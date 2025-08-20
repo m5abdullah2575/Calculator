@@ -5,17 +5,53 @@ function initializeSearch() {
     const searchInput = document.getElementById('searchInput');
     const toolCards = document.querySelectorAll('.tool-card');
 
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        
-        toolCards.forEach(card => {
-            const toolName = card.dataset.tool.toLowerCase();
-            const cardText = card.textContent.toLowerCase();
+    if (searchInput && toolCards.length > 0) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
             
-            if (toolName.includes(searchTerm) || cardText.includes(searchTerm)) {
-                card.style.display = 'block';
+            toolCards.forEach(card => {
+                const toolName = card.dataset.tool ? card.dataset.tool.toLowerCase() : '';
+                const cardText = card.textContent.toLowerCase();
+                
+                if (toolName.includes(searchTerm) || cardText.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+}
+
+// Category filter functionality
+function initializeCategoryFilters() {
+    const categoryButtons = document.querySelectorAll('.category-filter');
+    const toolCards = document.querySelectorAll('.tool-card');
+    const sections = document.querySelectorAll('section[id]');
+
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const category = this.dataset.category;
+            
+            // Update active button
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter content based on category
+            if (category === 'all') {
+                // Show all sections and cards
+                sections.forEach(section => section.style.display = 'block');
+                toolCards.forEach(card => card.style.display = 'block');
             } else {
-                card.style.display = 'none';
+                // Hide all sections first
+                sections.forEach(section => section.style.display = 'none');
+                
+                // Show only the relevant section
+                const targetSection = document.getElementById(category) || 
+                                    document.querySelector(`section[id*="${category}"]`);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                }
             }
         });
     });
@@ -683,6 +719,7 @@ function copyToClipboard(text) {
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     initializeSearch();
+    initializeCategoryFilters();
     
     // Add keyboard shortcuts
     document.addEventListener('keydown', function(e) {

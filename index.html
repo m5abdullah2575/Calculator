@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Tool Calculator & Converter</title>
+    <title>Professional Calculator Suite - Free Online Tools</title>
+    <meta name="description" content="Access 50+ professional calculators and converters. Fast, accurate, and always free. No signup required.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,507 +14,602 @@
     <header class="bg-white shadow-sm border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div class="flex items-center justify-between">
-                <h1 class="text-2xl font-bold text-gray-900">Multi-Tool Calculator</h1>
-                <div class="relative">
-                    <input
-                        type="text"
-                        id="searchInput"
-                        placeholder="Search tools..."
-                        class="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                    <i data-feather="search" class="absolute left-3 top-2.5 text-gray-400 w-4 h-4"></i>
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
                 </div>
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="text-blue-600 font-medium">Dashboard</a>
+                    <a href="#calculators" class="text-gray-600 hover:text-blue-600">Calculators</a>
+                    <a href="#converters" class="text-gray-600 hover:text-blue-600">Converters</a>
+                    <a href="about.html" class="text-gray-600 hover:text-blue-600">About</a>
+                </nav>
             </div>
         </div>
     </header>
 
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Professional Calculator
+                <span class="text-blue-600">Suite</span>
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                Access 50+ professional calculators and converters designed for students, professionals, and everyone in between. Fast, accurate, and always free.
+            </p>
+            
+            <!-- Search Bar -->
+            <div class="relative max-w-2xl mx-auto mb-8">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search calculators (e.g., BMI, loan, percentage...)"
+                    class="w-full pl-12 pr-20 py-4 text-lg border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-lg"
+                >
+                <i data-feather="search" class="absolute left-4 top-5 text-gray-400 w-6 h-6"></i>
+                <button class="absolute right-2 top-2 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                    Search
+                </button>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-3xl font-bold text-blue-600 mb-2">50+</div>
+                    <div class="text-gray-600">Calculators</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-3xl font-bold text-green-600 mb-2">8</div>
+                    <div class="text-gray-600">Categories</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-3xl font-bold text-purple-600 mb-2">1M+</div>
+                    <div class="text-gray-600">Users</div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="text-3xl font-bold text-orange-600 mb-2">10M+</div>
+                    <div class="text-gray-600">Calculations</div>
+                </div>
+            </div>
+            
+            <!-- Features -->
+            <div class="flex flex-wrap justify-center gap-4 mt-8 text-sm">
+                <span class="bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium">
+                    ✓ No Signup Required
+                </span>
+                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-medium">
+                    ✓ No Payment
+                </span>
+                <span class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full font-medium">
+                    ✓ No Limits
+                </span>
+                <span class="bg-orange-100 text-orange-800 px-4 py-2 rounded-full font-medium">
+                    ✓ 100% Secure
+                </span>
+            </div>
+        </div>
+    </section>
+
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <!-- Category Filter -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+            <button class="category-filter active" data-category="all">
+                <i data-feather="grid" class="w-4 h-4 mr-2"></i>
+                All Tools
+            </button>
+            <button class="category-filter" data-category="basic">
+                <i data-feather="calculator" class="w-4 h-4 mr-2"></i>
+                Basic
+            </button>
+            <button class="category-filter" data-category="financial">
+                <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i>
+                Financial
+            </button>
+            <button class="category-filter" data-category="health">
+                <i data-feather="heart" class="w-4 h-4 mr-2"></i>
+                Health
+            </button>
+            <button class="category-filter" data-category="engineering">
+                <i data-feather="settings" class="w-4 h-4 mr-2"></i>
+                Engineering
+            </button>
+            <button class="category-filter" data-category="converters">
+                <i data-feather="refresh-cw" class="w-4 h-4 mr-2"></i>
+                Converters
+            </button>
+        </div>
+        
         <!-- Tool Categories -->
         <div id="toolsContainer">
-            <!-- General Calculators -->
-            <section class="mb-12">
-                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-                    <i data-feather="calculator" class="w-5 h-5 mr-2"></i>
-                    General Calculators
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Age Calculator -->
-                    <div class="tool-card" data-tool="age-calculator">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="calendar" class="w-4 h-4 mr-2"></i>
-                                Age Calculator
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-                                    <input type="date" id="ageDob" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                </div>
-                                <button onclick="calculateAge()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Calculate Age</button>
-                                <div id="ageResult" class="result-display hidden"></div>
-                                <button onclick="resetAge()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
-                            </div>
-                        </div>
+            <!-- Basic Calculators -->
+            <section class="mb-12" id="calculators">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2 flex items-center">
+                    <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                        <i data-feather="calculator" class="w-5 h-5 text-blue-600"></i>
                     </div>
+                    Basic Calculators
+                </h2>
+                <p class="text-gray-600 mb-6">Essential mathematical and everyday calculators</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Age Calculator -->
+                    <a href="tools/age-calculator.html" class="tool-card" data-tool="age-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-blue-100 p-3 rounded-lg">
+                                    <i data-feather="calendar" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Age Calculator</h3>
+                            <p class="text-sm text-gray-600">Calculate age in years, months, days</p>
+                        </div>
+                    </a>
 
                     <!-- BMI Calculator -->
-                    <div class="tool-card" data-tool="bmi-calculator">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="activity" class="w-4 h-4 mr-2"></i>
-                                BMI Calculator
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
-                                    <input type="number" id="bmiWeight" placeholder="Enter weight" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <a href="tools/bmi-calculator.html" class="tool-card" data-tool="bmi-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-green-100 p-3 rounded-lg">
+                                    <i data-feather="activity" class="w-6 h-6 text-green-600"></i>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Height (cm)</label>
-                                    <input type="number" id="bmiHeight" placeholder="Enter height" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                </div>
-                                <button onclick="calculateBMI()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Calculate BMI</button>
-                                <div id="bmiResult" class="result-display hidden"></div>
-                                <button onclick="resetBMI()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">BMI Calculator</h3>
+                            <p class="text-sm text-gray-600">Calculate Body Mass Index</p>
                         </div>
-                    </div>
-
-                    <!-- BMR Calculator -->
-                    <div class="tool-card" data-tool="bmr-calculator">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="heart" class="w-4 h-4 mr-2"></i>
-                                BMR Calculator
-                            </h3>
-                            <div class="space-y-4">
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Weight (kg)</label>
-                                        <input type="number" id="bmrWeight" placeholder="Weight" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Height (cm)</label>
-                                        <input type="number" id="bmrHeight" placeholder="Height" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Age</label>
-                                        <input type="number" id="bmrAge" placeholder="Age" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-                                        <select id="bmrGender" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button onclick="calculateBMR()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Calculate BMR</button>
-                                <div id="bmrResult" class="result-display hidden"></div>
-                                <button onclick="resetBMR()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
 
                     <!-- Percentage Calculator -->
-                    <div class="tool-card" data-tool="percentage-calculator">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="percent" class="w-4 h-4 mr-2"></i>
-                                Percentage Calculator
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Number</label>
-                                    <input type="number" id="percentNumber" placeholder="Enter number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <a href="tools/percentage-calculator.html" class="tool-card" data-tool="percentage-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-purple-100 p-3 rounded-lg">
+                                    <i data-feather="percent" class="w-6 h-6 text-purple-600"></i>
                                 </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Percentage (%)</label>
-                                    <input type="number" id="percentValue" placeholder="Enter percentage" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                </div>
-                                <button onclick="calculatePercentage()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Calculate</button>
-                                <div id="percentResult" class="result-display hidden"></div>
-                                <button onclick="resetPercentage()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Percentage Calculator</h3>
+                            <p class="text-sm text-gray-600">Calculate percentages quickly</p>
                         </div>
-                    </div>
+                    </a>
 
+                    <!-- GPA Calculator -->
+                    <a href="tools/gpa-calculator.html" class="tool-card" data-tool="gpa-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-indigo-100 p-3 rounded-lg">
+                                    <i data-feather="award" class="w-6 h-6 text-indigo-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">GPA Calculator</h3>
+                            <p class="text-sm text-gray-600">Calculate Grade Point Average</p>
+                        </div>
+                    </a>
+
+                    <!-- Discount Calculator -->
+                    <a href="tools/discount-calculator.html" class="tool-card" data-tool="discount-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-red-100 p-3 rounded-lg">
+                                    <i data-feather="tag" class="w-6 h-6 text-red-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Discount Calculator</h3>
+                            <p class="text-sm text-gray-600">Calculate discounts and savings</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Date Difference Calculator -->
+                    <a href="tools/date-difference-calculator.html" class="tool-card" data-tool="date-difference-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-yellow-100 p-3 rounded-lg">
+                                    <i data-feather="clock" class="w-6 h-6 text-yellow-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Date Difference</h3>
+                            <p class="text-sm text-gray-600">Calculate days between dates</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Simple Interest Calculator -->
+                    <a href="tools/simple-interest-calculator.html" class="tool-card" data-tool="simple-interest-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-teal-100 p-3 rounded-lg">
+                                    <i data-feather="trending-up" class="w-6 h-6 text-teal-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Simple Interest</h3>
+                            <p class="text-sm text-gray-600">Calculate simple interest</p>
+                        </div>
+                    </a>
+                    
                     <!-- Compound Interest Calculator -->
-                    <div class="tool-card" data-tool="compound-interest-calculator">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="trending-up" class="w-4 h-4 mr-2"></i>
-                                Compound Interest
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Principal ($)</label>
-                                    <input type="number" id="ciPrincipal" placeholder="Principal amount" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <a href="tools/compound-interest-calculator.html" class="tool-card" data-tool="compound-interest-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-emerald-100 p-3 rounded-lg">
+                                    <i data-feather="bar-chart-2" class="w-6 h-6 text-emerald-600"></i>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Rate (%)</label>
-                                        <input type="number" id="ciRate" placeholder="Interest rate" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Time (years)</label>
-                                        <input type="number" id="ciTime" placeholder="Time period" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                </div>
-                                <button onclick="calculateCompoundInterest()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Calculate</button>
-                                <div id="ciResult" class="result-display hidden"></div>
-                                <button onclick="resetCompoundInterest()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Compound Interest</h3>
+                            <p class="text-sm text-gray-600">Calculate compound interest</p>
                         </div>
-                    </div>
-
-                    <!-- Loan EMI Calculator -->
-                    <div class="tool-card" data-tool="loan-emi-calculator">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="credit-card" class="w-4 h-4 mr-2"></i>
-                                Loan EMI Calculator
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Loan Amount ($)</label>
-                                    <input type="number" id="loanAmount" placeholder="Loan amount" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Rate (% per annum)</label>
-                                        <input type="number" id="loanRate" placeholder="Interest rate" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Tenure (years)</label>
-                                        <input type="number" id="loanTenure" placeholder="Loan tenure" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                </div>
-                                <button onclick="calculateEMI()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Calculate EMI</button>
-                                <div id="emiResult" class="result-display hidden"></div>
-                                <button onclick="resetEMI()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </section>
 
+            <!-- Financial Calculators -->
+            <section class="mb-12" id="financial">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2 flex items-center">
+                    <div class="bg-green-100 p-2 rounded-lg mr-3">
+                        <i data-feather="dollar-sign" class="w-5 h-5 text-green-600"></i>
+                    </div>
+                    Financial Calculators
+                </h2>
+                <p class="text-gray-600 mb-6">Loan, investment, and financial planning tools</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Loan EMI Calculator -->
+                    <a href="tools/loan-emi-calculator.html" class="tool-card" data-tool="loan-emi-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-green-100 p-3 rounded-lg">
+                                    <i data-feather="credit-card" class="w-6 h-6 text-green-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Loan EMI Calculator</h3>
+                            <p class="text-sm text-gray-600">Calculate monthly loan payments</p>
+                        </div>
+                    </a>
+                    
+                    <!-- SIP Calculator -->
+                    <a href="tools/sip-calculator.html" class="tool-card" data-tool="sip-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-blue-100 p-3 rounded-lg">
+                                    <i data-feather="pie-chart" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">SIP Calculator</h3>
+                            <p class="text-sm text-gray-600">Mutual fund investment planning</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Currency Converter -->
+                    <a href="tools/currency-converter.html" class="tool-card" data-tool="currency-converter">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-purple-100 p-3 rounded-lg">
+                                    <i data-feather="globe" class="w-6 h-6 text-purple-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Currency Converter</h3>
+                            <p class="text-sm text-gray-600">Convert between currencies</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Tip Calculator -->
+                    <a href="tools/tip-calculator.html" class="tool-card" data-tool="tip-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-orange-100 p-3 rounded-lg">
+                                    <i data-feather="coffee" class="w-6 h-6 text-orange-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Tip Calculator</h3>
+                            <p class="text-sm text-gray-600">Calculate tips and bill splits</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
             <!-- Unit Converters -->
-            <section class="mb-12">
-                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-                    <i data-feather="refresh-cw" class="w-5 h-5 mr-2"></i>
+            <section class="mb-12" id="converters">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2 flex items-center">
+                    <div class="bg-orange-100 p-2 rounded-lg mr-3">
+                        <i data-feather="refresh-cw" class="w-5 h-5 text-orange-600"></i>
+                    </div>
                     Unit Converters
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <p class="text-gray-600 mb-6">Convert between different units of measurement</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Length Converter -->
-                    <div class="tool-card" data-tool="length-converter">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="ruler" class="w-4 h-4 mr-2"></i>
-                                Length Converter
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Value</label>
-                                    <input type="number" id="lengthValue" placeholder="Enter value" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <a href="tools/length-converter.html" class="tool-card" data-tool="length-converter">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-blue-100 p-3 rounded-lg">
+                                    <i data-feather="move" class="w-6 h-6 text-blue-600"></i>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
-                                        <select id="lengthFrom" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="meter">Meter</option>
-                                            <option value="kilometer">Kilometer</option>
-                                            <option value="centimeter">Centimeter</option>
-                                            <option value="feet">Feet</option>
-                                            <option value="inch">Inch</option>
-                                            <option value="mile">Mile</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
-                                        <select id="lengthTo" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="meter">Meter</option>
-                                            <option value="kilometer">Kilometer</option>
-                                            <option value="centimeter">Centimeter</option>
-                                            <option value="feet">Feet</option>
-                                            <option value="inch">Inch</option>
-                                            <option value="mile">Mile</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button onclick="convertLength()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Convert</button>
-                                <div id="lengthResult" class="result-display hidden"></div>
-                                <button onclick="resetLength()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Length Converter</h3>
+                            <p class="text-sm text-gray-600">Convert meters, feet, inches</p>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Temperature Converter -->
-                    <div class="tool-card" data-tool="temperature-converter">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="thermometer" class="w-4 h-4 mr-2"></i>
-                                Temperature Converter
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Temperature</label>
-                                    <input type="number" id="tempValue" placeholder="Enter temperature" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <a href="tools/temperature-converter.html" class="tool-card" data-tool="temperature-converter">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-red-100 p-3 rounded-lg">
+                                    <i data-feather="thermometer" class="w-6 h-6 text-red-600"></i>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
-                                        <select id="tempFrom" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="celsius">Celsius</option>
-                                            <option value="fahrenheit">Fahrenheit</option>
-                                            <option value="kelvin">Kelvin</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
-                                        <select id="tempTo" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="celsius">Celsius</option>
-                                            <option value="fahrenheit">Fahrenheit</option>
-                                            <option value="kelvin">Kelvin</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button onclick="convertTemperature()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Convert</button>
-                                <div id="tempResult" class="result-display hidden"></div>
-                                <button onclick="resetTemperature()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Temperature Converter</h3>
+                            <p class="text-sm text-gray-600">Celsius, Fahrenheit, Kelvin</p>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Weight Converter -->
-                    <div class="tool-card" data-tool="weight-converter">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="package" class="w-4 h-4 mr-2"></i>
-                                Weight Converter
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Weight</label>
-                                    <input type="number" id="weightValue" placeholder="Enter weight" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <a href="tools/weight-converter.html" class="tool-card" data-tool="weight-converter">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-green-100 p-3 rounded-lg">
+                                    <i data-feather="package" class="w-6 h-6 text-green-600"></i>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
-                                        <select id="weightFrom" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="kilogram">Kilogram</option>
-                                            <option value="gram">Gram</option>
-                                            <option value="pound">Pound</option>
-                                            <option value="ounce">Ounce</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
-                                        <select id="weightTo" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="kilogram">Kilogram</option>
-                                            <option value="gram">Gram</option>
-                                            <option value="pound">Pound</option>
-                                            <option value="ounce">Ounce</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button onclick="convertWeight()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Convert</button>
-                                <div id="weightResult" class="result-display hidden"></div>
-                                <button onclick="resetWeight()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Weight Converter</h3>
+                            <p class="text-sm text-gray-600">Kg, pounds, grams, ounces</p>
                         </div>
-                    </div>
+                    </a>
+                    
+                    <!-- Volume Converter -->
+                    <a href="tools/volume-converter.html" class="tool-card" data-tool="volume-converter">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-indigo-100 p-3 rounded-lg">
+                                    <i data-feather="droplet" class="w-6 h-6 text-indigo-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Volume Converter</h3>
+                            <p class="text-sm text-gray-600">Liters, gallons, ml, cups</p>
+                        </div>
+                    </a>
                 </div>
             </section>
 
+            <!-- Health & Fitness Tools -->
+            <section class="mb-12" id="health">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2 flex items-center">
+                    <div class="bg-pink-100 p-2 rounded-lg mr-3">
+                        <i data-feather="heart" class="w-5 h-5 text-pink-600"></i>
+                    </div>
+                    Health & Fitness Tools
+                </h2>
+                <p class="text-gray-600 mb-6">BMI, BMR, calorie, and fitness calculators</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- BMI Calculator -->
+                    <a href="tools/bmi-calculator.html" class="tool-card" data-tool="bmi-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-pink-100 p-3 rounded-lg">
+                                    <i data-feather="activity" class="w-6 h-6 text-pink-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">BMI Calculator</h3>
+                            <p class="text-sm text-gray-600">Calculate Body Mass Index</p>
+                        </div>
+                    </a>
+                    
+                    <!-- BMR Calculator -->
+                    <a href="tools/bmr-calculator.html" class="tool-card" data-tool="bmr-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-red-100 p-3 rounded-lg">
+                                    <i data-feather="heart" class="w-6 h-6 text-red-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">BMR Calculator</h3>
+                            <p class="text-sm text-gray-600">Basal Metabolic Rate</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Body Fat Calculator -->
+                    <a href="tools/body-fat-calculator.html" class="tool-card" data-tool="body-fat-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-blue-100 p-3 rounded-lg">
+                                    <i data-feather="user" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Body Fat Calculator</h3>
+                            <p class="text-sm text-gray-600">Calculate body fat percentage</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Calorie Calculator -->
+                    <a href="tools/calorie-calculator.html" class="tool-card" data-tool="calorie-calculator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-orange-100 p-3 rounded-lg">
+                                    <i data-feather="zap" class="w-6 h-6 text-orange-600"></i>
+                                </div>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Calorie Calculator</h3>
+                            <p class="text-sm text-gray-600">Daily calorie needs</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            
             <!-- Text & Utility Tools -->
-            <section class="mb-12">
-                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-                    <i data-feather="tool" class="w-5 h-5 mr-2"></i>
+            <section class="mb-12" id="utilities">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2 flex items-center">
+                    <div class="bg-gray-100 p-2 rounded-lg mr-3">
+                        <i data-feather="tool" class="w-5 h-5 text-gray-600"></i>
+                    </div>
                     Text & Utility Tools
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <p class="text-gray-600 mb-6">Text processing, passwords, and QR codes</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Word Counter -->
-                    <div class="tool-card" data-tool="word-counter">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="type" class="w-4 h-4 mr-2"></i>
-                                Word Counter
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Text</label>
-                                    <textarea id="wordCountText" placeholder="Enter your text here..." rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    <a href="tools/word-counter.html" class="tool-card" data-tool="word-counter">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-blue-100 p-3 rounded-lg">
+                                    <i data-feather="type" class="w-6 h-6 text-blue-600"></i>
                                 </div>
-                                <button onclick="countWords()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Count Words</button>
-                                <div id="wordCountResult" class="result-display hidden"></div>
-                                <button onclick="resetWordCount()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Word Counter</h3>
+                            <p class="text-sm text-gray-600">Count words and characters</p>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Password Generator -->
-                    <div class="tool-card" data-tool="password-generator">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="lock" class="w-4 h-4 mr-2"></i>
-                                Password Generator
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Length</label>
-                                    <input type="number" id="passwordLength" value="12" min="4" max="50" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <a href="tools/password-generator.html" class="tool-card" data-tool="password-generator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-green-100 p-3 rounded-lg">
+                                    <i data-feather="lock" class="w-6 h-6 text-green-600"></i>
                                 </div>
-                                <div class="space-y-2">
-                                    <label class="flex items-center">
-                                        <input type="checkbox" id="includeUppercase" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="ml-2 text-sm text-gray-700">Include Uppercase</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" id="includeLowercase" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="ml-2 text-sm text-gray-700">Include Lowercase</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" id="includeNumbers" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="ml-2 text-sm text-gray-700">Include Numbers</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="checkbox" id="includeSymbols" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="ml-2 text-sm text-gray-700">Include Symbols</span>
-                                    </label>
-                                </div>
-                                <button onclick="generatePassword()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Generate Password</button>
-                                <div id="passwordResult" class="result-display hidden"></div>
-                                <button onclick="resetPassword()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Password Generator</h3>
+                            <p class="text-sm text-gray-600">Generate secure passwords</p>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- QR Code Generator -->
-                    <div class="tool-card" data-tool="qr-generator">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="grid" class="w-4 h-4 mr-2"></i>
-                                QR Code Generator
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Text or URL</label>
-                                    <textarea id="qrText" placeholder="Enter text or URL..." rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    <a href="tools/qr-generator.html" class="tool-card" data-tool="qr-generator">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-purple-100 p-3 rounded-lg">
+                                    <i data-feather="grid" class="w-6 h-6 text-purple-600"></i>
                                 </div>
-                                <button onclick="generateQR()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Generate QR Code</button>
-                                <div id="qrResult" class="result-display hidden text-center"></div>
-                                <button onclick="resetQR()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">QR Code Generator</h3>
+                            <p class="text-sm text-gray-600">Generate QR codes</p>
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Text Case Converter -->
-                    <div class="tool-card" data-tool="text-case-converter">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="edit-3" class="w-4 h-4 mr-2"></i>
-                                Text Case Converter
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Text</label>
-                                    <textarea id="caseText" placeholder="Enter your text..." rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                    <a href="tools/text-case-converter.html" class="tool-card" data-tool="text-case-converter">
+                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200 hover:scale-105">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-yellow-100 p-3 rounded-lg">
+                                    <i data-feather="edit-3" class="w-6 h-6 text-yellow-600"></i>
                                 </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <button onclick="convertCase('uppercase')" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">UPPERCASE</button>
-                                    <button onclick="convertCase('lowercase')" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">lowercase</button>
-                                </div>
-                                <button onclick="convertCase('title')" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Title Case</button>
-                                <div id="caseResult" class="result-display hidden"></div>
-                                <button onclick="resetCase()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
+                                <i data-feather="arrow-right" class="w-4 h-4 text-gray-400"></i>
                             </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Text Case Converter</h3>
+                            <p class="text-sm text-gray-600">Convert text case</p>
                         </div>
-                    </div>
+                    </a>
 
-                    <!-- Currency Converter -->
-                    <div class="tool-card" data-tool="currency-converter">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i>
-                                Currency Converter
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
-                                    <input type="number" id="currencyAmount" placeholder="Enter amount" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">From</label>
-                                        <select id="currencyFrom" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="USD">USD</option>
-                                            <option value="EUR">EUR</option>
-                                            <option value="GBP">GBP</option>
-                                            <option value="JPY">JPY</option>
-                                            <option value="INR">INR</option>
-                                            <option value="PKR">PKR</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">To</label>
-                                        <select id="currencyTo" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                            <option value="USD">USD</option>
-                                            <option value="EUR">EUR</option>
-                                            <option value="GBP">GBP</option>
-                                            <option value="JPY">JPY</option>
-                                            <option value="INR">INR</option>
-                                            <option value="PKR">PKR</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button onclick="convertCurrency()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Convert</button>
-                                <div id="currencyResult" class="result-display hidden"></div>
-                                <button onclick="resetCurrency()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tip Calculator -->
-                    <div class="tool-card" data-tool="tip-calculator">
-                        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-                            <h3 class="text-lg font-medium text-gray-900 mb-4 flex items-center">
-                                <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i>
-                                Tip Calculator
-                            </h3>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Bill Amount ($)</label>
-                                    <input type="number" id="billAmount" placeholder="Enter bill amount" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                </div>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">Tip (%)</label>
-                                        <input type="number" id="tipPercentage" value="15" placeholder="Tip percentage" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-1">People</label>
-                                        <input type="number" id="numberOfPeople" value="1" min="1" placeholder="Number of people" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    </div>
-                                </div>
-                                <button onclick="calculateTip()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-200">Calculate Tip</button>
-                                <div id="tipResult" class="result-display hidden"></div>
-                                <button onclick="resetTip()" class="w-full bg-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200">Reset</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo & Description -->
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="bg-blue-600 p-2 rounded-lg">
+                            <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold">CalcHub Pro</h3>
+                            <p class="text-xs text-gray-400">Professional Calculator Suite</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Your one-stop destination for all calculator and converter needs. Fast, accurate, and always free.
+                    </p>
+                    <div class="flex space-x-4">
+                        <span class="bg-green-600 text-xs px-2 py-1 rounded">✓ No Signup</span>
+                        <span class="bg-blue-600 text-xs px-2 py-1 rounded">✓ 100% Free</span>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#calculators" class="text-gray-400 hover:text-white transition-colors">Basic Calculators</a></li>
+                        <li><a href="#financial" class="text-gray-400 hover:text-white transition-colors">Financial Tools</a></li>
+                        <li><a href="#converters" class="text-gray-400 hover:text-white transition-colors">Unit Converters</a></li>
+                        <li><a href="#health" class="text-gray-400 hover:text-white transition-colors">Health & Fitness</a></li>
+                        <li><a href="#utilities" class="text-gray-400 hover:text-white transition-colors">Text & Utilities</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Popular Tools -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Popular Tools</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="tools/age-calculator.html" class="text-gray-400 hover:text-white transition-colors">Age Calculator</a></li>
+                        <li><a href="tools/bmi-calculator.html" class="text-gray-400 hover:text-white transition-colors">BMI Calculator</a></li>
+                        <li><a href="tools/percentage-calculator.html" class="text-gray-400 hover:text-white transition-colors">Percentage Calculator</a></li>
+                        <li><a href="tools/loan-emi-calculator.html" class="text-gray-400 hover:text-white transition-colors">EMI Calculator</a></li>
+                        <li><a href="tools/currency-converter.html" class="text-gray-400 hover:text-white transition-colors">Currency Converter</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="disclaimer.html" class="text-gray-400 hover:text-white transition-colors">Disclaimer</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Bar -->
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
+                </p>
+                <p class="text-gray-500 text-xs mt-2">
+                    All calculations are performed locally in your browser. No data is stored or transmitted.
+                </p>
+            </div>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
     <script>
         // Initialize Feather icons
         feather.replace();
+        
+        // Initialize search functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSearch();
+        });
     </script>
 </body>
 </html>
