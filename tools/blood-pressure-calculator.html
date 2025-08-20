@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Pressure Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate and interpret your blood pressure readings. Understand systolic and diastolic pressure categories.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Blood Pressure Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="heart" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Blood Pressure Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate and interpret your blood pressure readings to understand your cardiovascular health status.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Systolic Pressure (mmHg)</label>
+                            <input 
+                                type="number" 
+                                id="systolic" 
+                                placeholder="Top number (e.g., 120)"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                            <p class="text-sm text-gray-500 mt-1">The higher number when heart beats</p>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Diastolic Pressure (mmHg)</label>
+                            <input 
+                                type="number" 
+                                id="diastolic" 
+                                placeholder="Bottom number (e.g., 80)"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                            <p class="text-sm text-gray-500 mt-1">The lower number between heartbeats</p>
+                        </div>
+                        
+                        <div class="flex space-x-4">
+                            <button 
+                                onclick="calculateBloodPressure()" 
+                                class="flex-1 bg-red-600 text-white py-4 px-6 rounded-lg text-lg font-semibold hover:bg-red-700 transition-colors flex items-center justify-center"
+                            >
+                                <i data-feather="heart" class="w-5 h-5 mr-2"></i>
+                                Analyze
+                            </button>
+                            <button 
+                                onclick="resetBloodPressure()" 
+                                class="px-6 py-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div id="bloodPressureResult" class="result-display hidden"></div>
+                        
+                        <!-- AdSense Placeholder -->
+                        <div class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                            <p class="text-gray-500 text-sm">Advertisement</p>
+                            <p class="text-gray-400 text-xs mt-2">300x250 AdSense Banner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blood Pressure Categories -->
+            <div class="bg-red-50 rounded-xl p-6 mb-6">
+                <h3 class="text-lg font-semibold text-red-900 mb-4">Blood Pressure Categories</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="space-y-2">
+                        <div class="flex justify-between border-b pb-1">
+                            <span class="font-medium">Normal:</span>
+                            <span>&lt;120 and &lt;80</span>
+                        </div>
+                        <div class="flex justify-between border-b pb-1">
+                            <span class="font-medium">Elevated:</span>
+                            <span>120-129 and &lt;80</span>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between border-b pb-1">
+                            <span class="font-medium">Stage 1 High:</span>
+                            <span>130-139 or 80-89</span>
+                        </div>
+                        <div class="flex justify-between border-b pb-1">
+                            <span class="font-medium">Stage 2 High:</span>
+                            <span>≥140 or ≥90</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Disclaimer -->
+            <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-yellow-900 mb-3">⚠️ Medical Disclaimer</h3>
+                <p class="text-yellow-800 text-sm">
+                    This calculator is for educational purposes only and should not replace professional medical advice. 
+                    Always consult with healthcare professionals for medical concerns and treatment decisions.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-600">&copy; 2024 CalcHub Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+    </script>
+</body>
+</html>

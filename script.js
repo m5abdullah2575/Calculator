@@ -789,3 +789,457 @@ window.addEventListener('unhandledrejection', function(e) {
     console.error('Unhandled promise rejection:', e.reason);
     // You could send this to an error reporting service
 });
+
+// NEW CALCULATOR FUNCTIONS
+
+// Salary Calculator
+function calculateSalary() {
+    try {
+        const amount = validateInput(document.getElementById('salaryAmount').value, 'Salary amount');
+        const period = document.getElementById('payPeriod').value;
+        const hoursPerWeek = validateInput(document.getElementById('hoursPerWeek').value, 'Hours per week');
+        const weeksPerYear = validateInput(document.getElementById('weeksPerYear').value, 'Weeks per year');
+        
+        if (amount <= 0 || hoursPerWeek <= 0 || weeksPerYear <= 0) {
+            throw new Error('All values must be positive numbers');
+        }
+        
+        // Convert everything to annual salary first
+        let annualSalary;
+        switch (period) {
+            case 'hourly':
+                annualSalary = amount * hoursPerWeek * weeksPerYear;
+                break;
+            case 'daily':
+                annualSalary = amount * (hoursPerWeek / 5) * weeksPerYear;
+                break;
+            case 'weekly':
+                annualSalary = amount * weeksPerYear;
+                break;
+            case 'monthly':
+                annualSalary = amount * 12;
+                break;
+            case 'annual':
+                annualSalary = amount;
+                break;
+        }
+        
+        // Calculate all periods
+        const hourly = annualSalary / (hoursPerWeek * weeksPerYear);
+        const daily = hourly * (hoursPerWeek / 5);
+        const weekly = annualSalary / weeksPerYear;
+        const monthly = annualSalary / 12;
+        
+        const result = `
+            <strong>Salary Breakdown:</strong><br>
+            <strong>Hourly:</strong> $${hourly.toFixed(2)}<br>
+            <strong>Daily:</strong> $${daily.toFixed(2)}<br>
+            <strong>Weekly:</strong> $${weekly.toFixed(2)}<br>
+            <strong>Monthly:</strong> $${monthly.toLocaleString(undefined, {minimumFractionDigits: 2})}<br>
+            <strong>Annual:</strong> $${annualSalary.toLocaleString(undefined, {minimumFractionDigits: 2})}
+        `;
+        
+        showResult('salaryResult', result);
+    } catch (error) {
+        showResult('salaryResult', error.message, true);
+    }
+}
+
+function resetSalary() {
+    document.getElementById('salaryAmount').value = '';
+    document.getElementById('payPeriod').value = 'hourly';
+    document.getElementById('hoursPerWeek').value = '40';
+    document.getElementById('weeksPerYear').value = '52';
+    hideResult('salaryResult');
+}
+
+// ROI Calculator
+function calculateROI() {
+    try {
+        const initial = validateInput(document.getElementById('initialInvestment').value, 'Initial investment');
+        const final = validateInput(document.getElementById('finalValue').value, 'Final value');
+        const time = validateInput(document.getElementById('timePeriod').value, 'Time period');
+        
+        if (initial <= 0 || final <= 0 || time <= 0) {
+            throw new Error('All values must be positive numbers');
+        }
+        
+        const profit = final - initial;
+        const roi = (profit / initial) * 100;
+        const annualizedROI = Math.pow((final / initial), (1 / time)) - 1;
+        
+        let roiClass = roi >= 0 ? 'success' : 'error';
+        
+        const result = `
+            <strong>Investment Analysis:</strong><br>
+            <strong>Total Profit/Loss:</strong> $${profit.toLocaleString(undefined, {minimumFractionDigits: 2})}<br>
+            <strong>ROI:</strong> ${roi.toFixed(2)}%<br>
+            <strong>Annualized ROI:</strong> ${(annualizedROI * 100).toFixed(2)}%<br>
+            <strong>Investment Period:</strong> ${time} year(s)
+        `;
+        
+        showResult('roiResult', result, roi < 0);
+    } catch (error) {
+        showResult('roiResult', error.message, true);
+    }
+}
+
+function resetROI() {
+    document.getElementById('initialInvestment').value = '';
+    document.getElementById('finalValue').value = '';
+    document.getElementById('timePeriod').value = '';
+    hideResult('roiResult');
+}
+
+// Break-Even Calculator
+function calculateBreakEven() {
+    try {
+        const fixedCosts = validateInput(document.getElementById('fixedCosts').value, 'Fixed costs');
+        const variableCost = validateInput(document.getElementById('variableCost').value, 'Variable cost per unit');
+        const sellingPrice = validateInput(document.getElementById('sellingPrice').value, 'Selling price per unit');
+        
+        if (fixedCosts <= 0 || variableCost < 0 || sellingPrice <= 0) {
+            throw new Error('Fixed costs and selling price must be positive; variable cost cannot be negative');
+        }
+        
+        if (sellingPrice <= variableCost) {
+            throw new Error('Selling price must be greater than variable cost per unit');
+        }
+        
+        const contributionMargin = sellingPrice - variableCost;
+        const breakEvenUnits = Math.ceil(fixedCosts / contributionMargin);
+        const breakEvenRevenue = breakEvenUnits * sellingPrice;
+        const marginPercent = (contributionMargin / sellingPrice) * 100;
+        
+        const result = `
+            <strong>Break-Even Analysis:</strong><br>
+            <strong>Break-Even Units:</strong> ${breakEvenUnits.toLocaleString()}<br>
+            <strong>Break-Even Revenue:</strong> $${breakEvenRevenue.toLocaleString()}<br>
+            <strong>Contribution Margin:</strong> $${contributionMargin.toFixed(2)} (${marginPercent.toFixed(1)}%)<br>
+            <strong>Units for $10k profit:</strong> ${Math.ceil((fixedCosts + 10000) / contributionMargin).toLocaleString()}
+        `;
+        
+        showResult('breakEvenResult', result);
+    } catch (error) {
+        showResult('breakEvenResult', error.message, true);
+    }
+}
+
+function resetBreakEven() {
+    document.getElementById('fixedCosts').value = '';
+    document.getElementById('variableCost').value = '';
+    document.getElementById('sellingPrice').value = '';
+    hideResult('breakEvenResult');
+}
+
+// Blood Pressure Calculator
+function calculateBloodPressure() {
+    try {
+        const systolic = validateInput(document.getElementById('systolic').value, 'Systolic pressure');
+        const diastolic = validateInput(document.getElementById('diastolic').value, 'Diastolic pressure');
+        
+        if (systolic <= 0 || diastolic <= 0 || systolic > 300 || diastolic > 200) {
+            throw new Error('Please enter valid blood pressure readings');
+        }
+        
+        if (systolic < diastolic) {
+            throw new Error('Systolic pressure should be higher than diastolic pressure');
+        }
+        
+        let category, color, advice;
+        
+        if (systolic < 120 && diastolic < 80) {
+            category = 'Normal';
+            color = 'success';
+            advice = 'Maintain healthy lifestyle';
+        } else if (systolic >= 120 && systolic <= 129 && diastolic < 80) {
+            category = 'Elevated';
+            color = 'error';
+            advice = 'Lifestyle changes recommended';
+        } else if ((systolic >= 130 && systolic <= 139) || (diastolic >= 80 && diastolic <= 89)) {
+            category = 'Stage 1 High Blood Pressure';
+            color = 'error';
+            advice = 'Consult healthcare provider';
+        } else if (systolic >= 140 || diastolic >= 90) {
+            category = 'Stage 2 High Blood Pressure';
+            color = 'error';
+            advice = 'Seek immediate medical attention';
+        } else {
+            category = 'Hypertensive Crisis';
+            color = 'error';
+            advice = 'Emergency medical attention required';
+        }
+        
+        const result = `
+            <strong>Blood Pressure Reading:</strong><br>
+            <strong>${systolic}/${diastolic} mmHg</strong><br>
+            <strong>Category:</strong> ${category}<br>
+            <strong>Recommendation:</strong> ${advice}<br>
+            <em>Consult healthcare professionals for medical advice</em>
+        `;
+        
+        showResult('bloodPressureResult', result, color === 'error');
+    } catch (error) {
+        showResult('bloodPressureResult', error.message, true);
+    }
+}
+
+function resetBloodPressure() {
+    document.getElementById('systolic').value = '';
+    document.getElementById('diastolic').value = '';
+    hideResult('bloodPressureResult');
+}
+
+// Area Calculator
+function updateShapeInputs() {
+    const shapeType = document.getElementById('shapeType').value;
+    const inputsContainer = document.getElementById('shapeInputs');
+    
+    let inputsHTML = '';
+    
+    switch (shapeType) {
+        case 'rectangle':
+            inputsHTML = `
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Length</label>
+                    <input type="number" id="length" placeholder="Enter length" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Width</label>
+                    <input type="number" id="width" placeholder="Enter width" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            `;
+            break;
+        case 'circle':
+            inputsHTML = `
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Radius</label>
+                    <input type="number" id="radius" placeholder="Enter radius" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            `;
+            break;
+        case 'triangle':
+            inputsHTML = `
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Base</label>
+                    <input type="number" id="base" placeholder="Enter base" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Height</label>
+                    <input type="number" id="height" placeholder="Enter height" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            `;
+            break;
+        case 'square':
+            inputsHTML = `
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Side Length</label>
+                    <input type="number" id="side" placeholder="Enter side length" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            `;
+            break;
+        case 'parallelogram':
+            inputsHTML = `
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Base</label>
+                    <input type="number" id="base" placeholder="Enter base" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Height</label>
+                    <input type="number" id="height" placeholder="Enter height" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            `;
+            break;
+        case 'trapezoid':
+            inputsHTML = `
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Base 1</label>
+                    <input type="number" id="base1" placeholder="Enter first base" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Base 2</label>
+                    <input type="number" id="base2" placeholder="Enter second base" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-lg font-semibold text-gray-900 mb-3">Height</label>
+                    <input type="number" id="height" placeholder="Enter height" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+            `;
+            break;
+    }
+    
+    inputsContainer.innerHTML = inputsHTML;
+}
+
+function calculateArea() {
+    try {
+        const shapeType = document.getElementById('shapeType').value;
+        let area, perimeter;
+        
+        switch (shapeType) {
+            case 'rectangle':
+                const length = validateInput(document.getElementById('length').value, 'Length');
+                const width = validateInput(document.getElementById('width').value, 'Width');
+                if (length <= 0 || width <= 0) throw new Error('Length and width must be positive');
+                area = length * width;
+                perimeter = 2 * (length + width);
+                break;
+                
+            case 'circle':
+                const radius = validateInput(document.getElementById('radius').value, 'Radius');
+                if (radius <= 0) throw new Error('Radius must be positive');
+                area = Math.PI * radius * radius;
+                perimeter = 2 * Math.PI * radius;
+                break;
+                
+            case 'triangle':
+                const base = validateInput(document.getElementById('base').value, 'Base');
+                const height = validateInput(document.getElementById('height').value, 'Height');
+                if (base <= 0 || height <= 0) throw new Error('Base and height must be positive');
+                area = 0.5 * base * height;
+                perimeter = 'Perimeter requires all three sides';
+                break;
+                
+            case 'square':
+                const side = validateInput(document.getElementById('side').value, 'Side length');
+                if (side <= 0) throw new Error('Side length must be positive');
+                area = side * side;
+                perimeter = 4 * side;
+                break;
+                
+            case 'parallelogram':
+                const pBase = validateInput(document.getElementById('base').value, 'Base');
+                const pHeight = validateInput(document.getElementById('height').value, 'Height');
+                if (pBase <= 0 || pHeight <= 0) throw new Error('Base and height must be positive');
+                area = pBase * pHeight;
+                perimeter = 'Perimeter requires both side lengths';
+                break;
+                
+            case 'trapezoid':
+                const base1 = validateInput(document.getElementById('base1').value, 'Base 1');
+                const base2 = validateInput(document.getElementById('base2').value, 'Base 2');
+                const tHeight = validateInput(document.getElementById('height').value, 'Height');
+                if (base1 <= 0 || base2 <= 0 || tHeight <= 0) throw new Error('All measurements must be positive');
+                area = 0.5 * (base1 + base2) * tHeight;
+                perimeter = 'Perimeter requires all four sides';
+                break;
+        }
+        
+        const result = `
+            <strong>${shapeType.charAt(0).toUpperCase() + shapeType.slice(1)} Calculation:</strong><br>
+            <strong>Area:</strong> ${area.toFixed(4)} square units<br>
+            <strong>Perimeter/Circumference:</strong> ${typeof perimeter === 'number' ? perimeter.toFixed(4) + ' units' : perimeter}
+        `;
+        
+        showResult('areaResult', result);
+    } catch (error) {
+        showResult('areaResult', error.message, true);
+    }
+}
+
+function resetArea() {
+    const inputs = document.querySelectorAll('#shapeInputs input');
+    inputs.forEach(input => input.value = '');
+    hideResult('areaResult');
+}
+
+// Ovulation Calculator
+function calculateOvulation() {
+    try {
+        const lastPeriodDate = document.getElementById('lastPeriod').value;
+        const cycleLength = validateInput(document.getElementById('cycleLength').value, 'Cycle length');
+        const lutealPhase = validateInput(document.getElementById('lutealPhase').value, 'Luteal phase');
+        
+        if (!lastPeriodDate) throw new Error('Last period date is required');
+        
+        if (cycleLength < 21 || cycleLength > 45) {
+            throw new Error('Cycle length should be between 21-45 days');
+        }
+        
+        if (lutealPhase < 10 || lutealPhase > 16) {
+            throw new Error('Luteal phase should be between 10-16 days');
+        }
+        
+        const lastPeriod = new Date(lastPeriodDate);
+        const today = new Date();
+        
+        if (lastPeriod > today) {
+            throw new Error('Last period date cannot be in the future');
+        }
+        
+        // Calculate ovulation date
+        const ovulationDay = cycleLength - lutealPhase;
+        const ovulationDate = new Date(lastPeriod);
+        ovulationDate.setDate(lastPeriod.getDate() + ovulationDay);
+        
+        // Calculate fertile window (5 days before ovulation + ovulation day)
+        const fertileStart = new Date(ovulationDate);
+        fertileStart.setDate(ovulationDate.getDate() - 5);
+        
+        const fertileEnd = new Date(ovulationDate);
+        fertileEnd.setDate(ovulationDate.getDate() + 1);
+        
+        // Calculate next period
+        const nextPeriod = new Date(lastPeriod);
+        nextPeriod.setDate(lastPeriod.getDate() + cycleLength);
+        
+        const formatDate = (date) => date.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
+        const result = `
+            <strong>Ovulation Prediction:</strong><br>
+            <strong>Ovulation Date:</strong> ${formatDate(ovulationDate)}<br>
+            <strong>Fertile Window:</strong> ${formatDate(fertileStart)} - ${formatDate(fertileEnd)}<br>
+            <strong>Next Period:</strong> ${formatDate(nextPeriod)}<br>
+            <em>These are estimates based on average cycles</em>
+        `;
+        
+        showResult('ovulationResult', result);
+    } catch (error) {
+        showResult('ovulationResult', error.message, true);
+    }
+}
+
+function resetOvulation() {
+    document.getElementById('lastPeriod').value = '';
+    document.getElementById('cycleLength').value = '28';
+    document.getElementById('lutealPhase').value = '14';
+    hideResult('ovulationResult');
+}
+
+// Utility function for copying text to clipboard
+function copyToClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            // Show temporary success message
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        });
+    } else {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        } catch (err) {
+            console.error('Could not copy text: ', err);
+        }
+        document.body.removeChild(textArea);
+    }
+}

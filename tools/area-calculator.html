@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate area of various shapes including rectangle, circle, triangle, and more geometric shapes.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Area Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="square" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Area Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate the area of various geometric shapes including rectangles, circles, triangles, and more.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Shape Type</label>
+                            <select 
+                                id="shapeType" 
+                                onchange="updateShapeInputs()"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                <option value="rectangle">Rectangle</option>
+                                <option value="circle">Circle</option>
+                                <option value="triangle">Triangle</option>
+                                <option value="square">Square</option>
+                                <option value="parallelogram">Parallelogram</option>
+                                <option value="trapezoid">Trapezoid</option>
+                            </select>
+                        </div>
+                        
+                        <div id="shapeInputs">
+                            <!-- Dynamic inputs based on shape -->
+                        </div>
+                        
+                        <div class="flex space-x-4">
+                            <button 
+                                onclick="calculateArea()" 
+                                class="flex-1 bg-indigo-600 text-white py-4 px-6 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center"
+                            >
+                                <i data-feather="square" class="w-5 h-5 mr-2"></i>
+                                Calculate Area
+                            </button>
+                            <button 
+                                onclick="resetArea()" 
+                                class="px-6 py-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div id="areaResult" class="result-display hidden"></div>
+                        
+                        <!-- AdSense Placeholder -->
+                        <div class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                            <p class="text-gray-500 text-sm">Advertisement</p>
+                            <p class="text-gray-400 text-xs mt-2">300x250 AdSense Banner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Formulas Reference -->
+            <div class="bg-indigo-50 rounded-xl p-6">
+                <h3 class="text-lg font-semibold text-indigo-900 mb-4">Area Formulas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="space-y-2">
+                        <div><strong>Rectangle:</strong> Length × Width</div>
+                        <div><strong>Circle:</strong> π × radius²</div>
+                        <div><strong>Triangle:</strong> ½ × base × height</div>
+                    </div>
+                    <div class="space-y-2">
+                        <div><strong>Square:</strong> side²</div>
+                        <div><strong>Parallelogram:</strong> base × height</div>
+                        <div><strong>Trapezoid:</strong> ½ × (base1 + base2) × height</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-600">&copy; 2024 CalcHub Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+        
+        // Initialize shape inputs
+        updateShapeInputs();
+    </script>
+</body>
+</html>
