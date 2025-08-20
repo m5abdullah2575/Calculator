@@ -1,0 +1,73 @@
+I want you to build a fully functional multi-tool calculator and converter website using only HTML, CSS (Tailwind via CDN), and vanilla JavaScript (no backend, no database, no frameworks like React or Node.js).  
+
+The website requirements:  
+1. **Dashboard & Layout**  
+   - Attractive, modern, simple, and responsive design.  
+   - Clean color scheme, card-style layout, smooth hover animations.  
+   - Tools should be displayed in separate cards/sections with clear headings and icons.  
+   - Include a search bar at the top to quickly search/filter tools.  
+   - Responsive for mobile, tablet, and desktop.  
+
+2. **Tools & Features**  
+
+🔹 **General Calculators**  
+- Age Calculator (DOB → Age)  
+- BMI Calculator  
+- BMR (Basal Metabolic Rate) Calculator  
+- Body Fat Calculator  
+- Calories Burn Calculator  
+- Pregnancy Due Date Calculator  
+- Loan / EMI Calculator  
+- Compound Interest Calculator  
+- Simple Interest Calculator  
+- Percentage Calculator  
+- Discount Calculator  
+- GPA / CGPA Calculator  
+- Grade Calculator  
+- SIP Calculator (Mutual Funds)  
+- Date Difference Calculator (Days/Months/Years)  
+
+🔹 **Converters – Unit & Measurement**  
+- Length Converter (cm ↔ inch, meter ↔ feet, km ↔ mile)  
+- Weight Converter (kg ↔ lb, gram ↔ ounce)  
+- Temperature Converter (Celsius ↔ Fahrenheit ↔ Kelvin)  
+- Speed Converter (km/h ↔ mph, m/s ↔ ft/s)  
+- Area Converter (sq ft ↔ sq meter, acre ↔ hectare)  
+- Volume Converter (liter ↔ gallon, ml ↔ cup)  
+- Time Converter (hours ↔ minutes ↔ seconds)  
+- Fuel Efficiency Converter (km/l ↔ mpg)  
+
+🔹 **Currency & Finance**  
+- Currency Converter (USD ↔ PKR, INR ↔ USD, etc.)  
+- VAT / GST Calculator  
+- Tip Calculator  
+- Salary Tax Estimator  
+
+🔹 **Date & Time Tools**  
+- Time Zone Converter  
+- Countdown Timer Generator  
+- Age in Days / Weeks / Months Calculator / hours/ minutes/ seconds
+
+🔹 **Health & Fitness Tools**  
+- Ideal Weight Calculator  
+- Water Intake Calculator  
+- Macro Nutrient Calculator (Carbs/Protein/Fats)  
+
+🔹 **Text & Utility Tools**  
+- Word Counter  
+- Character Counter  
+- Random Password Generator  
+- QR Code Generator (JS Library)  
+- Text Case Converter (Uppercase ↔ Lowercase ↔ Title Case)  
+
+3. **Important Notes**  
+- Each tool must be fully functional with correct formulas in JavaScript.  
+- Each tool should open in its own card/section with input fields, result display, and a “Reset/Clear” button.  
+- No login, signup, or payment — 100% free and 100% secure.  
+- No backend or server-side logic.  
+- Keep code clean, well-commented, and structured (separate CSS, JS, and HTML files).  
+
+Deliverables:  
+- index.html (main dashboard + sections for tools)  
+- style.css (Tailwind via CDN, with custom styling if needed)  
+- script.js (all calculator & converter logic in vanilla JavaScript)  
