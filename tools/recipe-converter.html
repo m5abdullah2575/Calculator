@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Converter - CalcHub Pro</title>
+    <meta name="description" content="Scale recipe portions up or down, convert cooking measurements, and adjust serving sizes. Free recipe calculator.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Recipe Converter</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="coffee" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Recipe Converter</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Scale recipes up or down for different serving sizes and convert between cooking measurements easily.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Recipe Scaler Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-6">Recipe Scaler</h3>
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Original Servings</label>
+                            <input 
+                                type="number" 
+                                id="originalServings" 
+                                placeholder="Original recipe serves"
+                                min="1"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Desired Servings</label>
+                            <input 
+                                type="number" 
+                                id="desiredServings" 
+                                placeholder="New serving size"
+                                min="1"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-lg font-semibold text-gray-900">Recipe Ingredients</h4>
+                        <button 
+                            onclick="addIngredient()" 
+                            class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center"
+                        >
+                            <i data-feather="plus" class="w-4 h-4 mr-2"></i>
+                            Add Ingredient
+                        </button>
+                    </div>
+
+                    <div id="ingredientsList" class="space-y-3">
+                        <!-- Initial ingredient -->
+                        <div class="ingredient-item bg-gray-50 p-4 rounded-lg">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-2">
+                                <input 
+                                    type="number" 
+                                    placeholder="Amount"
+                                    step="0.25"
+                                    class="ingredient-amount px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                >
+                                <select class="ingredient-unit px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                                    <option value="cup">Cup</option>
+                                    <option value="tbsp">Tablespoon</option>
+                                    <option value="tsp">Teaspoon</option>
+                                    <option value="oz">Ounce</option>
+                                    <option value="lb">Pound</option>
+                                    <option value="g">Gram</option>
+                                    <option value="kg">Kilogram</option>
+                                    <option value="ml">Milliliter</option>
+                                    <option value="l">Liter</option>
+                                    <option value="pint">Pint</option>
+                                    <option value="quart">Quart</option>
+                                    <option value="gallon">Gallon</option>
+                                    <option value="piece">Piece</option>
+                                </select>
+                                <input 
+                                    type="text" 
+                                    placeholder="Ingredient name"
+                                    class="ingredient-name px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                                >
+                                <button 
+                                    onclick="removeIngredient(this)" 
+                                    class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm"
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                            <div class="scaled-result text-sm text-gray-600 font-medium hidden"></div>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="scaleRecipe()" 
+                        class="w-full bg-yellow-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-yellow-700 transition-colors duration-200 font-semibold"
+                    >
+                        Scale Recipe
+                    </button>
+                    
+                    <div id="recipeResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetRecipe()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Measurement Conversion Chart -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Cooking Measurement Conversions</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Volume Conversions</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between p-2 bg-yellow-50 rounded">
+                                <span>1 cup</span>
+                                <span class="font-medium">16 tablespoons</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-blue-50 rounded">
+                                <span>1 tablespoon</span>
+                                <span class="font-medium">3 teaspoons</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-green-50 rounded">
+                                <span>1 cup</span>
+                                <span class="font-medium">240 ml</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-purple-50 rounded">
+                                <span>1 fluid ounce</span>
+                                <span class="font-medium">30 ml</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-orange-50 rounded">
+                                <span>1 pint</span>
+                                <span class="font-medium">2 cups</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-red-50 rounded">
+                                <span>1 quart</span>
+                                <span class="font-medium">4 cups</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Weight Conversions</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between p-2 bg-indigo-50 rounded">
+                                <span>1 pound</span>
+                                <span class="font-medium">16 ounces</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-pink-50 rounded">
+                                <span>1 pound</span>
+                                <span class="font-medium">454 grams</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-teal-50 rounded">
+                                <span>1 ounce</span>
+                                <span class="font-medium">28 grams</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-gray-50 rounded">
+                                <span>1 kilogram</span>
+                                <span class="font-medium">2.2 pounds</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-cyan-50 rounded">
+                                <span>1 stick butter</span>
+                                <span class="font-medium">8 tablespoons</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-lime-50 rounded">
+                                <span>1 stick butter</span>
+                                <span class="font-medium">1/2 cup</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common Recipe Scaling Tips -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Recipe Scaling Tips</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">What Scales Well</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start">
+                                <i data-feather="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Most liquid ingredients</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Dry ingredients (flour, sugar)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Meat and main proteins</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Vegetables and fruits</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Scale with Caution</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start">
+                                <i data-feather="alert-triangle" class="w-4 h-4 text-yellow-500 mr-2 mt-0.5"></i>
+                                <span>Salt and seasonings (taste as you go)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="alert-triangle" class="w-4 h-4 text-yellow-500 mr-2 mt-0.5"></i>
+                                <span>Baking powder and baking soda</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="alert-triangle" class="w-4 h-4 text-yellow-500 mr-2 mt-0.5"></i>
+                                <span>Thickening agents (cornstarch, flour)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="alert-triangle" class="w-4 h-4 text-yellow-500 mr-2 mt-0.5"></i>
+                                <span>Cooking times (may not scale linearly)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use -->
+            <div class="bg-yellow-50 rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="info" class="w-5 h-5 mr-2 text-yellow-600"></i>
+                    How to Use the Recipe Converter
+                </h3>
+                <ol class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="bg-yellow-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
+                        Enter the original number of servings your recipe makes
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-yellow-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
+                        Enter the desired number of servings you want to make
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-yellow-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
+                        Add your recipe ingredients with amounts and units
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-yellow-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">4</span>
+                        Click "Scale Recipe" to get proportionally adjusted amounts
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-yellow-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">5</span>
+                        Use the scaled amounts for your new serving size
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">CalcHub Pro</h3>
+                    <p class="text-xs text-gray-400">Professional Calculator Suite</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-4">
+                © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
+            </p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="../index.html" class="text-gray-400 hover:text-white">Home</a>
+                <a href="../about.html" class="text-gray-400 hover:text-white">About</a>
+                <a href="../privacy.html" class="text-gray-400 hover:text-white">Privacy</a>
+                <a href="../contact.html" class="text-gray-400 hover:text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+        
+        function addIngredient() {
+            const ingredientHtml = `
+                <div class="ingredient-item bg-gray-50 p-4 rounded-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-2">
+                        <input 
+                            type="number" 
+                            placeholder="Amount"
+                            step="0.25"
+                            class="ingredient-amount px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                        >
+                        <select class="ingredient-unit px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                            <option value="cup">Cup</option>
+                            <option value="tbsp">Tablespoon</option>
+                            <option value="tsp">Teaspoon</option>
+                            <option value="oz">Ounce</option>
+                            <option value="lb">Pound</option>
+                            <option value="g">Gram</option>
+                            <option value="kg">Kilogram</option>
+                            <option value="ml">Milliliter</option>
+                            <option value="l">Liter</option>
+                            <option value="pint">Pint</option>
+                            <option value="quart">Quart</option>
+                            <option value="gallon">Gallon</option>
+                            <option value="piece">Piece</option>
+                        </select>
+                        <input 
+                            type="text" 
+                            placeholder="Ingredient name"
+                            class="ingredient-name px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                        >
+                        <button 
+                            onclick="removeIngredient(this)" 
+                            class="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm"
+                        >
+                            Remove
+                        </button>
+                    </div>
+                    <div class="scaled-result text-sm text-gray-600 font-medium hidden"></div>
+                </div>
+            `;
+            document.getElementById('ingredientsList').insertAdjacentHTML('beforeend', ingredientHtml);
+        }
+        
+        function removeIngredient(button) {
+            button.closest('.ingredient-item').remove();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Time Calculator - CalcHub Pro</title>
+    <meta name="description" content="Plan optimal study schedules and break down study time for exams. Free study time planner for students.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Study Time Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="clock" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Study Time Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Plan your study schedule efficiently with optimal time allocation and break intervals for maximum learning retention.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Study Material Volume</label>
+                            <select 
+                                id="materialVolume" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                                <option value="light">Light (1-2 chapters)</option>
+                                <option value="moderate" selected>Moderate (3-5 chapters)</option>
+                                <option value="heavy">Heavy (6+ chapters)</option>
+                                <option value="exam">Full Exam Preparation</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Subject Difficulty</label>
+                            <select 
+                                id="subjectDifficulty" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                                <option value="easy">Easy (Familiar topic)</option>
+                                <option value="moderate" selected>Moderate (Some challenge)</option>
+                                <option value="hard">Hard (New/Complex topic)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Days Available</label>
+                            <input 
+                                type="number" 
+                                id="daysAvailable" 
+                                placeholder="Days until exam/deadline"
+                                min="1"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Daily Study Hours Available</label>
+                            <input 
+                                type="number" 
+                                id="dailyHours" 
+                                placeholder="Hours per day"
+                                step="0.5"
+                                min="0.5"
+                                max="12"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Study Method</label>
+                            <select 
+                                id="studyMethod" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                                <option value="reading">Reading Only</option>
+                                <option value="notes" selected>Reading + Notes</option>
+                                <option value="practice">Practice Problems</option>
+                                <option value="mixed">Mixed Methods</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Learning Style</label>
+                            <select 
+                                id="learningStyle" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                                <option value="fast">Fast Learner</option>
+                                <option value="average" selected>Average Pace</option>
+                                <option value="slow">Slow & Thorough</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="calculateStudyTime()" 
+                        class="w-full bg-green-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-200 font-semibold"
+                    >
+                        Create Study Plan
+                    </button>
+                    
+                    <div id="studyResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetStudyPlan()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Study Techniques -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Effective Study Techniques</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Active Learning</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start">
+                                <i data-feather="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Take notes in your own words</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Create mind maps and diagrams</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Practice retrieval and self-testing</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check-circle" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Teach concepts to others</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Time Management</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start">
+                                <i data-feather="clock" class="w-4 h-4 text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Use Pomodoro Technique (25min focus)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="clock" class="w-4 h-4 text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Take 5-10 minute breaks</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="clock" class="w-4 h-4 text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Study during peak energy hours</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="clock" class="w-4 h-4 text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Space out study sessions</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Schedule Tips -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Optimal Study Schedule</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-green-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-green-600 mb-2">Morning</div>
+                        <div class="text-sm text-green-800 mb-2">7-11 AM</div>
+                        <div class="text-green-700 font-medium">Complex Topics</div>
+                        <div class="text-xs text-green-600 mt-2">Best for new material</div>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-blue-600 mb-2">Afternoon</div>
+                        <div class="text-sm text-blue-800 mb-2">1-5 PM</div>
+                        <div class="text-blue-700 font-medium">Review & Practice</div>
+                        <div class="text-xs text-blue-600 mt-2">Good for problem-solving</div>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-purple-600 mb-2">Evening</div>
+                        <div class="text-sm text-purple-800 mb-2">6-9 PM</div>
+                        <div class="text-purple-700 font-medium">Review & Memorize</div>
+                        <div class="text-xs text-purple-600 mt-2">Best for retention</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use -->
+            <div class="bg-green-50 rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="info" class="w-5 h-5 mr-2 text-green-600"></i>
+                    How to Use the Study Time Calculator
+                </h3>
+                <ol class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
+                        Select the volume of material you need to study
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
+                        Choose the difficulty level of your subject
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
+                        Enter how many days you have until your exam or deadline
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">4</span>
+                        Specify how many hours per day you can dedicate to studying
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">5</span>
+                        Select your preferred study method and learning pace
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">CalcHub Pro</h3>
+                    <p class="text-xs text-gray-400">Professional Calculator Suite</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-4">
+                © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
+            </p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="../index.html" class="text-gray-400 hover:text-white">Home</a>
+                <a href="../about.html" class="text-gray-400 hover:text-white">About</a>
+                <a href="../privacy.html" class="text-gray-400 hover:text-white">Privacy</a>
+                <a href="../contact.html" class="text-gray-400 hover:text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+    </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Return Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate investment returns, ROI, and portfolio performance. Free investment calculator for stocks, bonds, and mutual funds.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Investment Return Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="trending-up" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Investment Return Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate your investment returns, ROI percentage, and total gains from stocks, bonds, mutual funds, and other investments.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Initial Investment ($)</label>
+                            <input 
+                                type="number" 
+                                id="initialInvestment" 
+                                placeholder="Enter initial amount"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Final Value ($)</label>
+                            <input 
+                                type="number" 
+                                id="finalValue" 
+                                placeholder="Enter final value"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Investment Period (years)</label>
+                            <input 
+                                type="number" 
+                                id="investmentPeriod" 
+                                placeholder="Time held"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Additional Contributions ($)</label>
+                            <input 
+                                type="number" 
+                                id="additionalContributions" 
+                                placeholder="Optional: extra investments"
+                                value="0"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="calculateInvestmentReturn()" 
+                        class="w-full bg-green-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-200 font-semibold"
+                    >
+                        Calculate Investment Return
+                    </button>
+                    
+                    <div id="investmentResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetInvestment()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Investment Performance Metrics -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Understanding Investment Returns</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Key Metrics</h4>
+                        <div class="space-y-2">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <div class="font-medium text-green-800">Total Return</div>
+                                <div class="text-sm text-green-600">Final Value - Initial Investment</div>
+                            </div>
+                            <div class="bg-blue-50 p-3 rounded-lg">
+                                <div class="font-medium text-blue-800">ROI Percentage</div>
+                                <div class="text-sm text-blue-600">(Gain ÷ Initial Investment) × 100</div>
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded-lg">
+                                <div class="font-medium text-purple-800">Annualized Return</div>
+                                <div class="text-sm text-purple-600">Average yearly return rate</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Return Benchmarks</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between p-2 bg-gray-50 rounded">
+                                <span>S&P 500 (Historical)</span>
+                                <span class="font-medium">~10% annually</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-yellow-50 rounded">
+                                <span>Bonds (Government)</span>
+                                <span class="font-medium">~3-5% annually</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-red-50 rounded">
+                                <span>Inflation Rate</span>
+                                <span class="font-medium">~2-3% annually</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use -->
+            <div class="bg-green-50 rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="info" class="w-5 h-5 mr-2 text-green-600"></i>
+                    How to Use the Investment Return Calculator
+                </h3>
+                <ol class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
+                        Enter your initial investment amount
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
+                        Enter the current or final value of your investment
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
+                        Specify how long you've held the investment
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">4</span>
+                        Optionally add any additional contributions made
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">5</span>
+                        Click "Calculate" to see your total return, ROI%, and annualized return
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">CalcHub Pro</h3>
+                    <p class="text-xs text-gray-400">Professional Calculator Suite</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-4">
+                © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
+            </p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="../index.html" class="text-gray-400 hover:text-white">Home</a>
+                <a href="../about.html" class="text-gray-400 hover:text-white">About</a>
+                <a href="../privacy.html" class="text-gray-400 hover:text-white">Privacy</a>
+                <a href="../contact.html" class="text-gray-400 hover:text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+    </script>
+</body>
+</html>

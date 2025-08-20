@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Time Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate travel time and arrival time for trips based on distance and speed. Free travel time calculator.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Travel Time Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="map-pin" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Travel Time Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate travel time, arrival time, and journey duration based on distance, speed, and departure time.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div class="flex justify-center mb-6">
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="flex space-x-4">
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="calculationType" value="time" checked class="mr-2" onchange="toggleCalculationType()">
+                                    <span class="font-medium">Calculate Travel Time</span>
+                                </label>
+                                <label class="flex items-center cursor-pointer">
+                                    <input type="radio" name="calculationType" value="arrival" class="mr-2" onchange="toggleCalculationType()">
+                                    <span class="font-medium">Calculate Arrival Time</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Distance</label>
+                            <div class="flex">
+                                <input 
+                                    type="number" 
+                                    id="distance" 
+                                    placeholder="Enter distance"
+                                    class="flex-1 px-4 py-4 text-lg border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                <select 
+                                    id="distanceUnit" 
+                                    class="px-3 py-4 border border-l-0 border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
+                                >
+                                    <option value="miles">Miles</option>
+                                    <option value="km">Kilometers</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Average Speed</label>
+                            <div class="flex">
+                                <input 
+                                    type="number" 
+                                    id="speed" 
+                                    placeholder="Enter speed"
+                                    class="flex-1 px-4 py-4 text-lg border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                <select 
+                                    id="speedUnit" 
+                                    class="px-3 py-4 border border-l-0 border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
+                                >
+                                    <option value="mph">MPH</option>
+                                    <option value="kmh">KM/H</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="departureTimeSection" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Departure Date</label>
+                            <input 
+                                type="date" 
+                                id="departureDate" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Departure Time</label>
+                            <input 
+                                type="time" 
+                                id="departureTime" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Additional Time (Optional)</label>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div>
+                                <input 
+                                    type="number" 
+                                    id="breakTime" 
+                                    placeholder="0"
+                                    min="0"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                <label class="text-sm text-gray-600 mt-1 block">Rest Breaks (min)</label>
+                            </div>
+                            <div>
+                                <input 
+                                    type="number" 
+                                    id="fuelTime" 
+                                    placeholder="0"
+                                    min="0"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                <label class="text-sm text-gray-600 mt-1 block">Fuel Stops (min)</label>
+                            </div>
+                            <div>
+                                <input 
+                                    type="number" 
+                                    id="trafficTime" 
+                                    placeholder="0"
+                                    min="0"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                <label class="text-sm text-gray-600 mt-1 block">Traffic Delays (min)</label>
+                            </div>
+                            <div>
+                                <input 
+                                    type="number" 
+                                    id="otherTime" 
+                                    placeholder="0"
+                                    min="0"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                <label class="text-sm text-gray-600 mt-1 block">Other Delays (min)</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="calculateTravelTime()" 
+                        class="w-full bg-blue-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold"
+                    >
+                        Calculate Travel Time
+                    </button>
+                    
+                    <div id="travelResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetTravelTime()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Average Speeds Reference -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Average Speed References</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Driving Speeds</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+                                <span class="font-medium text-green-800">Highway</span>
+                                <span class="text-green-600">65-75 mph</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                                <span class="font-medium text-blue-800">City Driving</span>
+                                <span class="text-blue-600">25-35 mph</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
+                                <span class="font-medium text-yellow-800">Mixed (City+Highway)</span>
+                                <span class="text-yellow-600">45-55 mph</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+                                <span class="font-medium text-orange-800">Mountain Roads</span>
+                                <span class="text-orange-600">35-45 mph</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Other Transport</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
+                                <span class="font-medium text-purple-800">Walking</span>
+                                <span class="text-purple-600">3-4 mph</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-indigo-50 rounded-lg">
+                                <span class="font-medium text-indigo-800">Cycling</span>
+                                <span class="text-indigo-600">12-16 mph</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                                <span class="font-medium text-red-800">Train (Local)</span>
+                                <span class="text-red-600">40-60 mph</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                                <span class="font-medium text-gray-800">Commercial Flight</span>
+                                <span class="text-gray-600">500-600 mph</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Travel Planning Tips -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Travel Planning Tips</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Time Buffers</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start">
+                                <i data-feather="clock" class="w-4 h-4 text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Add 10-15% extra time for unexpected delays</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="clock" class="w-4 h-4 text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Account for rush hour traffic</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="clock" class="w-4 h-4 text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Consider weather conditions</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="clock" class="w-4 h-4 text-blue-500 mr-2 mt-0.5"></i>
+                                <span>Plan breaks every 2-3 hours</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Long Distance Tips</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li class="flex items-start">
+                                <i data-feather="map" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Check route for construction zones</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="map" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Plan fuel stops in advance</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="map" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Download offline maps as backup</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="map" class="w-4 h-4 text-green-500 mr-2 mt-0.5"></i>
+                                <span>Consider overnight stops for very long trips</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use -->
+            <div class="bg-blue-50 rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="info" class="w-5 h-5 mr-2 text-blue-600"></i>
+                    How to Use the Travel Time Calculator
+                </h3>
+                <ol class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
+                        Choose whether to calculate travel time or arrival time
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
+                        Enter the total distance of your journey
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
+                        Enter your expected average speed
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">4</span>
+                        If calculating arrival time, enter departure date and time
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">5</span>
+                        Add any additional time for breaks, fuel stops, or delays
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">CalcHub Pro</h3>
+                    <p class="text-xs text-gray-400">Professional Calculator Suite</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-4">
+                © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
+            </p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="../index.html" class="text-gray-400 hover:text-white">Home</a>
+                <a href="../about.html" class="text-gray-400 hover:text-white">About</a>
+                <a href="../privacy.html" class="text-gray-400 hover:text-white">Privacy</a>
+                <a href="../contact.html" class="text-gray-400 hover:text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+        
+        // Set today's date as default
+        document.getElementById('departureDate').value = new Date().toISOString().split('T')[0];
+        
+        function toggleCalculationType() {
+            const calculationType = document.querySelector('input[name="calculationType"]:checked').value;
+            const departureSection = document.getElementById('departureTimeSection');
+            
+            if (calculationType === 'arrival') {
+                departureSection.classList.remove('hidden');
+            } else {
+                departureSection.classList.add('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
