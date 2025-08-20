@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate electrical power, voltage, current, and resistance using Ohm's law.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="text-center mb-8">
+                <div class="bg-yellow-100 p-4 rounded-lg inline-block mb-4">
+                    <i data-feather="battery" class="w-8 h-8 text-yellow-600"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Electricity Calculator</h1>
+                <p class="text-gray-600">Calculate power, voltage, current, and resistance</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Ohm's Law Calculator -->
+                <div class="space-y-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Ohm's Law Calculator</h2>
+                    <p class="text-sm text-gray-600 mb-4">V = I × R (Voltage = Current × Resistance)</p>
+                    
+                    <div>
+                        <label for="voltage" class="block text-sm font-medium text-gray-700 mb-2">Voltage (V)</label>
+                        <input type="number" id="voltage" step="0.01" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter voltage">
+                    </div>
+
+                    <div>
+                        <label for="current" class="block text-sm font-medium text-gray-700 mb-2">Current (A)</label>
+                        <input type="number" id="current" step="0.01"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter current">
+                    </div>
+
+                    <div>
+                        <label for="resistance" class="block text-sm font-medium text-gray-700 mb-2">Resistance (Ω)</label>
+                        <input type="number" id="resistance" step="0.01"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter resistance">
+                    </div>
+
+                    <button onclick="calculateOhmsLaw()" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Calculate Missing Value
+                    </button>
+                    
+                    <div id="ohmsResult" class="hidden"></div>
+                </div>
+
+                <!-- Power Calculator -->
+                <div class="space-y-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Power Calculator</h2>
+                    <p class="text-sm text-gray-600 mb-4">P = V × I (Power = Voltage × Current)</p>
+                    
+                    <div>
+                        <label for="powerVoltage" class="block text-sm font-medium text-gray-700 mb-2">Voltage (V)</label>
+                        <input type="number" id="powerVoltage" step="0.01" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter voltage">
+                    </div>
+
+                    <div>
+                        <label for="powerCurrent" class="block text-sm font-medium text-gray-700 mb-2">Current (A)</label>
+                        <input type="number" id="powerCurrent" step="0.01"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter current">
+                    </div>
+
+                    <button onclick="calculatePower()" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors">
+                        Calculate Power
+                    </button>
+                    
+                    <div id="powerResult" class="hidden"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="../about.html" class="text-gray-600 hover:text-blue-600">About</a>
+                <a href="../disclaimer.html" class="text-gray-600 hover:text-blue-600">Disclaimer</a>
+                <a href="../terms.html" class="text-gray-600 hover:text-blue-600">Terms</a>
+                <a href="../privacy.html" class="text-gray-600 hover:text-blue-600">Privacy</a>
+                <a href="../contact.html" class="text-gray-600 hover:text-blue-600">Contact</a>
+            </div>
+            <p class="text-gray-600">&copy; 2024 CalcHub Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        feather.replace();
+
+        function calculateOhmsLaw() {
+            try {
+                const voltage = parseFloat(document.getElementById('voltage').value);
+                const current = parseFloat(document.getElementById('current').value);
+                const resistance = parseFloat(document.getElementById('resistance').value);
+
+                let filledFields = 0;
+                let result = '';
+
+                if (voltage) filledFields++;
+                if (current) filledFields++;
+                if (resistance) filledFields++;
+
+                if (filledFields !== 2) {
+                    throw new Error('Please enter exactly 2 values to calculate the missing one');
+                }
+
+                if (!voltage && current && resistance) {
+                    // Calculate voltage: V = I × R
+                    const calculatedVoltage = current * resistance;
+                    result = `
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-blue-900">Calculated Voltage</h3>
+                            <p class="text-2xl font-bold text-blue-600">${calculatedVoltage.toFixed(2)} V</p>
+                            <p class="text-sm text-blue-700 mt-2">V = I × R = ${current} × ${resistance} = ${calculatedVoltage.toFixed(2)} V</p>
+                        </div>
+                    `;
+                } else if (voltage && !current && resistance) {
+                    // Calculate current: I = V / R
+                    const calculatedCurrent = voltage / resistance;
+                    result = `
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-green-900">Calculated Current</h3>
+                            <p class="text-2xl font-bold text-green-600">${calculatedCurrent.toFixed(2)} A</p>
+                            <p class="text-sm text-green-700 mt-2">I = V / R = ${voltage} / ${resistance} = ${calculatedCurrent.toFixed(2)} A</p>
+                        </div>
+                    `;
+                } else if (voltage && current && !resistance) {
+                    // Calculate resistance: R = V / I
+                    const calculatedResistance = voltage / current;
+                    result = `
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-purple-900">Calculated Resistance</h3>
+                            <p class="text-2xl font-bold text-purple-600">${calculatedResistance.toFixed(2)} Ω</p>
+                            <p class="text-sm text-purple-700 mt-2">R = V / I = ${voltage} / ${current} = ${calculatedResistance.toFixed(2)} Ω</p>
+                        </div>
+                    `;
+                }
+
+                showResult('ohmsResult', result);
+            } catch (error) {
+                showResult('ohmsResult', error.message, true);
+            }
+        }
+
+        function calculatePower() {
+            try {
+                const voltage = parseFloat(document.getElementById('powerVoltage').value);
+                const current = parseFloat(document.getElementById('powerCurrent').value);
+
+                if (!voltage || !current) {
+                    throw new Error('Please enter both voltage and current');
+                }
+
+                const power = voltage * current;
+
+                const result = `
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-orange-900">Power</h3>
+                        <p class="text-2xl font-bold text-orange-600">${power.toFixed(2)} W</p>
+                        <p class="text-sm text-orange-700 mt-2">P = V × I = ${voltage} × ${current} = ${power.toFixed(2)} Watts</p>
+                        <p class="text-xs text-orange-600 mt-1">${(power / 1000).toFixed(3)} kW</p>
+                    </div>
+                `;
+
+                showResult('powerResult', result);
+            } catch (error) {
+                showResult('powerResult', error.message, true);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate physics formulas including force, velocity, energy, and momentum.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <div class="text-center mb-8">
+                <div class="bg-indigo-100 p-4 rounded-lg inline-block mb-4">
+                    <i data-feather="zap" class="w-8 h-8 text-indigo-600"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">Physics Calculator</h1>
+                <p class="text-gray-600">Calculate force, velocity, energy, and momentum</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Force Calculator -->
+                <div class="space-y-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Force Calculator (F = ma)</h2>
+                    
+                    <div>
+                        <label for="mass" class="block text-sm font-medium text-gray-700 mb-2">Mass (kg)</label>
+                        <input type="number" id="mass" step="0.01" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter mass">
+                    </div>
+
+                    <div>
+                        <label for="acceleration" class="block text-sm font-medium text-gray-700 mb-2">Acceleration (m/s²)</label>
+                        <input type="number" id="acceleration" step="0.01"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter acceleration">
+                    </div>
+
+                    <button onclick="calculateForce()" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Calculate Force
+                    </button>
+                    
+                    <div id="forceResult" class="hidden"></div>
+                </div>
+
+                <!-- Velocity Calculator -->
+                <div class="space-y-6">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Velocity Calculator</h2>
+                    
+                    <div>
+                        <label for="distance" class="block text-sm font-medium text-gray-700 mb-2">Distance (m)</label>
+                        <input type="number" id="distance" step="0.01" 
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter distance">
+                    </div>
+
+                    <div>
+                        <label for="time" class="block text-sm font-medium text-gray-700 mb-2">Time (s)</label>
+                        <input type="number" id="time" step="0.01"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                               placeholder="Enter time">
+                    </div>
+
+                    <button onclick="calculateVelocity()" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors">
+                        Calculate Velocity
+                    </button>
+                    
+                    <div id="velocityResult" class="hidden"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="../about.html" class="text-gray-600 hover:text-blue-600">About</a>
+                <a href="../disclaimer.html" class="text-gray-600 hover:text-blue-600">Disclaimer</a>
+                <a href="../terms.html" class="text-gray-600 hover:text-blue-600">Terms</a>
+                <a href="../privacy.html" class="text-gray-600 hover:text-blue-600">Privacy</a>
+                <a href="../contact.html" class="text-gray-600 hover:text-blue-600">Contact</a>
+            </div>
+            <p class="text-gray-600">&copy; 2024 CalcHub Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        feather.replace();
+
+        function calculateForce() {
+            try {
+                const mass = parseFloat(document.getElementById('mass').value);
+                const acceleration = parseFloat(document.getElementById('acceleration').value);
+
+                if (!mass || !acceleration) {
+                    throw new Error('Please enter both mass and acceleration');
+                }
+
+                const force = mass * acceleration;
+
+                const result = `
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-blue-900">Force</h3>
+                        <p class="text-2xl font-bold text-blue-600">${force.toFixed(2)} N</p>
+                        <p class="text-sm text-blue-700 mt-2">F = ma = ${mass} × ${acceleration} = ${force.toFixed(2)} Newtons</p>
+                    </div>
+                `;
+
+                showResult('forceResult', result);
+            } catch (error) {
+                showResult('forceResult', error.message, true);
+            }
+        }
+
+        function calculateVelocity() {
+            try {
+                const distance = parseFloat(document.getElementById('distance').value);
+                const time = parseFloat(document.getElementById('time').value);
+
+                if (!distance || !time) {
+                    throw new Error('Please enter both distance and time');
+                }
+
+                if (time <= 0) {
+                    throw new Error('Time must be greater than 0');
+                }
+
+                const velocity = distance / time;
+
+                const result = `
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-semibold text-green-900">Velocity</h3>
+                        <p class="text-2xl font-bold text-green-600">${velocity.toFixed(2)} m/s</p>
+                        <p class="text-sm text-green-700 mt-2">v = d/t = ${distance} ÷ ${time} = ${velocity.toFixed(2)} m/s</p>
+                    </div>
+                `;
+
+                showResult('velocityResult', result);
+            } catch (error) {
+                showResult('velocityResult', error.message, true);
+            }
+        }
+    </script>
+</body>
+</html>

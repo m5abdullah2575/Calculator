@@ -47,8 +47,27 @@ function initializeCategoryFilters() {
                 sections.forEach(section => section.style.display = 'none');
                 
                 // Show only the relevant section
-                const targetSection = document.getElementById(category) || 
-                                    document.querySelector(`section[id*="${category}"]`);
+                let targetSection = document.getElementById(category);
+                
+                // Handle specific category mappings
+                if (!targetSection) {
+                    if (category === 'basic') {
+                        targetSection = document.getElementById('basic');
+                    } else if (category === 'business') {
+                        targetSection = document.getElementById('business');
+                    } else if (category === 'financial') {
+                        targetSection = document.getElementById('financial');
+                    } else if (category === 'health') {
+                        targetSection = document.getElementById('health');
+                    } else if (category === 'engineering') {
+                        targetSection = document.getElementById('engineering');
+                    } else if (category === 'converters') {
+                        targetSection = document.getElementById('converters');
+                    } else if (category === 'utilities') {
+                        targetSection = document.getElementById('utilities');
+                    }
+                }
+                
                 if (targetSection) {
                     targetSection.style.display = 'block';
                 }
