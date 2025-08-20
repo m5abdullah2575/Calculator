@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter - CalcHub Pro</title>
+    <meta name="description" content="Count words, characters, paragraphs, and sentences in your text. Free word counter tool.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Word Counter</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="file-text" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Word Counter</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Count words, characters, sentences, and paragraphs in your text with real-time updates.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Counter Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Enter Your Text</label>
+                        <textarea 
+                            id="textInput" 
+                            placeholder="Type or paste your text here..."
+                            rows="12"
+                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                            oninput="updateCounts()"
+                        ></textarea>
+                    </div>
+                    
+                    <!-- Real-time Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="wordCount">0</div>
+                            <div class="text-sm text-blue-800">Words</div>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-green-600" id="charCount">0</div>
+                            <div class="text-sm text-green-800">Characters</div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-purple-600" id="charNoSpaceCount">0</div>
+                            <div class="text-sm text-purple-800">Characters (no spaces)</div>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-orange-600" id="sentenceCount">0</div>
+                            <div class="text-sm text-orange-800">Sentences</div>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-red-600" id="paragraphCount">0</div>
+                            <div class="text-sm text-red-800">Paragraphs</div>
+                        </div>
+                        <div class="bg-indigo-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-indigo-600" id="avgWordsPerSentence">0</div>
+                            <div class="text-sm text-indigo-800">Avg Words/Sentence</div>
+                        </div>
+                        <div class="bg-yellow-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-yellow-600" id="readingTime">0</div>
+                            <div class="text-sm text-yellow-800">Reading Time (min)</div>
+                        </div>
+                        <div class="bg-pink-50 p-4 rounded-lg text-center">
+                            <div class="text-2xl font-bold text-pink-600" id="speakingTime">0</div>
+                            <div class="text-sm text-pink-800">Speaking Time (min)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button 
+                            onclick="clearText()" 
+                            class="flex-1 bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                        >
+                            Clear Text
+                        </button>
+                        <button 
+                            onclick="copyStats()" 
+                            class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                        >
+                            Copy Statistics
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reading Speed Info -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Reading & Speaking Speed Reference</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i data-feather="eye" class="w-5 h-5 mr-2 text-blue-600"></i>
+                            Reading Speed
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between p-2 bg-blue-50 rounded">
+                                <span>Slow Reader</span>
+                                <span class="font-medium">150-200 WPM</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-green-50 rounded">
+                                <span>Average Reader</span>
+                                <span class="font-medium">200-250 WPM</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-purple-50 rounded">
+                                <span>Fast Reader</span>
+                                <span class="font-medium">250-300 WPM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
+                            <i data-feather="mic" class="w-5 h-5 mr-2 text-orange-600"></i>
+                            Speaking Speed
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between p-2 bg-orange-50 rounded">
+                                <span>Slow Speaker</span>
+                                <span class="font-medium">120-150 WPM</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-yellow-50 rounded">
+                                <span>Average Speaker</span>
+                                <span class="font-medium">150-160 WPM</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-red-50 rounded">
+                                <span>Fast Speaker</span>
+                                <span class="font-medium">160-200 WPM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use -->
+            <div class="bg-blue-50 rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="info" class="w-5 h-5 mr-2 text-blue-600"></i>
+                    How to Use the Word Counter
+                </h3>
+                <ol class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
+                        Type or paste your text in the text area
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
+                        Watch the statistics update in real-time as you type
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
+                        View detailed statistics including reading and speaking time
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">4</span>
+                        Copy the statistics or clear the text as needed
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i data-feather="calculator" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">CalcHub Pro</h3>
+                    <p class="text-xs text-gray-400">Professional Calculator Suite</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-4">
+                © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
+            </p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="../index.html" class="text-gray-400 hover:text-white">Home</a>
+                <a href="../about.html" class="text-gray-400 hover:text-white">About</a>
+                <a href="../privacy.html" class="text-gray-400 hover:text-white">Privacy</a>
+                <a href="../contact.html" class="text-gray-400 hover:text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+        
+        function updateCounts() {
+            const text = document.getElementById('textInput').value;
+            
+            // Word count
+            const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
+            document.getElementById('wordCount').textContent = words;
+            
+            // Character count
+            const chars = text.length;
+            document.getElementById('charCount').textContent = chars;
+            
+            // Character count without spaces
+            const charsNoSpace = text.replace(/\s/g, '').length;
+            document.getElementById('charNoSpaceCount').textContent = charsNoSpace;
+            
+            // Sentence count
+            const sentences = text.trim() === '' ? 0 : text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+            document.getElementById('sentenceCount').textContent = sentences;
+            
+            // Paragraph count
+            const paragraphs = text.trim() === '' ? 0 : text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
+            document.getElementById('paragraphCount').textContent = paragraphs;
+            
+            // Average words per sentence
+            const avgWordsPerSentence = sentences === 0 ? 0 : Math.round(words / sentences);
+            document.getElementById('avgWordsPerSentence').textContent = avgWordsPerSentence;
+            
+            // Reading time (average 200 WPM)
+            const readingTime = Math.ceil(words / 200);
+            document.getElementById('readingTime').textContent = readingTime;
+            
+            // Speaking time (average 150 WPM)
+            const speakingTime = Math.ceil(words / 150);
+            document.getElementById('speakingTime').textContent = speakingTime;
+        }
+        
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            updateCounts();
+        }
+        
+        function copyStats() {
+            const words = document.getElementById('wordCount').textContent;
+            const chars = document.getElementById('charCount').textContent;
+            const charsNoSpace = document.getElementById('charNoSpaceCount').textContent;
+            const sentences = document.getElementById('sentenceCount').textContent;
+            const paragraphs = document.getElementById('paragraphCount').textContent;
+            const avgWords = document.getElementById('avgWordsPerSentence').textContent;
+            const readingTime = document.getElementById('readingTime').textContent;
+            const speakingTime = document.getElementById('speakingTime').textContent;
+            
+            const stats = `Text Statistics:
+Words: ${words}
+Characters: ${chars}
+Characters (no spaces): ${charsNoSpace}
+Sentences: ${sentences}
+Paragraphs: ${paragraphs}
+Average words per sentence: ${avgWords}
+Reading time: ${readingTime} minutes
+Speaking time: ${speakingTime} minutes`;
+            
+            navigator.clipboard.writeText(stats).then(() => {
+                // Show feedback
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('bg-green-600');
+                button.classList.remove('bg-blue-600');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('bg-green-600');
+                    button.classList.add('bg-blue-600');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
