@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Converter - CalcHub Pro</title>
+    <meta name="description" content="Convert between binary, decimal, octal, and hexadecimal number systems.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Binary Converter</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="code" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Binary Converter</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Convert between binary, decimal, octal, and hexadecimal number systems instantly.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="decimalInput" class="block text-lg font-semibold text-gray-900 mb-3">Decimal</label>
+                            <input 
+                                type="number" 
+                                id="decimalInput" 
+                                placeholder="Enter decimal number"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                oninput="convertFromDecimal()"
+                            >
+                        </div>
+                        <div>
+                            <label for="binaryInput" class="block text-lg font-semibold text-gray-900 mb-3">Binary</label>
+                            <input 
+                                type="text" 
+                                id="binaryInput" 
+                                placeholder="Enter binary number"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                oninput="convertFromBinary()"
+                            >
+                        </div>
+                        <div>
+                            <label for="octalInput" class="block text-lg font-semibold text-gray-900 mb-3">Octal</label>
+                            <input 
+                                type="text" 
+                                id="octalInput" 
+                                placeholder="Enter octal number"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                oninput="convertFromOctal()"
+                            >
+                        </div>
+                        <div>
+                            <label for="hexInput" class="block text-lg font-semibold text-gray-900 mb-3">Hexadecimal</label>
+                            <input 
+                                type="text" 
+                                id="hexInput" 
+                                placeholder="Enter hex number"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                                oninput="convertFromHex()"
+                            >
+                        </div>
+                    </div>
+
+                    <div id="conversionResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetBinary()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset All
+                    </button>
+                </div>
+            </div>
+
+            <!-- How to Use -->
+            <div class="bg-blue-50 rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="info" class="w-5 h-5 mr-2 text-blue-600"></i>
+                    How to Use the Binary Converter
+                </h3>
+                <ol class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
+                        Enter a number in any of the four number systems
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
+                        The converter will automatically fill in the other three formats
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
+                        Perfect for programmers and computer science students
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Features -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-green-50 p-6 rounded-lg">
+                    <h4 class="font-semibold text-green-900 mb-2 flex items-center">
+                        <i data-feather="check-circle" class="w-5 h-5 mr-2"></i>
+                        Real-time Conversion
+                    </h4>
+                    <p class="text-green-800 text-sm">Instant conversion as you type in any field.</p>
+                </div>
+                <div class="bg-purple-50 p-6 rounded-lg">
+                    <h4 class="font-semibold text-purple-900 mb-2 flex items-center">
+                        <i data-feather="shield" class="w-5 h-5 mr-2"></i>
+                        Programming Tool
+                    </h4>
+                    <p class="text-purple-800 text-sm">Essential for computer science and programming work.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">CalcHub Pro</h3>
+                    <p class="text-xs text-gray-400">Professional Calculator Suite</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-4">
+                © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
+            </p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="../index.html" class="text-gray-400 hover:text-white">Home</a>
+                <a href="../about.html" class="text-gray-400 hover:text-white">About</a>
+                <a href="../privacy.html" class="text-gray-400 hover:text-white">Privacy</a>
+                <a href="../contact.html" class="text-gray-400 hover:text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        feather.replace();
+        let isConverting = false;
+
+        function convertFromDecimal() {
+            if (isConverting) return;
+            isConverting = true;
+            
+            const decimal = parseInt(document.getElementById('decimalInput').value);
+            if (!isNaN(decimal) && decimal >= 0) {
+                document.getElementById('binaryInput').value = decimal.toString(2);
+                document.getElementById('octalInput').value = decimal.toString(8);
+                document.getElementById('hexInput').value = decimal.toString(16).toUpperCase();
+                showConversionResult(decimal);
+            } else {
+                clearOtherFields('decimal');
+            }
+            isConverting = false;
+        }
+
+        function convertFromBinary() {
+            if (isConverting) return;
+            isConverting = true;
+            
+            const binary = document.getElementById('binaryInput').value;
+            if (/^[01]+$/.test(binary)) {
+                const decimal = parseInt(binary, 2);
+                document.getElementById('decimalInput').value = decimal;
+                document.getElementById('octalInput').value = decimal.toString(8);
+                document.getElementById('hexInput').value = decimal.toString(16).toUpperCase();
+                showConversionResult(decimal);
+            } else {
+                clearOtherFields('binary');
+            }
+            isConverting = false;
+        }
+
+        function convertFromOctal() {
+            if (isConverting) return;
+            isConverting = true;
+            
+            const octal = document.getElementById('octalInput').value;
+            if (/^[0-7]+$/.test(octal)) {
+                const decimal = parseInt(octal, 8);
+                document.getElementById('decimalInput').value = decimal;
+                document.getElementById('binaryInput').value = decimal.toString(2);
+                document.getElementById('hexInput').value = decimal.toString(16).toUpperCase();
+                showConversionResult(decimal);
+            } else {
+                clearOtherFields('octal');
+            }
+            isConverting = false;
+        }
+
+        function convertFromHex() {
+            if (isConverting) return;
+            isConverting = true;
+            
+            const hex = document.getElementById('hexInput').value;
+            if (/^[0-9A-Fa-f]+$/.test(hex)) {
+                const decimal = parseInt(hex, 16);
+                document.getElementById('decimalInput').value = decimal;
+                document.getElementById('binaryInput').value = decimal.toString(2);
+                document.getElementById('octalInput').value = decimal.toString(8);
+                showConversionResult(decimal);
+            } else {
+                clearOtherFields('hex');
+            }
+            isConverting = false;
+        }
+
+        function clearOtherFields(except) {
+            if (except !== 'decimal') document.getElementById('decimalInput').value = '';
+            if (except !== 'binary') document.getElementById('binaryInput').value = '';
+            if (except !== 'octal') document.getElementById('octalInput').value = '';
+            if (except !== 'hex') document.getElementById('hexInput').value = '';
+            hideResult('conversionResult');
+        }
+
+        function showConversionResult(decimal) {
+            const result = `
+                <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                    <h4 class="text-lg font-semibold text-blue-900 mb-2">Conversion Complete</h4>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div><strong>Decimal:</strong> ${decimal}</div>
+                        <div><strong>Binary:</strong> ${decimal.toString(2)}</div>
+                        <div><strong>Octal:</strong> ${decimal.toString(8)}</div>
+                        <div><strong>Hex:</strong> ${decimal.toString(16).toUpperCase()}</div>
+                    </div>
+                </div>
+            `;
+            showResult('conversionResult', result);
+        }
+
+        function resetBinary() {
+            document.getElementById('decimalInput').value = '';
+            document.getElementById('binaryInput').value = '';
+            document.getElementById('octalInput').value = '';
+            document.getElementById('hexInput').value = '';
+            hideResult('conversionResult');
+        }
+    </script>
+</body>
+</html>

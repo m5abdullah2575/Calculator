@@ -37,91 +37,160 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="bg-white rounded-xl shadow-lg p-8">
-            <div class="text-center mb-8">
-                <div class="bg-purple-100 p-4 rounded-lg inline-block mb-4">
-                    <i data-feather="activity" class="w-8 h-8 text-purple-600"></i>
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Chemical Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="activity" class="w-12 h-12"></i>
                 </div>
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">Chemical Calculator</h1>
-                <p class="text-gray-600">Calculate molarity, molality, and solution concentrations</p>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Chemical Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate molarity, molality, and solution concentrations for chemistry problems.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Molarity Calculator -->
+                    <div class="space-y-6">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Molarity Calculator</h2>
+                        <p class="text-sm text-gray-600 mb-4">M = moles / volume (in liters)</p>
+                        
+                        <div>
+                            <label for="moles" class="block text-lg font-semibold text-gray-900 mb-3">Moles of Solute</label>
+                            <input type="number" id="moles" step="0.001" 
+                                   class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="Enter moles">
+                        </div>
+
+                        <div>
+                            <label for="volume" class="block text-lg font-semibold text-gray-900 mb-3">Volume of Solution (L)</label>
+                            <input type="number" id="volume" step="0.001"
+                                   class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="Enter volume in liters">
+                        </div>
+
+                        <button onclick="calculateMolarity()" class="w-full bg-purple-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-purple-700 transition-colors duration-200 font-semibold">
+                            Calculate Molarity
+                        </button>
+                        
+                        <div id="molarityResult" class="result-display hidden"></div>
+                    </div>
+
+                    <!-- Dilution Calculator -->
+                    <div class="space-y-6">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Dilution Calculator</h2>
+                        <p class="text-sm text-gray-600 mb-4">C₁V₁ = C₂V₂</p>
+                        
+                        <div>
+                            <label for="c1" class="block text-lg font-semibold text-gray-900 mb-3">Initial Concentration (C₁)</label>
+                            <input type="number" id="c1" step="0.001" 
+                                   class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                   placeholder="Enter initial concentration">
+                        </div>
+
+                        <div>
+                            <label for="v1" class="block text-lg font-semibold text-gray-900 mb-3">Initial Volume (V₁)</label>
+                            <input type="number" id="v1" step="0.001"
+                                   class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                   placeholder="Enter initial volume">
+                        </div>
+
+                        <div>
+                            <label for="c2" class="block text-lg font-semibold text-gray-900 mb-3">Final Concentration (C₂)</label>
+                            <input type="number" id="c2" step="0.001"
+                                   class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                                   placeholder="Enter final concentration">
+                        </div>
+
+                        <button onclick="calculateDilution()" class="w-full bg-teal-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-teal-700 transition-colors duration-200 font-semibold">
+                            Calculate Final Volume
+                        </button>
+                        
+                        <div id="dilutionResult" class="result-display hidden"></div>
+                    </div>
+                </div>
+
+                <button onclick="resetChemical()" class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200 mt-6">
+                    Reset All
+                </button>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Molarity Calculator -->
-                <div class="space-y-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Molarity Calculator</h2>
-                    <p class="text-sm text-gray-600 mb-4">M = moles / volume (in liters)</p>
-                    
-                    <div>
-                        <label for="moles" class="block text-sm font-medium text-gray-700 mb-2">Moles of Solute</label>
-                        <input type="number" id="moles" step="0.001" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                               placeholder="Enter moles">
-                    </div>
+            <!-- How to Use -->
+            <div class="bg-purple-50 rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="info" class="w-5 h-5 mr-2 text-purple-600"></i>
+                    How to Use the Chemical Calculator
+                </h3>
+                <ol class="space-y-2 text-gray-700">
+                    <li class="flex items-start">
+                        <span class="bg-purple-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
+                        For Molarity: Enter moles of solute and volume in liters
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-purple-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
+                        For Dilution: Enter initial concentration, initial volume, and final concentration
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-purple-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
+                        Results show the calculation with the formula used
+                    </li>
+                </ol>
+            </div>
 
-                    <div>
-                        <label for="volume" class="block text-sm font-medium text-gray-700 mb-2">Volume of Solution (L)</label>
-                        <input type="number" id="volume" step="0.001"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                               placeholder="Enter volume in liters">
-                    </div>
-
-                    <button onclick="calculateMolarity()" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
-                        Calculate Molarity
-                    </button>
-                    
-                    <div id="molarityResult" class="hidden"></div>
+            <!-- Features -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-green-50 p-6 rounded-lg">
+                    <h4 class="font-semibold text-green-900 mb-2 flex items-center">
+                        <i data-feather="check-circle" class="w-5 h-5 mr-2"></i>
+                        Standard Formulas
+                    </h4>
+                    <p class="text-green-800 text-sm">Uses standard chemistry formulas for accurate calculations.</p>
                 </div>
-
-                <!-- Dilution Calculator -->
-                <div class="space-y-6">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Dilution Calculator</h2>
-                    <p class="text-sm text-gray-600 mb-4">C₁V₁ = C₂V₂</p>
-                    
-                    <div>
-                        <label for="c1" class="block text-sm font-medium text-gray-700 mb-2">Initial Concentration (C₁)</label>
-                        <input type="number" id="c1" step="0.001" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                               placeholder="Enter initial concentration">
-                    </div>
-
-                    <div>
-                        <label for="v1" class="block text-sm font-medium text-gray-700 mb-2">Initial Volume (V₁)</label>
-                        <input type="number" id="v1" step="0.001"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                               placeholder="Enter initial volume">
-                    </div>
-
-                    <div>
-                        <label for="c2" class="block text-sm font-medium text-gray-700 mb-2">Final Concentration (C₂)</label>
-                        <input type="number" id="c2" step="0.001"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                               placeholder="Enter final concentration">
-                    </div>
-
-                    <button onclick="calculateDilution()" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-green-700 transition-colors">
-                        Calculate Final Volume
-                    </button>
-                    
-                    <div id="dilutionResult" class="hidden"></div>
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h4 class="font-semibold text-blue-900 mb-2 flex items-center">
+                        <i data-feather="shield" class="w-5 h-5 mr-2"></i>
+                        Study Tool
+                    </h4>
+                    <p class="text-blue-800 text-sm">Perfect for chemistry students and laboratory work.</p>
                 </div>
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="../about.html" class="text-gray-600 hover:text-blue-600">About</a>
-                <a href="../disclaimer.html" class="text-gray-600 hover:text-blue-600">Disclaimer</a>
-                <a href="../terms.html" class="text-gray-600 hover:text-blue-600">Terms</a>
-                <a href="../privacy.html" class="text-gray-600 hover:text-blue-600">Privacy</a>
-                <a href="../contact.html" class="text-gray-600 hover:text-blue-600">Contact</a>
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">CalcHub Pro</h3>
+                    <p class="text-xs text-gray-400">Professional Calculator Suite</p>
+                </div>
             </div>
-            <p class="text-gray-600">&copy; 2024 CalcHub Pro. All rights reserved.</p>
+            <p class="text-gray-400 text-sm mb-4">
+                © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
+            </p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="../index.html" class="text-gray-400 hover:text-white">Home</a>
+                <a href="../about.html" class="text-gray-400 hover:text-white">About</a>
+                <a href="../privacy.html" class="text-gray-400 hover:text-white">Privacy</a>
+                <a href="../contact.html" class="text-gray-400 hover:text-white">Contact</a>
+            </div>
         </div>
     </footer>
 
@@ -145,10 +214,10 @@
                 const molarity = moles / volume;
 
                 const result = `
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <h3 class="font-semibold text-blue-900">Molarity</h3>
-                        <p class="text-2xl font-bold text-blue-600">${molarity.toFixed(3)} M</p>
-                        <p class="text-sm text-blue-700 mt-2">M = ${moles} mol / ${volume} L = ${molarity.toFixed(3)} M</p>
+                    <div class="bg-purple-50 p-6 rounded-lg border border-purple-200">
+                        <h4 class="text-lg font-semibold text-purple-900 mb-2">Molarity</h4>
+                        <p class="text-3xl font-bold text-purple-600 mb-2">${molarity.toFixed(3)} M</p>
+                        <p class="text-sm text-purple-700">M = ${moles} mol / ${volume} L = ${molarity.toFixed(3)} M</p>
                     </div>
                 `;
 
@@ -180,11 +249,11 @@
                 const v2 = (c1 * v1) / c2;
 
                 const result = `
-                    <div class="bg-green-50 p-4 rounded-lg">
-                        <h3 class="font-semibold text-green-900">Final Volume (V₂)</h3>
-                        <p class="text-2xl font-bold text-green-600">${v2.toFixed(3)} L</p>
-                        <p class="text-sm text-green-700 mt-2">V₂ = C₁V₁ / C₂ = (${c1} × ${v1}) / ${c2} = ${v2.toFixed(3)} L</p>
-                        <p class="text-xs text-green-600 mt-1">Volume of solvent to add: ${(v2 - v1).toFixed(3)} L</p>
+                    <div class="bg-teal-50 p-6 rounded-lg border border-teal-200">
+                        <h4 class="text-lg font-semibold text-teal-900 mb-2">Final Volume (V₂)</h4>
+                        <p class="text-3xl font-bold text-teal-600 mb-2">${v2.toFixed(3)} L</p>
+                        <p class="text-sm text-teal-700">V₂ = C₁V₁ / C₂ = (${c1} × ${v1}) / ${c2} = ${v2.toFixed(3)} L</p>
+                        <p class="text-xs text-teal-600 mt-1">Volume of solvent to add: ${(v2 - v1).toFixed(3)} L</p>
                     </div>
                 `;
 
@@ -192,6 +261,16 @@
             } catch (error) {
                 showResult('dilutionResult', error.message, true);
             }
+        }
+
+        function resetChemical() {
+            document.getElementById('moles').value = '';
+            document.getElementById('volume').value = '';
+            document.getElementById('c1').value = '';
+            document.getElementById('v1').value = '';
+            document.getElementById('c2').value = '';
+            hideResult('molarityResult');
+            hideResult('dilutionResult');
         }
     </script>
 </body>
