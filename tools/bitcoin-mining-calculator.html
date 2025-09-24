@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Mining Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate Bitcoin mining profitability with current difficulty and electricity costs. Free BTC mining calculator.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header bg-gradient-to-br from-yellow-600 to-orange-600">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-yellow-200">
+                <a href="../index.html" class="text-yellow-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Bitcoin Mining Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="cpu" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Bitcoin Mining Calculator</h1>
+            <p class="text-xl text-yellow-100 max-w-2xl mx-auto">
+                Calculate Bitcoin mining profitability based on hash rate, power consumption, and electricity costs.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Hash Rate (TH/s)</label>
+                            <input 
+                                type="number" 
+                                step="any"
+                                id="miningHashRate" 
+                                placeholder="Enter hash rate"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Power Consumption (Watts)</label>
+                            <input 
+                                type="number" 
+                                id="miningPower" 
+                                placeholder="Power in watts"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Electricity Cost ($/kWh)</label>
+                            <input 
+                                type="number" 
+                                step="any"
+                                id="miningElectricityCost" 
+                                value="0.12"
+                                placeholder="Cost per kWh"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Bitcoin Price ($)</label>
+                            <input 
+                                type="number" 
+                                id="miningBtcPrice" 
+                                value="65000"
+                                placeholder="Current BTC price"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Pool Fee (%)</label>
+                            <input 
+                                type="number" 
+                                step="any"
+                                id="miningPoolFee" 
+                                value="1"
+                                placeholder="Mining pool fee"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Network Difficulty</label>
+                            <input 
+                                type="number" 
+                                id="miningDifficulty" 
+                                value="83000000000000"
+                                placeholder="Current difficulty"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="calculateBitcoinMining()" 
+                        class="w-full bg-gradient-to-r from-yellow-600 to-orange-600 text-white text-lg py-4 px-6 rounded-lg hover:from-yellow-700 hover:to-orange-700 transition-all duration-200 font-semibold"
+                    >
+                        ₿ Calculate Mining Profitability
+                    </button>
+                    
+                    <div id="bitcoinMiningResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetBitcoinMining()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mining Info -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Mining Information</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <div class="font-bold text-yellow-600 mb-2">⚡ Power Efficiency</div>
+                        <div class="text-sm text-yellow-800">Lower power consumption = higher profits</div>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="font-bold text-blue-600 mb-2">🏊 Pool Mining</div>
+                        <div class="text-sm text-blue-800">Join pools for more consistent payouts</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="font-bold text-green-600 mb-2">📊 Difficulty</div>
+                        <div class="text-sm text-green-800">Adjusts every 2016 blocks (~2 weeks)</div>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <div class="font-bold text-red-600 mb-2">💰 ROI</div>
+                        <div class="text-sm text-red-800">Consider hardware costs and depreciation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>

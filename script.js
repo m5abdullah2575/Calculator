@@ -1991,3 +1991,1015 @@ function copyToClipboard(text) {
         document.body.removeChild(textArea);
     }
 }
+
+// ======= NEW CALCULATORS FUNCTIONS =======
+
+// Heart Rate Zone Calculator
+function calculateHeartRateZones() {
+    try {
+        const age = validateInput(document.getElementById('hrAge').value, 'Age');
+        const restingHR = document.getElementById('hrResting').value ? 
+            validateInput(document.getElementById('hrResting').value, 'Resting Heart Rate') : 60;
+        
+        if (age <= 0) throw new Error('Age must be a positive number');
+        if (restingHR <= 0) throw new Error('Resting heart rate must be a positive number');
+        
+        const maxHR = 220 - age;
+        const hrReserve = maxHR - restingHR;
+        
+        const zones = {
+            zone1: { min: Math.round(restingHR + (hrReserve * 0.5)), max: Math.round(restingHR + (hrReserve * 0.6)) },
+            zone2: { min: Math.round(restingHR + (hrReserve * 0.6)), max: Math.round(restingHR + (hrReserve * 0.7)) },
+            zone3: { min: Math.round(restingHR + (hrReserve * 0.7)), max: Math.round(restingHR + (hrReserve * 0.8)) },
+            zone4: { min: Math.round(restingHR + (hrReserve * 0.8)), max: Math.round(restingHR + (hrReserve * 0.9)) },
+            zone5: { min: Math.round(restingHR + (hrReserve * 0.9)), max: maxHR }
+        };
+        
+        const result = `
+            <strong>Maximum Heart Rate:</strong> ${maxHR} bpm<br>
+            <strong>Zone 1 (50-60%):</strong> ${zones.zone1.min}-${zones.zone1.max} bpm<br>
+            <strong>Zone 2 (60-70%):</strong> ${zones.zone2.min}-${zones.zone2.max} bpm<br>
+            <strong>Zone 3 (70-80%):</strong> ${zones.zone3.min}-${zones.zone3.max} bpm<br>
+            <strong>Zone 4 (80-90%):</strong> ${zones.zone4.min}-${zones.zone4.max} bpm<br>
+            <strong>Zone 5 (90-100%):</strong> ${zones.zone5.min}-${zones.zone5.max} bpm
+        `;
+        
+        showResult('hrZoneResult', result);
+    } catch (error) {
+        showResult('hrZoneResult', error.message, true);
+    }
+}
+
+function resetHeartRateZones() {
+    document.getElementById('hrAge').value = '';
+    document.getElementById('hrResting').value = '';
+    hideResult('hrZoneResult');
+}
+
+// Ideal Weight Calculator
+function calculateIdealWeight() {
+    try {
+        const height = validateInput(document.getElementById('idealHeight').value, 'Height');
+        const gender = document.getElementById('idealGender').value;
+        const age = validateInput(document.getElementById('idealAge').value, 'Age');
+        
+        if (height <= 0) throw new Error('Height must be a positive number');
+        if (!gender) throw new Error('Please select gender');
+        if (age <= 0) throw new Error('Age must be a positive number');
+        
+        const heightInches = height / 2.54; // Convert cm to inches
+        
+        // Different formulas for ideal weight
+        const robinson = gender === 'male' ? 
+            52 + 1.9 * (heightInches - 60) : 
+            49 + 1.7 * (heightInches - 60);
+            
+        const miller = gender === 'male' ? 
+            56.2 + 1.41 * (heightInches - 60) : 
+            53.1 + 1.36 * (heightInches - 60);
+            
+        const devine = gender === 'male' ? 
+            50 + 2.3 * (heightInches - 60) : 
+            45.5 + 2.3 * (heightInches - 60);
+            
+        const hamwi = gender === 'male' ? 
+            48 + 2.7 * (heightInches - 60) : 
+            45.5 + 2.2 * (heightInches - 60);
+        
+        const average = (robinson + miller + devine + hamwi) / 4;
+        const range = { min: average * 0.9, max: average * 1.1 };
+        
+        const result = `
+            <strong>Average Ideal Weight:</strong> ${average.toFixed(1)} kg (${(average * 2.205).toFixed(1)} lbs)<br>
+            <strong>Healthy Range:</strong> ${range.min.toFixed(1)} - ${range.max.toFixed(1)} kg<br>
+            <hr>
+            <strong>Robinson Formula:</strong> ${robinson.toFixed(1)} kg<br>
+            <strong>Miller Formula:</strong> ${miller.toFixed(1)} kg<br>
+            <strong>Devine Formula:</strong> ${devine.toFixed(1)} kg<br>
+            <strong>Hamwi Formula:</strong> ${hamwi.toFixed(1)} kg
+        `;
+        
+        showResult('idealWeightResult', result);
+    } catch (error) {
+        showResult('idealWeightResult', error.message, true);
+    }
+}
+
+function resetIdealWeight() {
+    document.getElementById('idealHeight').value = '';
+    document.getElementById('idealGender').value = '';
+    document.getElementById('idealAge').value = '';
+    hideResult('idealWeightResult');
+}
+
+// Quadratic Equation Solver
+function solveQuadratic() {
+    try {
+        const a = validateInput(document.getElementById('quadA').value, 'Coefficient a');
+        const b = validateInput(document.getElementById('quadB').value, 'Coefficient b');
+        const c = validateInput(document.getElementById('quadC').value, 'Coefficient c');
+        
+        if (a === 0) throw new Error('Coefficient "a" cannot be zero for a quadratic equation');
+        
+        const discriminant = b * b - 4 * a * c;
+        
+        let result = `<strong>Equation:</strong> ${a}x² + ${b}x + ${c} = 0<br>`;
+        result += `<strong>Discriminant:</strong> ${discriminant.toFixed(2)}<br>`;
+        
+        if (discriminant > 0) {
+            const x1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+            const x2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+            result += `<strong>Two real solutions:</strong><br>`;
+            result += `x₁ = ${x1.toFixed(4)}<br>`;
+            result += `x₂ = ${x2.toFixed(4)}`;
+        } else if (discriminant === 0) {
+            const x = -b / (2 * a);
+            result += `<strong>One real solution:</strong><br>`;
+            result += `x = ${x.toFixed(4)}`;
+        } else {
+            const realPart = -b / (2 * a);
+            const imagPart = Math.sqrt(-discriminant) / (2 * a);
+            result += `<strong>Two complex solutions:</strong><br>`;
+            result += `x₁ = ${realPart.toFixed(4)} + ${imagPart.toFixed(4)}i<br>`;
+            result += `x₂ = ${realPart.toFixed(4)} - ${imagPart.toFixed(4)}i`;
+        }
+        
+        showResult('quadResult', result);
+    } catch (error) {
+        showResult('quadResult', error.message, true);
+    }
+}
+
+function resetQuadratic() {
+    document.getElementById('quadA').value = '';
+    document.getElementById('quadB').value = '';
+    document.getElementById('quadC').value = '';
+    hideResult('quadResult');
+}
+
+// Crypto Profit Calculator
+function calculateCryptoProfit() {
+    try {
+        const buyPrice = validateInput(document.getElementById('cryptoBuyPrice').value, 'Buy Price');
+        const sellPrice = validateInput(document.getElementById('cryptoSellPrice').value, 'Sell Price');
+        const quantity = validateInput(document.getElementById('cryptoQuantity').value, 'Quantity');
+        const fees = validateInput(document.getElementById('cryptoFees').value, 'Fees') / 100;
+        
+        if (buyPrice <= 0 || sellPrice <= 0 || quantity <= 0) {
+            throw new Error('All values must be positive numbers');
+        }
+        
+        const buyTotal = buyPrice * quantity;
+        const sellTotal = sellPrice * quantity;
+        
+        const buyFees = buyTotal * fees;
+        const sellFees = sellTotal * fees;
+        const totalFees = buyFees + sellFees;
+        
+        const grossProfit = sellTotal - buyTotal;
+        const netProfit = grossProfit - totalFees;
+        const roi = (netProfit / (buyTotal + buyFees)) * 100;
+        
+        const breakEvenPrice = (buyPrice * (1 + fees)) / (1 - fees);
+        
+        const result = `
+            <strong>Investment:</strong> $${(buyTotal + buyFees).toFixed(2)}<br>
+            <strong>Returns:</strong> $${(sellTotal - sellFees).toFixed(2)}<br>
+            <strong>Total Fees:</strong> $${totalFees.toFixed(2)}<br>
+            <strong>Net Profit/Loss:</strong> $${netProfit.toFixed(2)}<br>
+            <strong>ROI:</strong> ${roi.toFixed(2)}%<br>
+            <strong>Break-even Price:</strong> $${breakEvenPrice.toFixed(4)}
+        `;
+        
+        showResult('cryptoProfitResult', result);
+    } catch (error) {
+        showResult('cryptoProfitResult', error.message, true);
+    }
+}
+
+function resetCryptoProfit() {
+    document.getElementById('cryptoBuyPrice').value = '';
+    document.getElementById('cryptoSellPrice').value = '';
+    document.getElementById('cryptoQuantity').value = '';
+    document.getElementById('cryptoFees').value = '0.1';
+    hideResult('cryptoProfitResult');
+}
+
+// Data Storage Converter
+function convertStorage() {
+    try {
+        const value = validateInput(document.getElementById('storageValue').value, 'Value');
+        const fromUnit = document.getElementById('storageFromUnit').value;
+        const toUnit = document.getElementById('storageToUnit').value;
+        
+        if (value < 0) throw new Error('Value cannot be negative');
+        
+        // Convert everything to bytes first
+        const bytesConversion = {
+            'bit': 0.125,
+            'byte': 1,
+            'kb': 1024,
+            'mb': 1024 * 1024,
+            'gb': 1024 * 1024 * 1024,
+            'tb': 1024 * 1024 * 1024 * 1024,
+            'pb': 1024 * 1024 * 1024 * 1024 * 1024
+        };
+        
+        const bytes = value * bytesConversion[fromUnit];
+        const result = bytes / bytesConversion[toUnit];
+        
+        const unitNames = {
+            'bit': 'Bits',
+            'byte': 'Bytes',
+            'kb': 'KB',
+            'mb': 'MB',
+            'gb': 'GB',
+            'tb': 'TB',
+            'pb': 'PB'
+        };
+        
+        const resultText = `
+            <strong>Result:</strong> ${result.toLocaleString(undefined, {maximumFractionDigits: 10})} ${unitNames[toUnit]}<br>
+            <strong>In Bytes:</strong> ${bytes.toLocaleString()} bytes<br>
+            <strong>Scientific:</strong> ${result.toExponential(3)} ${unitNames[toUnit]}
+        `;
+        
+        showResult('storageResult', resultText);
+    } catch (error) {
+        showResult('storageResult', error.message, true);
+    }
+}
+
+function resetStorage() {
+    document.getElementById('storageValue').value = '';
+    document.getElementById('storageFromUnit').selectedIndex = 1; // byte
+    document.getElementById('storageToUnit').selectedIndex = 3; // mb
+    hideResult('storageResult');
+}
+
+// Love Calculator
+function calculateLove() {
+    try {
+        const name1 = document.getElementById('loveName1').value.trim().toLowerCase();
+        const name2 = document.getElementById('loveName2').value.trim().toLowerCase();
+        
+        if (!name1 || !name2) throw new Error('Please enter both names');
+        if (name1 === name2) throw new Error('Please enter two different names');
+        
+        // Simple algorithm based on character codes and name characteristics
+        let compatibility = 0;
+        const combinedNames = name1 + name2;
+        
+        // Add character codes
+        for (let i = 0; i < combinedNames.length; i++) {
+            compatibility += combinedNames.charCodeAt(i);
+        }
+        
+        // Add some factors for more interesting results
+        compatibility += name1.length * 7;
+        compatibility += name2.length * 11;
+        compatibility += (name1.includes('a') || name2.includes('a')) ? 13 : 0;
+        compatibility += (name1.includes('e') || name2.includes('e')) ? 17 : 0;
+        compatibility += (name1.includes('i') || name2.includes('i')) ? 19 : 0;
+        compatibility += (name1.includes('o') || name2.includes('o')) ? 23 : 0;
+        compatibility += (name1.includes('u') || name2.includes('u')) ? 29 : 0;
+        
+        // Convert to percentage
+        const percentage = (compatibility % 101);
+        const finalPercentage = Math.max(20, percentage); // Ensure at least 20%
+        
+        let message = '';
+        if (finalPercentage >= 80) {
+            message = '💕 Perfect match! You were meant to be together!';
+        } else if (finalPercentage >= 60) {
+            message = '❤️ Great compatibility! Love is in the air!';
+        } else if (finalPercentage >= 40) {
+            message = '💖 Good potential! Give it a chance!';
+        } else {
+            message = '💛 Friendship might work better, but who knows?';
+        }
+        
+        const result = `
+            <div class="text-center">
+                <div class="text-4xl font-bold text-pink-600 mb-2">${finalPercentage}%</div>
+                <div class="text-lg font-medium text-gray-800 mb-3">${name1.charAt(0).toUpperCase() + name1.slice(1)} ❤️ ${name2.charAt(0).toUpperCase() + name2.slice(1)}</div>
+                <div class="text-gray-600">${message}</div>
+            </div>
+        `;
+        
+        showResult('loveResult', result);
+    } catch (error) {
+        showResult('loveResult', error.message, true);
+    }
+}
+
+function resetLove() {
+    document.getElementById('loveName1').value = '';
+    document.getElementById('loveName2').value = '';
+    hideResult('loveResult');
+}
+
+// Freelance Rate Calculator
+function calculateFreelanceRate() {
+    try {
+        const annualSalary = validateInput(document.getElementById('freelanceAnnualSalary').value, 'Annual Salary');
+        const billableHours = validateInput(document.getElementById('freelanceBillableHours').value, 'Billable Hours');
+        const vacationWeeks = validateInput(document.getElementById('freelanceVacation').value, 'Vacation Weeks');
+        const expenses = validateInput(document.getElementById('freelanceExpenses').value, 'Business Expenses');
+        const taxRate = validateInput(document.getElementById('freelanceTaxRate').value, 'Tax Rate') / 100;
+        const profitMargin = validateInput(document.getElementById('freelanceProfit').value, 'Profit Margin') / 100;
+        
+        if (annualSalary <= 0 || billableHours <= 0) {
+            throw new Error('All values must be positive numbers');
+        }
+        
+        const workingWeeks = 52 - vacationWeeks;
+        const totalBillableHours = billableHours * workingWeeks;
+        
+        const totalNeeded = annualSalary + expenses;
+        const afterTax = totalNeeded / (1 - taxRate);
+        const withProfit = afterTax * (1 + profitMargin);
+        
+        const hourlyRate = withProfit / totalBillableHours;
+        
+        const result = `
+            <strong>Recommended Hourly Rate:</strong> $${hourlyRate.toFixed(2)}/hour<br>
+            <strong>Total Annual Income Needed:</strong> $${withProfit.toFixed(2)}<br>
+            <strong>Billable Hours per Year:</strong> ${totalBillableHours} hours<br>
+            <strong>Working Weeks:</strong> ${workingWeeks} weeks<br>
+            <hr>
+            <strong>Breakdown:</strong><br>
+            • Desired Salary: $${annualSalary.toFixed(2)}<br>
+            • Business Expenses: $${expenses.toFixed(2)}<br>
+            • Tax Adjustment: +${(taxRate * 100).toFixed(1)}%<br>
+            • Profit Margin: +${(profitMargin * 100).toFixed(1)}%
+        `;
+        
+        showResult('freelanceRateResult', result);
+    } catch (error) {
+        showResult('freelanceRateResult', error.message, true);
+    }
+}
+
+function resetFreelanceRate() {
+    document.getElementById('freelanceAnnualSalary').value = '';
+    document.getElementById('freelanceBillableHours').value = '30';
+    document.getElementById('freelanceVacation').value = '4';
+    document.getElementById('freelanceExpenses').value = '';
+    document.getElementById('freelanceTaxRate').value = '30';
+    document.getElementById('freelanceProfit').value = '20';
+    hideResult('freelanceRateResult');
+}
+
+// Pressure Converter
+function convertPressure() {
+    try {
+        const value = parseFloat(document.getElementById('pressureValue').value);
+        if (isNaN(value) || value < 0) {
+            if (value < 0) throw new Error('Pressure cannot be negative');
+            hideResult('pressureResult');
+            return;
+        }
+        
+        const fromUnit = document.getElementById('pressureFromUnit').value;
+        const toUnit = document.getElementById('pressureToUnit').value;
+        
+        // Convert everything to PSI first
+        const toPsi = {
+            'psi': 1,
+            'bar': 14.5038,
+            'atm': 14.696,
+            'kpa': 0.145038,
+            'mpa': 145.038,
+            'torr': 0.0193368,
+            'mmhg': 0.0193368,
+            'inhg': 0.491154
+        };
+        
+        const psiValue = value * toPsi[fromUnit];
+        const result = psiValue / toPsi[toUnit];
+        
+        const unitNames = {
+            'psi': 'PSI',
+            'bar': 'Bar',
+            'atm': 'Atmosphere',
+            'kpa': 'kPa',
+            'mpa': 'MPa',
+            'torr': 'Torr',
+            'mmhg': 'mmHg',
+            'inhg': 'inHg'
+        };
+        
+        const resultText = `
+            <strong>Result:</strong> ${result.toLocaleString(undefined, {maximumFractionDigits: 6})} ${unitNames[toUnit]}<br>
+            <strong>In PSI:</strong> ${psiValue.toFixed(4)} PSI<br>
+            <strong>Scientific:</strong> ${result.toExponential(3)} ${unitNames[toUnit]}
+        `;
+        
+        showResult('pressureResult', resultText);
+    } catch (error) {
+        showResult('pressureResult', error.message, true);
+    }
+}
+
+function resetPressure() {
+    document.getElementById('pressureValue').value = '';
+    document.getElementById('pressureFromUnit').selectedIndex = 0; // psi
+    document.getElementById('pressureToUnit').selectedIndex = 1; // bar
+    hideResult('pressureResult');
+}
+
+// Triangle Calculator
+function toggleTriangleInputs() {
+    const method = document.getElementById('triangleMethod').value;
+    const baseHeight = document.getElementById('baseHeightInputs');
+    const threeSides = document.getElementById('threeSidesInputs');
+    const twoSidesAngle = document.getElementById('twoSidesAngleInputs');
+    
+    // Hide all inputs first
+    baseHeight.classList.add('hidden');
+    threeSides.classList.add('hidden');
+    twoSidesAngle.classList.add('hidden');
+    
+    // Show relevant input
+    if (method === 'base-height') {
+        baseHeight.classList.remove('hidden');
+    } else if (method === 'three-sides') {
+        threeSides.classList.remove('hidden');
+    } else if (method === 'two-sides-angle') {
+        twoSidesAngle.classList.remove('hidden');
+    }
+}
+
+function calculateTriangle() {
+    try {
+        const method = document.getElementById('triangleMethod').value;
+        let result = '';
+        
+        if (method === 'base-height') {
+            const base = validateInput(document.getElementById('triangleBase').value, 'Base');
+            const height = validateInput(document.getElementById('triangleHeight').value, 'Height');
+            
+            if (base <= 0 || height <= 0) throw new Error('Base and height must be positive');
+            
+            const area = 0.5 * base * height;
+            
+            result = `
+                <strong>Area:</strong> ${area.toFixed(2)} square units<br>
+                <strong>Base:</strong> ${base} units<br>
+                <strong>Height:</strong> ${height} units<br>
+                <strong>Method:</strong> Area = ½ × base × height
+            `;
+            
+        } else if (method === 'three-sides') {
+            const a = validateInput(document.getElementById('triangleSideA').value, 'Side A');
+            const b = validateInput(document.getElementById('triangleSideB').value, 'Side B');
+            const c = validateInput(document.getElementById('triangleSideC').value, 'Side C');
+            
+            if (a <= 0 || b <= 0 || c <= 0) throw new Error('All sides must be positive');
+            if (a + b <= c || a + c <= b || b + c <= a) {
+                throw new Error('Invalid triangle: sum of any two sides must be greater than the third');
+            }
+            
+            const s = (a + b + c) / 2; // semi-perimeter
+            const area = Math.sqrt(s * (s - a) * (s - b) * (s - c)); // Heron's formula
+            const perimeter = a + b + c;
+            
+            result = `
+                <strong>Area:</strong> ${area.toFixed(2)} square units<br>
+                <strong>Perimeter:</strong> ${perimeter.toFixed(2)} units<br>
+                <strong>Sides:</strong> ${a}, ${b}, ${c}<br>
+                <strong>Method:</strong> Heron's Formula
+            `;
+            
+        } else if (method === 'two-sides-angle') {
+            const a = validateInput(document.getElementById('triangleSideSAS_A').value, 'Side A');
+            const b = validateInput(document.getElementById('triangleSideSAS_B').value, 'Side B');
+            const angleC = validateInput(document.getElementById('triangleAngleC').value, 'Angle C');
+            
+            if (a <= 0 || b <= 0) throw new Error('Sides must be positive');
+            if (angleC <= 0 || angleC >= 180) throw new Error('Angle must be between 0 and 180 degrees');
+            
+            const angleRad = angleC * Math.PI / 180;
+            const area = 0.5 * a * b * Math.sin(angleRad);
+            const c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(angleRad)); // Law of cosines
+            const perimeter = a + b + c;
+            
+            result = `
+                <strong>Area:</strong> ${area.toFixed(2)} square units<br>
+                <strong>Third Side (c):</strong> ${c.toFixed(2)} units<br>
+                <strong>Perimeter:</strong> ${perimeter.toFixed(2)} units<br>
+                <strong>Method:</strong> SAS (Side-Angle-Side)
+            `;
+        }
+        
+        showResult('triangleResult', result);
+    } catch (error) {
+        showResult('triangleResult', error.message, true);
+    }
+}
+
+function resetTriangle() {
+    document.getElementById('triangleBase').value = '';
+    document.getElementById('triangleHeight').value = '';
+    document.getElementById('triangleSideA').value = '';
+    document.getElementById('triangleSideB').value = '';
+    document.getElementById('triangleSideC').value = '';
+    document.getElementById('triangleSideSAS_A').value = '';
+    document.getElementById('triangleSideSAS_B').value = '';
+    document.getElementById('triangleAngleC').value = '';
+    document.getElementById('triangleMethod').selectedIndex = 0;
+    toggleTriangleInputs();
+    hideResult('triangleResult');
+}
+
+// Fraction Calculator  
+function calculateFraction() {
+    try {
+        const num1 = validateInput(document.getElementById('fraction1Num').value, 'First numerator');
+        const den1 = validateInput(document.getElementById('fraction1Den').value, 'First denominator');
+        const num2 = validateInput(document.getElementById('fraction2Num').value, 'Second numerator');
+        const den2 = validateInput(document.getElementById('fraction2Den').value, 'Second denominator');
+        const operation = document.getElementById('fractionOperation').value;
+        
+        if (den1 === 0 || den2 === 0) throw new Error('Denominators cannot be zero');
+        
+        let resultNum, resultDen;
+        let operationSymbol;
+        
+        switch (operation) {
+            case 'add':
+                resultNum = num1 * den2 + num2 * den1;
+                resultDen = den1 * den2;
+                operationSymbol = '+';
+                break;
+            case 'subtract':
+                resultNum = num1 * den2 - num2 * den1;
+                resultDen = den1 * den2;
+                operationSymbol = '−';
+                break;
+            case 'multiply':
+                resultNum = num1 * num2;
+                resultDen = den1 * den2;
+                operationSymbol = '×';
+                break;
+            case 'divide':
+                if (num2 === 0) throw new Error('Cannot divide by zero');
+                resultNum = num1 * den2;
+                resultDen = den1 * num2;
+                operationSymbol = '÷';
+                break;
+        }
+        
+        // Simplify fraction
+        const gcd = findGCD(Math.abs(resultNum), Math.abs(resultDen));
+        const simplifiedNum = resultNum / gcd;
+        const simplifiedDen = resultDen / gcd;
+        
+        // Handle negative fractions
+        const finalNum = simplifiedDen < 0 ? -simplifiedNum : simplifiedNum;
+        const finalDen = Math.abs(simplifiedDen);
+        
+        const decimal = finalNum / finalDen;
+        
+        const result = `
+            <strong>Expression:</strong> ${num1}/${den1} ${operationSymbol} ${num2}/${den2}<br>
+            <strong>Result:</strong> ${finalNum}/${finalDen}<br>
+            <strong>Decimal:</strong> ${decimal.toFixed(6)}<br>
+            ${finalNum !== resultNum ? `<strong>Unsimplified:</strong> ${resultNum}/${resultDen}<br>` : ''}
+            <strong>Mixed Number:</strong> ${toMixedNumber(finalNum, finalDen)}
+        `;
+        
+        showResult('fractionResult', result);
+    } catch (error) {
+        showResult('fractionResult', error.message, true);
+    }
+}
+
+function findGCD(a, b) {
+    return b === 0 ? a : findGCD(b, a % b);
+}
+
+function toMixedNumber(num, den) {
+    if (Math.abs(num) < Math.abs(den)) {
+        return `${num}/${den}`;
+    }
+    const whole = Math.floor(Math.abs(num) / Math.abs(den));
+    const remainder = Math.abs(num) % Math.abs(den);
+    const sign = num < 0 ? '-' : '';
+    if (remainder === 0) {
+        return `${sign}${whole}`;
+    }
+    return `${sign}${whole} ${remainder}/${den}`;
+}
+
+function resetFraction() {
+    document.getElementById('fraction1Num').value = '';
+    document.getElementById('fraction1Den').value = '';
+    document.getElementById('fraction2Num').value = '';
+    document.getElementById('fraction2Den').value = '';
+    document.getElementById('fractionOperation').selectedIndex = 0;
+    hideResult('fractionResult');
+}
+
+// Bitcoin Mining Calculator
+function calculateBitcoinMining() {
+    try {
+        const hashRate = validateInput(document.getElementById('miningHashRate').value, 'Hash Rate') * 1e12; // Convert TH/s to H/s
+        const power = validateInput(document.getElementById('miningPower').value, 'Power Consumption');
+        const electricityCost = validateInput(document.getElementById('miningElectricityCost').value, 'Electricity Cost');
+        const btcPrice = validateInput(document.getElementById('miningBtcPrice').value, 'Bitcoin Price');
+        const poolFee = validateInput(document.getElementById('miningPoolFee').value, 'Pool Fee') / 100;
+        const difficulty = validateInput(document.getElementById('miningDifficulty').value, 'Network Difficulty');
+        
+        if (hashRate <= 0 || power <= 0 || btcPrice <= 0) {
+            throw new Error('All values must be positive numbers');
+        }
+        
+        // Bitcoin mining calculations
+        const blocksPerDay = 144; // Approximate blocks per day
+        const btcPerBlock = 3.125; // Current reward after halving
+        const totalNetworkHashRate = difficulty * Math.pow(2, 32) / 600; // Approximate network hash rate
+        
+        const dailyBTC = (hashRate / totalNetworkHashRate) * blocksPerDay * btcPerBlock;
+        const dailyGrossRevenue = dailyBTC * btcPrice;
+        const dailyNetRevenue = dailyGrossRevenue * (1 - poolFee);
+        
+        const dailyPowerCost = (power / 1000) * 24 * electricityCost; // kWh * hours * cost
+        const dailyProfit = dailyNetRevenue - dailyPowerCost;
+        
+        const monthlyProfit = dailyProfit * 30;
+        const yearlyProfit = dailyProfit * 365;
+        
+        const roi = dailyNetRevenue > 0 ? (dailyProfit / dailyNetRevenue) * 100 : -100;
+        
+        const result = `
+            <strong>Daily Mining Results:</strong><br>
+            • BTC Mined: ${dailyBTC.toFixed(8)} BTC<br>
+            • Gross Revenue: $${dailyGrossRevenue.toFixed(2)}<br>
+            • Net Revenue (after pool fees): $${dailyNetRevenue.toFixed(2)}<br>
+            • Electricity Cost: $${dailyPowerCost.toFixed(2)}<br>
+            • <strong>Daily Profit: $${dailyProfit.toFixed(2)}</strong><br>
+            <hr>
+            <strong>Projections:</strong><br>
+            • Monthly Profit: $${monthlyProfit.toFixed(2)}<br>
+            • Yearly Profit: $${yearlyProfit.toFixed(2)}<br>
+            • Profit Margin: ${roi.toFixed(1)}%<br>
+            <hr>
+            <strong>Network Stats:</strong><br>
+            • Your Hash Rate: ${(hashRate / 1e12).toFixed(2)} TH/s<br>
+            • Network Hash Rate: ${(totalNetworkHashRate / 1e18).toFixed(2)} EH/s<br>
+            • Your Network Share: ${((hashRate / totalNetworkHashRate) * 100).toExponential(2)}%
+        `;
+        
+        showResult('bitcoinMiningResult', result);
+    } catch (error) {
+        showResult('bitcoinMiningResult', error.message, true);
+    }
+}
+
+function resetBitcoinMining() {
+    document.getElementById('miningHashRate').value = '';
+    document.getElementById('miningPower').value = '';
+    document.getElementById('miningElectricityCost').value = '0.12';
+    document.getElementById('miningBtcPrice').value = '65000';
+    document.getElementById('miningPoolFee').value = '1';
+    document.getElementById('miningDifficulty').value = '83000000000000';
+    hideResult('bitcoinMiningResult');
+}
+
+// Circle Calculator
+function toggleCircleInputs() {
+    const inputType = document.getElementById('circleInputType').value;
+    
+    // Hide all inputs
+    document.getElementById('radiusInput').classList.add('hidden');
+    document.getElementById('diameterInput').classList.add('hidden');
+    document.getElementById('circumferenceInput').classList.add('hidden');
+    document.getElementById('areaInput').classList.add('hidden');
+    
+    // Show selected input
+    document.getElementById(inputType + 'Input').classList.remove('hidden');
+}
+
+function calculateCircle() {
+    try {
+        const inputType = document.getElementById('circleInputType').value;
+        let radius;
+        
+        // Get radius from different inputs
+        switch (inputType) {
+            case 'radius':
+                radius = validateInput(document.getElementById('circleRadius').value, 'Radius');
+                break;
+            case 'diameter':
+                const diameter = validateInput(document.getElementById('circleDiameter').value, 'Diameter');
+                radius = diameter / 2;
+                break;
+            case 'circumference':
+                const circumference = validateInput(document.getElementById('circleCircumference').value, 'Circumference');
+                radius = circumference / (2 * Math.PI);
+                break;
+            case 'area':
+                const area = validateInput(document.getElementById('circleArea').value, 'Area');
+                radius = Math.sqrt(area / Math.PI);
+                break;
+        }
+        
+        if (radius <= 0) throw new Error('Value must be positive');
+        
+        // Calculate all circle properties
+        const diameter = radius * 2;
+        const circumference = 2 * Math.PI * radius;
+        const area = Math.PI * radius * radius;
+        
+        const result = `
+            <strong>Circle Properties:</strong><br>
+            • <strong>Radius:</strong> ${radius.toFixed(4)} units<br>
+            • <strong>Diameter:</strong> ${diameter.toFixed(4)} units<br>
+            • <strong>Circumference:</strong> ${circumference.toFixed(4)} units<br>
+            • <strong>Area:</strong> ${area.toFixed(4)} square units<br>
+            <hr>
+            <strong>Formulas Used:</strong><br>
+            • Area = π × r² = ${area.toFixed(4)}<br>
+            • Circumference = 2π × r = ${circumference.toFixed(4)}<br>
+            • π ≈ ${Math.PI.toFixed(6)}
+        `;
+        
+        showResult('circleResult', result);
+    } catch (error) {
+        showResult('circleResult', error.message, true);
+    }
+}
+
+function resetCircle() {
+    document.getElementById('circleRadius').value = '';
+    document.getElementById('circleDiameter').value = '';
+    document.getElementById('circleCircumference').value = '';
+    document.getElementById('circleArea').value = '';
+    document.getElementById('circleInputType').selectedIndex = 0;
+    toggleCircleInputs();
+    hideResult('circleResult');
+}
+
+// Hourly vs Salary Calculator
+function switchJobType(type) {
+    const hourlyTab = document.getElementById('hourlyTab');
+    const salaryTab = document.getElementById('salaryTab');
+    const hourlyInputs = document.getElementById('hourlyInputs');
+    const salaryInputs = document.getElementById('salaryInputs');
+    
+    if (type === 'hourly') {
+        hourlyTab.classList.add('bg-blue-600', 'text-white');
+        hourlyTab.classList.remove('text-gray-600');
+        salaryTab.classList.remove('bg-blue-600', 'text-white');
+        salaryTab.classList.add('text-gray-600');
+        
+        hourlyInputs.classList.remove('hidden');
+        salaryInputs.classList.add('hidden');
+    } else {
+        salaryTab.classList.add('bg-blue-600', 'text-white');
+        salaryTab.classList.remove('text-gray-600');
+        hourlyTab.classList.remove('bg-blue-600', 'text-white');
+        hourlyTab.classList.add('text-gray-600');
+        
+        salaryInputs.classList.remove('hidden');
+        hourlyInputs.classList.add('hidden');
+    }
+}
+
+function calculateHourlySalary() {
+    try {
+        const vacationDays = validateInput(document.getElementById('vacationDays').value, 'Vacation Days');
+        const healthBenefits = validateInput(document.getElementById('healthBenefits').value, 'Health Benefits');
+        const retirementMatch = validateInput(document.getElementById('retirementMatch').value, 'Retirement Match') / 100;
+        const otherBenefits = validateInput(document.getElementById('otherBenefits').value, 'Other Benefits');
+        
+        const workDaysPerYear = 260 - vacationDays; // Assuming 5 days/week, 52 weeks
+        const workHoursPerYear = workDaysPerYear * 8;
+        const annualHealthBenefits = healthBenefits * 12;
+        const annualOtherBenefits = otherBenefits * 12;
+        
+        let result = '';
+        
+        if (!document.getElementById('hourlyInputs').classList.contains('hidden')) {
+            // Hourly calculation
+            const hourlyRate = validateInput(document.getElementById('hourlyRate').value, 'Hourly Rate');
+            const hoursPerWeek = validateInput(document.getElementById('hoursPerWeek').value, 'Hours per Week');
+            
+            if (hourlyRate <= 0 || hoursPerWeek <= 0) {
+                throw new Error('Hourly rate and hours must be positive');
+            }
+            
+            const annualSalary = hourlyRate * hoursPerWeek * 52;
+            const annualRetirementMatch = annualSalary * retirementMatch;
+            const totalCompensation = annualSalary + annualHealthBenefits + annualRetirementMatch + annualOtherBenefits;
+            
+            result = `
+                <strong>Hourly Position Analysis:</strong><br>
+                • Base Pay: $${hourlyRate}/hour × ${hoursPerWeek} hrs/week<br>
+                • <strong>Annual Base Salary:</strong> $${annualSalary.toLocaleString()}<br>
+                • Health Benefits: $${annualHealthBenefits.toLocaleString()}/year<br>
+                • 401k Match (${(retirementMatch * 100).toFixed(1)}%): $${annualRetirementMatch.toLocaleString()}<br>
+                • Other Benefits: $${annualOtherBenefits.toLocaleString()}<br>
+                • <strong>Total Compensation: $${totalCompensation.toLocaleString()}</strong><br>
+                <hr>
+                <strong>Equivalent Salary Rate:</strong> $${(totalCompensation / workHoursPerYear).toFixed(2)}/hour
+            `;
+        } else {
+            // Salary calculation
+            const annualSalary = validateInput(document.getElementById('annualSalary').value, 'Annual Salary');
+            
+            if (annualSalary <= 0) {
+                throw new Error('Annual salary must be positive');
+            }
+            
+            const annualRetirementMatch = annualSalary * retirementMatch;
+            const totalCompensation = annualSalary + annualHealthBenefits + annualRetirementMatch + annualOtherBenefits;
+            const effectiveHourlyRate = totalCompensation / workHoursPerYear;
+            
+            result = `
+                <strong>Salary Position Analysis:</strong><br>
+                • <strong>Base Annual Salary:</strong> $${annualSalary.toLocaleString()}<br>
+                • Health Benefits: $${annualHealthBenefits.toLocaleString()}/year<br>
+                • 401k Match (${(retirementMatch * 100).toFixed(1)}%): $${annualRetirementMatch.toLocaleString()}<br>
+                • Other Benefits: $${annualOtherBenefits.toLocaleString()}<br>
+                • <strong>Total Compensation: $${totalCompensation.toLocaleString()}</strong><br>
+                <hr>
+                <strong>Effective Hourly Rate:</strong> $${effectiveHourlyRate.toFixed(2)}/hour<br>
+                <strong>Working Hours:</strong> ${workHoursPerYear.toLocaleString()} hours/year
+            `;
+        }
+        
+        showResult('hourlySalaryResult', result);
+    } catch (error) {
+        showResult('hourlySalaryResult', error.message, true);
+    }
+}
+
+function resetHourlySalary() {
+    document.getElementById('hourlyRate').value = '';
+    document.getElementById('hoursPerWeek').value = '40';
+    document.getElementById('annualSalary').value = '';
+    document.getElementById('vacationDays').value = '10';
+    document.getElementById('healthBenefits').value = '0';
+    document.getElementById('retirementMatch').value = '0';
+    document.getElementById('otherBenefits').value = '0';
+    hideResult('hourlySalaryResult');
+}
+
+// Hash Generator
+async function generateHashes() {
+    try {
+        const inputText = document.getElementById('hashInput').value;
+        if (!inputText.trim()) throw new Error('Please enter text to hash');
+        
+        const generateMD5 = document.getElementById('generateMD5').checked;
+        const generateSHA1 = document.getElementById('generateSHA1').checked;
+        const generateSHA256 = document.getElementById('generateSHA256').checked;
+        const generateSHA512 = document.getElementById('generateSHA512').checked;
+        
+        if (!generateMD5 && !generateSHA1 && !generateSHA256 && !generateSHA512) {
+            throw new Error('Please select at least one hash algorithm');
+        }
+        
+        let result = '<strong>Generated Hashes:</strong><br><br>';
+        
+        // Note: For a real implementation, you'd need crypto libraries
+        // This is a simplified example showing the structure
+        if (generateMD5) {
+            const md5Hash = await simpleHash(inputText, 'MD5');
+            result += `<strong>MD5:</strong><br><code style="word-break: break-all; font-family: monospace; background: #f3f4f6; padding: 8px; border-radius: 4px; display: block; margin-bottom: 10px;">${md5Hash}</code>`;
+        }
+        
+        if (generateSHA1) {
+            const sha1Hash = await simpleHash(inputText, 'SHA-1');
+            result += `<strong>SHA-1:</strong><br><code style="word-break: break-all; font-family: monospace; background: #f3f4f6; padding: 8px; border-radius: 4px; display: block; margin-bottom: 10px;">${sha1Hash}</code>`;
+        }
+        
+        if (generateSHA256) {
+            const sha256Hash = await simpleHash(inputText, 'SHA-256');
+            result += `<strong>SHA-256:</strong><br><code style="word-break: break-all; font-family: monospace; background: #f3f4f6; padding: 8px; border-radius: 4px; display: block; margin-bottom: 10px;">${sha256Hash}</code>`;
+        }
+        
+        if (generateSHA512) {
+            const sha512Hash = await simpleHash(inputText, 'SHA-512');
+            result += `<strong>SHA-512:</strong><br><code style="word-break: break-all; font-family: monospace; background: #f3f4f6; padding: 8px; border-radius: 4px; display: block; margin-bottom: 10px;">${sha512Hash}</code>`;
+        }
+        
+        result += '<br><em>Note: Hashes generated using Web Crypto API</em>';
+        
+        showResult('hashResult', result);
+    } catch (error) {
+        showResult('hashResult', error.message, true);
+    }
+}
+
+async function simpleHash(text, algorithm) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(text);
+    const hashBuffer = await crypto.subtle.digest(algorithm, data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function resetHash() {
+    document.getElementById('hashInput').value = '';
+    document.getElementById('generateMD5').checked = true;
+    document.getElementById('generateSHA1').checked = true;
+    document.getElementById('generateSHA256').checked = true;
+    document.getElementById('generateSHA512').checked = false;
+    hideResult('hashResult');
+}
+
+// Random Team Generator
+function generateRandomTeams() {
+    try {
+        const participantText = document.getElementById('participantNames').value.trim();
+        const numberOfTeams = validateInput(document.getElementById('numberOfTeams').value, 'Number of Teams');
+        const teamNamesText = document.getElementById('teamNames').value.trim();
+        const balancedTeams = document.getElementById('balancedTeams').checked;
+        const allowEmptyTeams = document.getElementById('allowEmptyTeams').checked;
+        
+        if (!participantText) throw new Error('Please enter participant names');
+        if (numberOfTeams <= 0) throw new Error('Number of teams must be positive');
+        
+        const participants = participantText.split('\n')
+            .map(name => name.trim())
+            .filter(name => name.length > 0);
+            
+        if (participants.length === 0) throw new Error('Please enter at least one participant');
+        
+        const teamNames = teamNamesText ? 
+            teamNamesText.split('\n').map(name => name.trim()).filter(name => name.length > 0) :
+            Array.from({length: numberOfTeams}, (_, i) => `Team ${i + 1}`);
+            
+        // Shuffle participants
+        const shuffledParticipants = [...participants];
+        for (let i = shuffledParticipants.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledParticipants[i], shuffledParticipants[j]] = [shuffledParticipants[j], shuffledParticipants[i]];
+        }
+        
+        // Create teams
+        const teams = Array.from({length: numberOfTeams}, (_, i) => ({
+            name: teamNames[i] || `Team ${i + 1}`,
+            members: []
+        }));
+        
+        if (balancedTeams) {
+            // Distribute participants evenly
+            shuffledParticipants.forEach((participant, index) => {
+                teams[index % numberOfTeams].members.push(participant);
+            });
+        } else {
+            // Random distribution
+            shuffledParticipants.forEach(participant => {
+                const randomTeamIndex = Math.floor(Math.random() * numberOfTeams);
+                teams[randomTeamIndex].members.push(participant);
+            });
+        }
+        
+        // Filter out empty teams if not allowed
+        const finalTeams = allowEmptyTeams ? teams : teams.filter(team => team.members.length > 0);
+        
+        let result = '<strong>Generated Teams:</strong><br><br>';
+        
+        finalTeams.forEach((team, index) => {
+            const teamColor = ['bg-blue-50 border-blue-200', 'bg-green-50 border-green-200', 
+                              'bg-purple-50 border-purple-200', 'bg-orange-50 border-orange-200',
+                              'bg-red-50 border-red-200', 'bg-indigo-50 border-indigo-200',
+                              'bg-yellow-50 border-yellow-200', 'bg-pink-50 border-pink-200'][index % 8];
+            
+            result += `<div style="margin-bottom: 16px; padding: 12px; border: 2px solid; border-radius: 8px;" class="${teamColor}">`;
+            result += `<strong style="font-size: 18px; color: #374151;">${team.name}</strong><br>`;
+            result += `<span style="color: #6b7280; font-size: 14px;">${team.members.length} member(s)</span><br><br>`;
+            
+            if (team.members.length > 0) {
+                team.members.forEach((member, memberIndex) => {
+                    result += `<span style="display: inline-block; background: white; padding: 4px 8px; margin: 2px; border-radius: 4px; border: 1px solid #e5e7eb;">${member}</span>`;
+                });
+            } else {
+                result += '<em style="color: #9ca3af;">No members assigned</em>';
+            }
+            
+            result += '</div>';
+        });
+        
+        result += `<br><strong>Summary:</strong> ${participants.length} participants divided into ${finalTeams.length} teams`;
+        
+        showResult('teamResult', result);
+    } catch (error) {
+        showResult('teamResult', error.message, true);
+    }
+}
+
+function resetTeamGenerator() {
+    document.getElementById('participantNames').value = '';
+    document.getElementById('numberOfTeams').value = '2';
+    document.getElementById('teamNames').value = '';
+    document.getElementById('balancedTeams').checked = true;
+    document.getElementById('allowEmptyTeams').checked = false;
+    document.getElementById('participantCount').textContent = '0';
+    hideResult('teamResult');
+}
