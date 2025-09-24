@@ -1230,6 +1230,735 @@ function resetOvulation() {
     hideResult('ovulationResult');
 }
 
+// Water Intake Calculator
+function calculateWaterIntake() {
+    try {
+        const weight = validateInput(document.getElementById('waterWeight').value, 'Weight');
+        const activity = document.getElementById('waterActivity').value;
+        const climate = document.getElementById('waterClimate').value;
+        
+        if (weight <= 0) {
+            throw new Error('Weight must be a positive number');
+        }
+        
+        // Base water intake: 35ml per kg body weight
+        let baseIntake = weight * 35;
+        
+        // Activity multipliers
+        const activityMultipliers = {
+            sedentary: 1.0,
+            light: 1.2,
+            moderate: 1.4,
+            intense: 1.6
+        };
+        
+        // Climate multipliers
+        const climateMultipliers = {
+            normal: 1.0,
+            hot: 1.2,
+            humid: 1.3
+        };
+        
+        const totalIntake = baseIntake * activityMultipliers[activity] * climateMultipliers[climate];
+        const cups = totalIntake / 240; // 240ml per cup
+        const liters = totalIntake / 1000;
+        
+        const result = `
+            <strong>Recommended Daily Water Intake:</strong><br>
+            <strong>${Math.round(totalIntake)} ml</strong><br>
+            <strong>${liters.toFixed(2)} liters</strong><br>
+            <strong>${Math.round(cups)} cups (8oz)</strong><br><br>
+            <small>Based on your weight, activity level, and climate conditions</small>
+        `;
+        
+        showResult('waterResult', result);
+    } catch (error) {
+        showResult('waterResult', error.message, true);
+    }
+}
+
+function resetWaterIntake() {
+    document.getElementById('waterWeight').value = '';
+    document.getElementById('waterActivity').value = 'sedentary';
+    document.getElementById('waterClimate').value = 'normal';
+    hideResult('waterResult');
+}
+
+// Retirement Calculator
+function calculateRetirement() {
+    try {
+        const currentAge = validateInput(document.getElementById('retireCurrentAge').value, 'Current age');
+        const retireAge = validateInput(document.getElementById('retireTargetAge').value, 'Retirement age');
+        const currentSavings = validateInput(document.getElementById('retireCurrentSavings').value, 'Current savings');
+        const monthlyContrib = validateInput(document.getElementById('retireMonthlyContrib').value, 'Monthly contribution');
+        const returnRate = validateInput(document.getElementById('retireReturn').value, 'Return rate');
+        const inflationRate = validateInput(document.getElementById('retireInflation').value, 'Inflation rate');
+        
+        if (retireAge <= currentAge) {
+            throw new Error('Retirement age must be greater than current age');
+        }
+        
+        const yearsToRetire = retireAge - currentAge;
+        const monthsToRetire = yearsToRetire * 12;
+        const monthlyReturn = returnRate / 100 / 12;
+        
+        // Future value of current savings
+        const futureCurrentSavings = currentSavings * Math.pow(1 + returnRate / 100, yearsToRetire);
+        
+        // Future value of monthly contributions
+        let futureContributions = 0;
+        if (monthlyReturn > 0) {
+            futureContributions = monthlyContrib * ((Math.pow(1 + monthlyReturn, monthsToRetire) - 1) / monthlyReturn);
+        }
+        
+        const totalRetirementSavings = futureCurrentSavings + futureContributions;
+        const realValue = totalRetirementSavings / Math.pow(1 + inflationRate / 100, yearsToRetire);
+        
+        const result = `
+            <strong>Retirement Projections:</strong><br>
+            <strong>Years to retirement:</strong> ${yearsToRetire} years<br>
+            <strong>Total at retirement:</strong> $${totalRetirementSavings.toLocaleString(undefined, {maximumFractionDigits: 0})}<br>
+            <strong>Real value (today's dollars):</strong> $${realValue.toLocaleString(undefined, {maximumFractionDigits: 0})}<br>
+            <strong>Total contributed:</strong> $${(currentSavings + (monthlyContrib * monthsToRetire)).toLocaleString(undefined, {maximumFractionDigits: 0})}<br>
+            <strong>Investment growth:</strong> $${(totalRetirementSavings - currentSavings - (monthlyContrib * monthsToRetire)).toLocaleString(undefined, {maximumFractionDigits: 0})}
+        `;
+        
+        showResult('retireResult', result);
+    } catch (error) {
+        showResult('retireResult', error.message, true);
+    }
+}
+
+function resetRetirement() {
+    document.getElementById('retireCurrentAge').value = '';
+    document.getElementById('retireTargetAge').value = '';
+    document.getElementById('retireCurrentSavings').value = '';
+    document.getElementById('retireMonthlyContrib').value = '';
+    document.getElementById('retireReturn').value = '';
+    document.getElementById('retireInflation').value = '';
+    hideResult('retireResult');
+}
+
+// Carbon Footprint Calculator
+function calculateCarbonFootprint() {
+    try {
+        const miles = validateInput(document.getElementById('carbonMiles').value || '0', 'Miles');
+        const mpg = validateInput(document.getElementById('carbonMpg').value || '25', 'MPG');
+        const electricity = validateInput(document.getElementById('carbonElectricity').value || '0', 'Electricity');
+        const gas = validateInput(document.getElementById('carbonGas').value || '0', 'Gas');
+        const flights = validateInput(document.getElementById('carbonFlights').value || '0', 'Flights');
+        const diet = document.getElementById('carbonDiet').value;
+        
+        // Transportation emissions (lbs CO2 per gallon of gas = 19.6)
+        const transportEmissions = (miles / mpg) * 19.6;
+        
+        // Electricity emissions (lbs CO2 per kWh = 1.22)
+        const electricityEmissions = electricity * 12 * 1.22;
+        
+        // Natural gas emissions (lbs CO2 per therm = 11.7)
+        const gasEmissions = gas * 12 * 11.7;
+        
+        // Flight emissions (lbs CO2 per flight = 1100 for average domestic flight)
+        const flightEmissions = flights * 1100;
+        
+        // Diet emissions (lbs CO2 per year)
+        const dietEmissions = {
+            meat_heavy: 3300,
+            average: 2500,
+            low_meat: 1900,
+            vegetarian: 1500,
+            vegan: 1100
+        };
+        
+        const totalEmissions = transportEmissions + electricityEmissions + gasEmissions + flightEmissions + dietEmissions[diet];
+        const totalTons = totalEmissions / 2000;
+        const usAverage = 16; // US average tons CO2 per year
+        
+        const result = `
+            <strong>Annual Carbon Footprint:</strong><br>
+            <strong>${totalTons.toFixed(1)} tons CO2</strong><br>
+            <strong>${totalEmissions.toLocaleString()} lbs CO2</strong><br><br>
+            <strong>Breakdown:</strong><br>
+            Transportation: ${(transportEmissions/2000).toFixed(1)} tons<br>
+            Electricity: ${(electricityEmissions/2000).toFixed(1)} tons<br>
+            Natural Gas: ${(gasEmissions/2000).toFixed(1)} tons<br>
+            Flights: ${(flightEmissions/2000).toFixed(1)} tons<br>
+            Diet: ${(dietEmissions[diet]/2000).toFixed(1)} tons<br><br>
+            <small>US Average: ${usAverage} tons/year | ${totalTons < usAverage ? 'Below' : 'Above'} average</small>
+        `;
+        
+        showResult('carbonResult', result);
+    } catch (error) {
+        showResult('carbonResult', error.message, true);
+    }
+}
+
+function resetCarbonFootprint() {
+    document.getElementById('carbonMiles').value = '';
+    document.getElementById('carbonMpg').value = '';
+    document.getElementById('carbonElectricity').value = '';
+    document.getElementById('carbonGas').value = '';
+    document.getElementById('carbonFlights').value = '';
+    document.getElementById('carbonDiet').value = 'meat_heavy';
+    hideResult('carbonResult');
+}
+
+// Time Calculator
+function calculateTime() {
+    try {
+        const operation = document.getElementById('timeOperation').value;
+        const hours1 = parseInt(document.getElementById('timeHours1').value || '0');
+        const minutes1 = parseInt(document.getElementById('timeMinutes1').value || '0');
+        const seconds1 = parseInt(document.getElementById('timeSeconds1').value || '0');
+        const hours2 = parseInt(document.getElementById('timeHours2').value || '0');
+        const minutes2 = parseInt(document.getElementById('timeMinutes2').value || '0');
+        const seconds2 = parseInt(document.getElementById('timeSeconds2').value || '0');
+        
+        // Convert to total seconds
+        const totalSeconds1 = hours1 * 3600 + minutes1 * 60 + seconds1;
+        const totalSeconds2 = hours2 * 3600 + minutes2 * 60 + seconds2;
+        
+        let resultSeconds;
+        let operationText;
+        
+        if (operation === 'add') {
+            resultSeconds = totalSeconds1 + totalSeconds2;
+            operationText = 'Addition Result';
+        } else if (operation === 'subtract') {
+            resultSeconds = totalSeconds1 - totalSeconds2;
+            operationText = 'Subtraction Result';
+        } else {
+            resultSeconds = Math.abs(totalSeconds1 - totalSeconds2);
+            operationText = 'Duration Between Times';
+        }
+        
+        // Convert back to hours, minutes, seconds
+        const resultHours = Math.floor(Math.abs(resultSeconds) / 3600);
+        const remainingSeconds = Math.abs(resultSeconds) % 3600;
+        const resultMinutes = Math.floor(remainingSeconds / 60);
+        const finalSeconds = remainingSeconds % 60;
+        
+        const sign = resultSeconds < 0 ? '-' : '';
+        
+        const result = `
+            <strong>${operationText}:</strong><br>
+            <strong>${sign}${resultHours}h ${resultMinutes}m ${finalSeconds}s</strong><br>
+            <strong>Total seconds:</strong> ${sign}${Math.abs(resultSeconds).toLocaleString()}<br>
+            <strong>Total minutes:</strong> ${sign}${(Math.abs(resultSeconds) / 60).toFixed(2)}<br>
+            <strong>Total hours:</strong> ${sign}${(Math.abs(resultSeconds) / 3600).toFixed(2)}
+        `;
+        
+        showResult('timeResult', result);
+    } catch (error) {
+        showResult('timeResult', error.message, true);
+    }
+}
+
+function resetTime() {
+    document.getElementById('timeHours1').value = '';
+    document.getElementById('timeMinutes1').value = '';
+    document.getElementById('timeSeconds1').value = '';
+    document.getElementById('timeHours2').value = '';
+    document.getElementById('timeMinutes2').value = '';
+    document.getElementById('timeSeconds2').value = '';
+    document.getElementById('timeOperation').value = 'add';
+    hideResult('timeResult');
+}
+
+// Subnet Calculator
+function calculateSubnet() {
+    try {
+        const ipInput = document.getElementById('subnetIp').value.trim();
+        const maskInput = document.getElementById('subnetMask').value.trim();
+        
+        if (!ipInput || !maskInput) {
+            throw new Error('Both IP address and subnet mask are required');
+        }
+        
+        // Parse IP address
+        const ipParts = ipInput.split('.').map(Number);
+        if (ipParts.length !== 4 || ipParts.some(part => isNaN(part) || part < 0 || part > 255)) {
+            throw new Error('Invalid IP address format');
+        }
+        
+        let cidr;
+        let subnetMask;
+        
+        // Handle CIDR notation
+        if (maskInput.startsWith('/')) {
+            cidr = parseInt(maskInput.substring(1));
+            if (isNaN(cidr) || cidr < 0 || cidr > 32) {
+                throw new Error('Invalid CIDR notation');
+            }
+            // Convert CIDR to subnet mask
+            const mask = 0xFFFFFFFF << (32 - cidr);
+            subnetMask = [
+                (mask >>> 24) & 0xFF,
+                (mask >>> 16) & 0xFF,
+                (mask >>> 8) & 0xFF,
+                mask & 0xFF
+            ];
+        } else {
+            // Parse subnet mask
+            subnetMask = maskInput.split('.').map(Number);
+            if (subnetMask.length !== 4 || subnetMask.some(part => isNaN(part) || part < 0 || part > 255)) {
+                throw new Error('Invalid subnet mask format');
+            }
+            // Convert to CIDR
+            const mask = (subnetMask[0] << 24) | (subnetMask[1] << 16) | (subnetMask[2] << 8) | subnetMask[3];
+            cidr = 32 - Math.log2((~mask >>> 0) + 1);
+        }
+        
+        // Calculate network and broadcast addresses
+        const ip = (ipParts[0] << 24) | (ipParts[1] << 16) | (ipParts[2] << 8) | ipParts[3];
+        const mask = (subnetMask[0] << 24) | (subnetMask[1] << 16) | (subnetMask[2] << 8) | subnetMask[3];
+        const network = ip & mask;
+        const broadcast = network | (~mask >>> 0);
+        const hostBits = 32 - cidr;
+        const totalHosts = Math.pow(2, hostBits);
+        const usableHosts = totalHosts - 2;
+        
+        // Convert back to dotted decimal
+        const networkAddr = [(network >>> 24) & 0xFF, (network >>> 16) & 0xFF, (network >>> 8) & 0xFF, network & 0xFF].join('.');
+        const broadcastAddr = [(broadcast >>> 24) & 0xFF, (broadcast >>> 16) & 0xFF, (broadcast >>> 8) & 0xFF, broadcast & 0xFF].join('.');
+        const firstHost = [(network >>> 24) & 0xFF, (network >>> 16) & 0xFF, (network >>> 8) & 0xFF, (network & 0xFF) + 1].join('.');
+        const lastHost = [(broadcast >>> 24) & 0xFF, (broadcast >>> 16) & 0xFF, (broadcast >>> 8) & 0xFF, (broadcast & 0xFF) - 1].join('.');
+        
+        const result = `
+            <strong>Subnet Information:</strong><br>
+            <strong>Network Address:</strong> ${networkAddr}/${cidr}<br>
+            <strong>Subnet Mask:</strong> ${subnetMask.join('.')}<br>
+            <strong>Broadcast Address:</strong> ${broadcastAddr}<br>
+            <strong>First Host:</strong> ${firstHost}<br>
+            <strong>Last Host:</strong> ${lastHost}<br>
+            <strong>Total Hosts:</strong> ${totalHosts.toLocaleString()}<br>
+            <strong>Usable Hosts:</strong> ${usableHosts.toLocaleString()}<br>
+            <strong>CIDR Notation:</strong> /${cidr}
+        `;
+        
+        showResult('subnetResult', result);
+    } catch (error) {
+        showResult('subnetResult', error.message, true);
+    }
+}
+
+function resetSubnet() {
+    document.getElementById('subnetIp').value = '';
+    document.getElementById('subnetMask').value = '';
+    hideResult('subnetResult');
+}
+
+// Pregnancy Calculator
+function calculatePregnancy() {
+    try {
+        const lmpInput = document.getElementById('pregnancyLmp').value;
+        if (!lmpInput) {
+            throw new Error('Last menstrual period date is required');
+        }
+        
+        const lmp = new Date(lmpInput);
+        const today = new Date();
+        
+        if (lmp > today) {
+            throw new Error('Last menstrual period cannot be in the future');
+        }
+        
+        // Calculate due date (280 days from LMP)
+        const dueDate = new Date(lmp);
+        dueDate.setDate(dueDate.getDate() + 280);
+        
+        // Calculate current pregnancy week
+        const daysSinceLmp = Math.floor((today - lmp) / (1000 * 60 * 60 * 24));
+        const weeks = Math.floor(daysSinceLmp / 7);
+        const days = daysSinceLmp % 7;
+        
+        // Determine trimester
+        let trimester;
+        if (weeks < 13) {
+            trimester = 'First Trimester';
+        } else if (weeks < 27) {
+            trimester = 'Second Trimester';
+        } else {
+            trimester = 'Third Trimester';
+        }
+        
+        // Days until due date
+        const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+        
+        const result = `
+            <strong>Pregnancy Information:</strong><br>
+            <strong>Due Date:</strong> ${dueDate.toDateString()}<br>
+            <strong>Current Week:</strong> ${weeks} weeks, ${days} days<br>
+            <strong>Trimester:</strong> ${trimester}<br>
+            <strong>Days until due:</strong> ${daysUntilDue > 0 ? daysUntilDue : 'Overdue by ' + Math.abs(daysUntilDue)} days<br>
+            <strong>Conception Date:</strong> ${new Date(lmp.getTime() + 14 * 24 * 60 * 60 * 1000).toDateString()}<br><br>
+            <small>This calculation is based on a 28-day cycle. Consult your doctor for personalized care.</small>
+        `;
+        
+        showResult('pregnancyResult', result);
+    } catch (error) {
+        showResult('pregnancyResult', error.message, true);
+    }
+}
+
+function resetPregnancy() {
+    document.getElementById('pregnancyLmp').value = '';
+    hideResult('pregnancyResult');
+}
+
+// Loan Comparison Calculator
+function compareLoan() {
+    try {
+        const amount1 = validateInput(document.getElementById('loanAmount1').value, 'Loan 1 amount');
+        const rate1 = validateInput(document.getElementById('loanRate1').value, 'Loan 1 rate');
+        const term1 = validateInput(document.getElementById('loanTerm1').value, 'Loan 1 term');
+        const fees1 = validateInput(document.getElementById('loanFees1').value || '0', 'Loan 1 fees');
+        
+        const amount2 = validateInput(document.getElementById('loanAmount2').value, 'Loan 2 amount');
+        const rate2 = validateInput(document.getElementById('loanRate2').value, 'Loan 2 rate');
+        const term2 = validateInput(document.getElementById('loanTerm2').value, 'Loan 2 term');
+        const fees2 = validateInput(document.getElementById('loanFees2').value || '0', 'Loan 2 fees');
+        
+        // Calculate EMI for both loans
+        function calculateEMI(principal, rate, years) {
+            const monthlyRate = rate / (12 * 100);
+            const months = years * 12;
+            return (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / 
+                   (Math.pow(1 + monthlyRate, months) - 1);
+        }
+        
+        const emi1 = calculateEMI(amount1, rate1, term1);
+        const totalAmount1 = emi1 * term1 * 12;
+        const totalInterest1 = totalAmount1 - amount1;
+        const totalCost1 = totalAmount1 + fees1;
+        
+        const emi2 = calculateEMI(amount2, rate2, term2);
+        const totalAmount2 = emi2 * term2 * 12;
+        const totalInterest2 = totalAmount2 - amount2;
+        const totalCost2 = totalAmount2 + fees2;
+        
+        const savings = Math.abs(totalCost1 - totalCost2);
+        const betterLoan = totalCost1 < totalCost2 ? 1 : 2;
+        
+        const result = `
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="border border-gray-200 rounded-lg p-4 ${betterLoan === 1 ? 'bg-green-50 border-green-200' : ''}">
+                    <h4 class="font-semibold text-lg mb-2">Loan Option 1 ${betterLoan === 1 ? '✓ Better' : ''}</h4>
+                    <strong>Monthly EMI:</strong> $${emi1.toFixed(2)}<br>
+                    <strong>Total Interest:</strong> $${totalInterest1.toLocaleString()}<br>
+                    <strong>Total Cost:</strong> $${totalCost1.toLocaleString()}<br>
+                    <strong>Fees:</strong> $${fees1.toLocaleString()}
+                </div>
+                <div class="border border-gray-200 rounded-lg p-4 ${betterLoan === 2 ? 'bg-green-50 border-green-200' : ''}">
+                    <h4 class="font-semibold text-lg mb-2">Loan Option 2 ${betterLoan === 2 ? '✓ Better' : ''}</h4>
+                    <strong>Monthly EMI:</strong> $${emi2.toFixed(2)}<br>
+                    <strong>Total Interest:</strong> $${totalInterest2.toLocaleString()}<br>
+                    <strong>Total Cost:</strong> $${totalCost2.toLocaleString()}<br>
+                    <strong>Fees:</strong> $${fees2.toLocaleString()}
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <strong>Savings with better option:</strong> $${savings.toLocaleString()}
+            </div>
+        `;
+        
+        showResult('loanCompareResult', result);
+    } catch (error) {
+        showResult('loanCompareResult', error.message, true);
+    }
+}
+
+function resetLoanComparison() {
+    document.getElementById('loanAmount1').value = '';
+    document.getElementById('loanRate1').value = '';
+    document.getElementById('loanTerm1').value = '';
+    document.getElementById('loanFees1').value = '';
+    document.getElementById('loanAmount2').value = '';
+    document.getElementById('loanRate2').value = '';
+    document.getElementById('loanTerm2').value = '';
+    document.getElementById('loanFees2').value = '';
+    hideResult('loanCompareResult');
+}
+
+// Speed Calculator
+function calculateSpeed() {
+    try {
+        const calculateType = document.getElementById('speedCalculateType').value;
+        const distance = parseFloat(document.getElementById('speedDistance').value || '0');
+        const time = parseFloat(document.getElementById('speedTime').value || '0');
+        const speed = parseFloat(document.getElementById('speedValue').value || '0');
+        
+        const distanceUnit = document.getElementById('speedDistanceUnit').value;
+        const timeUnit = document.getElementById('speedTimeUnit').value;
+        const speedUnit = document.getElementById('speedUnit').value;
+        
+        // Convert to base units (meters and seconds)
+        const distanceToMeters = {
+            m: 1,
+            km: 1000,
+            ft: 0.3048,
+            mi: 1609.34
+        };
+        
+        const timeToSeconds = {
+            s: 1,
+            min: 60,
+            h: 3600
+        };
+        
+        const speedToMS = {
+            ms: 1,
+            kmh: 1/3.6,
+            mph: 0.44704,
+            kn: 0.514444
+        };
+        
+        let result;
+        
+        if (calculateType === 'speed') {
+            if (distance <= 0 || time <= 0) {
+                throw new Error('Distance and time must be positive numbers');
+            }
+            const distanceM = distance * distanceToMeters[distanceUnit];
+            const timeS = time * timeToSeconds[timeUnit];
+            const speedMS = distanceM / timeS;
+            
+            result = `
+                <strong>Calculated Speed:</strong><br>
+                <strong>${(speedMS / speedToMS[speedUnit]).toFixed(2)} ${speedUnit}</strong><br>
+                <strong>Conversions:</strong><br>
+                ${(speedMS).toFixed(2)} m/s<br>
+                ${(speedMS * 3.6).toFixed(2)} km/h<br>
+                ${(speedMS / 0.44704).toFixed(2)} mph<br>
+                ${(speedMS / 0.514444).toFixed(2)} knots
+            `;
+        } else if (calculateType === 'distance') {
+            if (speed <= 0 || time <= 0) {
+                throw new Error('Speed and time must be positive numbers');
+            }
+            const speedMS = speed * speedToMS[speedUnit];
+            const timeS = time * timeToSeconds[timeUnit];
+            const distanceM = speedMS * timeS;
+            
+            result = `
+                <strong>Calculated Distance:</strong><br>
+                <strong>${(distanceM / distanceToMeters[distanceUnit]).toFixed(2)} ${distanceUnit}</strong><br>
+                <strong>Conversions:</strong><br>
+                ${distanceM.toFixed(2)} meters<br>
+                ${(distanceM / 1000).toFixed(2)} kilometers<br>
+                ${(distanceM / 0.3048).toFixed(2)} feet<br>
+                ${(distanceM / 1609.34).toFixed(2)} miles
+            `;
+        } else {
+            if (speed <= 0 || distance <= 0) {
+                throw new Error('Speed and distance must be positive numbers');
+            }
+            const speedMS = speed * speedToMS[speedUnit];
+            const distanceM = distance * distanceToMeters[distanceUnit];
+            const timeS = distanceM / speedMS;
+            
+            const hours = Math.floor(timeS / 3600);
+            const minutes = Math.floor((timeS % 3600) / 60);
+            const seconds = Math.floor(timeS % 60);
+            
+            result = `
+                <strong>Calculated Time:</strong><br>
+                <strong>${(timeS / timeToSeconds[timeUnit]).toFixed(2)} ${timeUnit}</strong><br>
+                <strong>Formatted:</strong><br>
+                ${hours}h ${minutes}m ${seconds}s<br>
+                <strong>Conversions:</strong><br>
+                ${timeS.toFixed(2)} seconds<br>
+                ${(timeS / 60).toFixed(2)} minutes<br>
+                ${(timeS / 3600).toFixed(2)} hours
+            `;
+        }
+        
+        showResult('speedResult', result);
+    } catch (error) {
+        showResult('speedResult', error.message, true);
+    }
+}
+
+function resetSpeed() {
+    document.getElementById('speedDistance').value = '';
+    document.getElementById('speedTime').value = '';
+    document.getElementById('speedValue').value = '';
+    document.getElementById('speedCalculateType').value = 'speed';
+    document.getElementById('speedDistanceUnit').value = 'm';
+    document.getElementById('speedTimeUnit').value = 's';
+    document.getElementById('speedUnit').value = 'ms';
+    hideResult('speedResult');
+}
+
+// Markup Calculator
+function calculateMarkup() {
+    try {
+        const calculateType = document.getElementById('markupCalculateType').value;
+        const cost = parseFloat(document.getElementById('markupCost').value || '0');
+        const selling = parseFloat(document.getElementById('markupSelling').value || '0');
+        const markupPercent = parseFloat(document.getElementById('markupPercentage').value || '0');
+        const marginPercent = parseFloat(document.getElementById('markupMargin').value || '0');
+        
+        let result;
+        
+        if (calculateType === 'selling_price') {
+            if (cost <= 0) {
+                throw new Error('Cost price must be a positive number');
+            }
+            
+            let sellingPrice;
+            if (markupPercent > 0) {
+                sellingPrice = cost * (1 + markupPercent / 100);
+            } else if (marginPercent > 0) {
+                sellingPrice = cost / (1 - marginPercent / 100);
+            } else {
+                throw new Error('Enter either markup percentage or profit margin');
+            }
+            
+            const profit = sellingPrice - cost;
+            const calculatedMarkup = ((sellingPrice - cost) / cost) * 100;
+            const calculatedMargin = ((sellingPrice - cost) / sellingPrice) * 100;
+            
+            result = `
+                <strong>Calculated Selling Price:</strong><br>
+                <strong>$${sellingPrice.toFixed(2)}</strong><br>
+                <strong>Profit:</strong> $${profit.toFixed(2)}<br>
+                <strong>Markup:</strong> ${calculatedMarkup.toFixed(2)}%<br>
+                <strong>Profit Margin:</strong> ${calculatedMargin.toFixed(2)}%
+            `;
+        } else if (calculateType === 'markup_percentage') {
+            if (cost <= 0 || selling <= 0) {
+                throw new Error('Both cost and selling price must be positive numbers');
+            }
+            
+            const profit = selling - cost;
+            const markup = ((selling - cost) / cost) * 100;
+            const margin = ((selling - cost) / selling) * 100;
+            
+            result = `
+                <strong>Calculated Markup:</strong><br>
+                <strong>${markup.toFixed(2)}%</strong><br>
+                <strong>Profit:</strong> $${profit.toFixed(2)}<br>
+                <strong>Profit Margin:</strong> ${margin.toFixed(2)}%<br>
+                <strong>Return on Investment:</strong> ${markup.toFixed(2)}%
+            `;
+        } else {
+            if (selling <= 0) {
+                throw new Error('Selling price must be a positive number');
+            }
+            
+            let costPrice;
+            if (markupPercent > 0) {
+                costPrice = selling / (1 + markupPercent / 100);
+            } else if (marginPercent > 0) {
+                costPrice = selling * (1 - marginPercent / 100);
+            } else {
+                throw new Error('Enter either markup percentage or profit margin');
+            }
+            
+            const profit = selling - costPrice;
+            const calculatedMarkup = ((selling - costPrice) / costPrice) * 100;
+            const calculatedMargin = ((selling - costPrice) / selling) * 100;
+            
+            result = `
+                <strong>Calculated Cost Price:</strong><br>
+                <strong>$${costPrice.toFixed(2)}</strong><br>
+                <strong>Profit:</strong> $${profit.toFixed(2)}<br>
+                <strong>Markup:</strong> ${calculatedMarkup.toFixed(2)}%<br>
+                <strong>Profit Margin:</strong> ${calculatedMargin.toFixed(2)}%
+            `;
+        }
+        
+        showResult('markupResult', result);
+    } catch (error) {
+        showResult('markupResult', error.message, true);
+    }
+}
+
+function resetMarkup() {
+    document.getElementById('markupCost').value = '';
+    document.getElementById('markupSelling').value = '';
+    document.getElementById('markupPercentage').value = '';
+    document.getElementById('markupMargin').value = '';
+    document.getElementById('markupCalculateType').value = 'selling_price';
+    hideResult('markupResult');
+}
+
+// Energy Calculator
+function convertEnergy() {
+    try {
+        const value = validateInput(document.getElementById('energyFromValue').value, 'Energy value');
+        const fromUnit = document.getElementById('energyFromUnit').value;
+        const toUnit = document.getElementById('energyToUnit').value;
+        
+        if (value <= 0) {
+            throw new Error('Energy value must be positive');
+        }
+        
+        // Convert to joules first
+        const toJoules = {
+            joule: 1,
+            kilojoule: 1000,
+            calorie: 4.184,
+            kilocalorie: 4184,
+            btu: 1055.06,
+            kwh: 3600000,
+            wh: 3600,
+            erg: 1e-7
+        };
+        
+        // Convert from joules to target unit
+        const fromJoules = {
+            joule: 1,
+            kilojoule: 0.001,
+            calorie: 0.239006,
+            kilocalorie: 0.000239006,
+            btu: 0.000947817,
+            kwh: 2.77778e-7,
+            wh: 0.000277778,
+            erg: 1e7
+        };
+        
+        const joules = value * toJoules[fromUnit];
+        const converted = joules * fromJoules[toUnit];
+        
+        const unitNames = {
+            joule: 'Joules (J)',
+            kilojoule: 'Kilojoules (kJ)',
+            calorie: 'Calories (cal)',
+            kilocalorie: 'Kilocalories (kcal)',
+            btu: 'BTU',
+            kwh: 'Kilowatt-hours (kWh)',
+            wh: 'Watt-hours (Wh)',
+            erg: 'Ergs'
+        };
+        
+        const result = `
+            <strong>Energy Conversion:</strong><br>
+            <strong>${value.toLocaleString()} ${unitNames[fromUnit]}</strong><br>
+            = <strong>${converted.toLocaleString()} ${unitNames[toUnit]}</strong><br><br>
+            <strong>Common Conversions:</strong><br>
+            ${(joules * fromJoules.joule).toLocaleString()} Joules<br>
+            ${(joules * fromJoules.kilojoule).toFixed(3)} Kilojoules<br>
+            ${(joules * fromJoules.calorie).toFixed(3)} Calories<br>
+            ${(joules * fromJoules.kilocalorie).toFixed(6)} Kilocalories<br>
+            ${(joules * fromJoules.kwh).toFixed(9)} kWh<br>
+            ${(joules * fromJoules.btu).toFixed(6)} BTU
+        `;
+        
+        showResult('energyResult', result);
+    } catch (error) {
+        showResult('energyResult', error.message, true);
+    }
+}
+
+function resetEnergy() {
+    document.getElementById('energyFromValue').value = '';
+    document.getElementById('energyFromUnit').value = 'joule';
+    document.getElementById('energyToUnit').value = 'joule';
+    hideResult('energyResult');
+}
+
 // Utility function for copying text to clipboard
 function copyToClipboard(text) {
     if (navigator.clipboard && window.isSecureContext) {
