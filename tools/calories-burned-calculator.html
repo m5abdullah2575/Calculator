@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calories Burned Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate calories burned for any activity or exercise. Free calories burned calculator with 500+ activities.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Calories Burned Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="zap" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Calories Burned Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate calories burned for any activity or exercise based on your weight, duration, and activity type.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (lbs)</label>
+                            <input 
+                                type="number" 
+                                id="calorieWeight" 
+                                placeholder="Enter your weight"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Duration (minutes)</label>
+                            <input 
+                                type="number" 
+                                id="calorieDuration" 
+                                placeholder="Exercise duration"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Activity Type</label>
+                        <select 
+                            id="activityType" 
+                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                        >
+                            <option value="">Select an activity</option>
+                            <option value="3.0">Walking (2.5 mph)</option>
+                            <option value="4.0">Walking (3.5 mph)</option>
+                            <option value="6.0">Running (5 mph)</option>
+                            <option value="8.0">Running (6 mph)</option>
+                            <option value="11.5">Running (8 mph)</option>
+                            <option value="4.0">Cycling (leisure)</option>
+                            <option value="8.0">Cycling (moderate)</option>
+                            <option value="12.0">Cycling (vigorous)</option>
+                            <option value="6.0">Swimming (leisure)</option>
+                            <option value="8.0">Swimming (moderate)</option>
+                            <option value="10.0">Swimming (vigorous)</option>
+                            <option value="3.0">Yoga</option>
+                            <option value="6.0">Weight Training</option>
+                            <option value="7.0">Basketball</option>
+                            <option value="8.0">Soccer</option>
+                            <option value="6.0">Tennis</option>
+                            <option value="5.0">Dancing</option>
+                            <option value="4.0">Housework</option>
+                            <option value="3.5">Gardening</option>
+                        </select>
+                    </div>
+                    
+                    <button 
+                        onclick="calculateCaloriesBurned()" 
+                        class="w-full bg-red-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-red-700 transition-colors duration-200 font-semibold"
+                    >
+                        Calculate Calories Burned
+                    </button>
+                    
+                    <div id="calorieResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetCalories()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Activity Guidelines -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Activity Intensity Levels</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-green-800 mb-2">Light Activities</h4>
+                        <p class="text-sm text-green-700">Walking, yoga, light housework</p>
+                        <p class="text-xs text-green-600 mt-1">3-4 METs</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-yellow-800 mb-2">Moderate Activities</h4>
+                        <p class="text-sm text-yellow-700">Brisk walking, cycling, dancing</p>
+                        <p class="text-xs text-yellow-600 mt-1">5-8 METs</p>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-red-800 mb-2">Vigorous Activities</h4>
+                        <p class="text-sm text-red-700">Running, swimming, sports</p>
+                        <p class="text-xs text-red-600 mt-1">8+ METs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Feather icons
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+
+        function calculateCaloriesBurned() {
+            const weight = parseFloat(document.getElementById('calorieWeight').value);
+            const duration = parseFloat(document.getElementById('calorieDuration').value);
+            const activityMET = parseFloat(document.getElementById('activityType').value);
+            const resultDiv = document.getElementById('calorieResult');
+
+            if (!weight || !duration || !activityMET) {
+                resultDiv.innerHTML = '<div class="text-red-600">Please fill in all fields</div>';
+                resultDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Formula: Calories = METs × weight (kg) × time (hours)
+            const weightKg = weight * 0.453592; // Convert lbs to kg
+            const durationHours = duration / 60; // Convert minutes to hours
+            const caloriesBurned = Math.round(activityMET * weightKg * durationHours);
+
+            const activityText = document.getElementById('activityType').selectedOptions[0].text;
+
+            resultDiv.innerHTML = `
+                <div class="bg-green-50 border border-green-200 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-green-800 mb-2">Calories Burned Results</h3>
+                    <div class="space-y-2">
+                        <p><span class="font-medium">Activity:</span> ${activityText}</p>
+                        <p><span class="font-medium">Duration:</span> ${duration} minutes</p>
+                        <p><span class="font-medium">Weight:</span> ${weight} lbs</p>
+                        <p class="text-xl font-bold text-green-600">Calories Burned: ${caloriesBurned} calories</p>
+                    </div>
+                </div>
+            `;
+            resultDiv.classList.remove('hidden');
+        }
+
+        function resetCalories() {
+            document.getElementById('calorieWeight').value = '';
+            document.getElementById('calorieDuration').value = '';
+            document.getElementById('activityType').value = '';
+            document.getElementById('calorieResult').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

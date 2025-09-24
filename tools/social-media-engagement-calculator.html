@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Engagement Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate engagement rate for Instagram, TikTok, YouTube, Facebook. Free social media engagement rate calculator.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Social Media Engagement Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="thumbs-up" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Social Media Engagement Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate engagement rate for Instagram, TikTok, YouTube, and other social media platforms.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Social Media Platform</label>
+                        <select 
+                            id="platform" 
+                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                        >
+                            <option value="instagram">Instagram</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="twitter">Twitter/X</option>
+                            <option value="linkedin">LinkedIn</option>
+                        </select>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Followers/Subscribers</label>
+                            <input 
+                                type="number" 
+                                id="followers" 
+                                placeholder="Total followers"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Post Likes</label>
+                            <input 
+                                type="number" 
+                                id="likes" 
+                                placeholder="Likes on post"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Comments</label>
+                            <input 
+                                type="number" 
+                                id="comments" 
+                                placeholder="Comments on post"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Shares/Saves (optional)</label>
+                            <input 
+                                type="number" 
+                                id="shares" 
+                                placeholder="Shares or saves"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="calculateEngagement()" 
+                        class="w-full bg-pink-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-pink-700 transition-colors duration-200 font-semibold"
+                    >
+                        Calculate Engagement Rate
+                    </button>
+                    
+                    <div id="engagementResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetEngagement()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Engagement Benchmarks -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Engagement Rate Benchmarks</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-pink-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-pink-800 mb-2">Instagram</h4>
+                        <ul class="text-sm text-pink-700 space-y-1">
+                            <li>• Excellent: 6%+</li>
+                            <li>• Good: 3-6%</li>
+                            <li>• Average: 1-3%</li>
+                            <li>• Poor: <1%</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-purple-800 mb-2">TikTok</h4>
+                        <ul class="text-sm text-purple-700 space-y-1">
+                            <li>• Excellent: 9%+</li>
+                            <li>• Good: 6-9%</li>
+                            <li>• Average: 3-6%</li>
+                            <li>• Poor: <3%</li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-red-800 mb-2">YouTube</h4>
+                        <ul class="text-sm text-red-700 space-y-1">
+                            <li>• Excellent: 4%+</li>
+                            <li>• Good: 2-4%</li>
+                            <li>• Average: 1-2%</li>
+                            <li>• Poor: <1%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Feather icons
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+
+        function calculateEngagement() {
+            const platform = document.getElementById('platform').value;
+            const followers = parseFloat(document.getElementById('followers').value);
+            const likes = parseFloat(document.getElementById('likes').value) || 0;
+            const comments = parseFloat(document.getElementById('comments').value) || 0;
+            const shares = parseFloat(document.getElementById('shares').value) || 0;
+            const resultDiv = document.getElementById('engagementResult');
+
+            if (!followers || (!likes && !comments && !shares)) {
+                resultDiv.innerHTML = '<div class="text-red-600">Please enter followers and at least one engagement metric</div>';
+                resultDiv.classList.remove('hidden');
+                return;
+            }
+
+            const totalEngagements = likes + comments + shares;
+            const engagementRate = (totalEngagements / followers) * 100;
+            
+            // Determine engagement level based on platform
+            let level = '';
+            let color = '';
+            
+            if (platform === 'instagram') {
+                if (engagementRate >= 6) { level = 'Excellent'; color = 'green'; }
+                else if (engagementRate >= 3) { level = 'Good'; color = 'blue'; }
+                else if (engagementRate >= 1) { level = 'Average'; color = 'yellow'; }
+                else { level = 'Poor'; color = 'red'; }
+            } else if (platform === 'tiktok') {
+                if (engagementRate >= 9) { level = 'Excellent'; color = 'green'; }
+                else if (engagementRate >= 6) { level = 'Good'; color = 'blue'; }
+                else if (engagementRate >= 3) { level = 'Average'; color = 'yellow'; }
+                else { level = 'Poor'; color = 'red'; }
+            } else {
+                if (engagementRate >= 4) { level = 'Excellent'; color = 'green'; }
+                else if (engagementRate >= 2) { level = 'Good'; color = 'blue'; }
+                else if (engagementRate >= 1) { level = 'Average'; color = 'yellow'; }
+                else { level = 'Poor'; color = 'red'; }
+            }
+
+            resultDiv.innerHTML = `
+                <div class="bg-pink-50 border border-pink-200 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-pink-800 mb-2">Engagement Analysis</h3>
+                    <div class="space-y-2">
+                        <p><span class="font-medium">Platform:</span> ${platform.charAt(0).toUpperCase() + platform.slice(1)}</p>
+                        <p><span class="font-medium">Followers:</span> ${followers.toLocaleString()}</p>
+                        <p><span class="font-medium">Total Engagements:</span> ${totalEngagements.toLocaleString()}</p>
+                        <p class="text-xl font-bold text-pink-600">Engagement Rate: ${engagementRate.toFixed(2)}%</p>
+                        <p><span class="font-medium">Performance:</span> <span class="font-bold text-${color}-600">${level}</span></p>
+                        <div class="mt-3 text-sm text-gray-600">
+                            <p>Breakdown: ${likes} likes + ${comments} comments + ${shares} shares</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            resultDiv.classList.remove('hidden');
+        }
+
+        function resetEngagement() {
+            document.getElementById('followers').value = '';
+            document.getElementById('likes').value = '';
+            document.getElementById('comments').value = '';
+            document.getElementById('shares').value = '';
+            document.getElementById('engagementResult').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

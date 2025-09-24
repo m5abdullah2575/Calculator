@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein Intake Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate your daily protein needs based on weight, activity level, and fitness goals. Free protein calculator.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Protein Intake Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="target" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Protein Intake Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate your daily protein needs based on your weight, activity level, and fitness goals.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (lbs)</label>
+                            <input 
+                                type="number" 
+                                id="proteinWeight" 
+                                placeholder="Enter your weight"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Age</label>
+                            <input 
+                                type="number" 
+                                id="proteinAge" 
+                                placeholder="Enter your age"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Activity Level</label>
+                        <select 
+                            id="activityLevel" 
+                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        >
+                            <option value="">Select activity level</option>
+                            <option value="0.8">Sedentary (little to no exercise)</option>
+                            <option value="1.0">Lightly active (light exercise 1-3 days/week)</option>
+                            <option value="1.2">Moderately active (moderate exercise 3-5 days/week)</option>
+                            <option value="1.4">Very active (hard exercise 6-7 days/week)</option>
+                            <option value="1.6">Extremely active (very hard exercise, physical job)</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Fitness Goal</label>
+                        <select 
+                            id="fitnessGoal" 
+                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        >
+                            <option value="">Select your goal</option>
+                            <option value="1.0">Maintain current weight</option>
+                            <option value="1.2">Build muscle mass</option>
+                            <option value="1.4">Build muscle + strength training</option>
+                            <option value="0.9">Weight loss</option>
+                            <option value="1.6">Elite athlete/bodybuilder</option>
+                        </select>
+                    </div>
+                    
+                    <button 
+                        onclick="calculateProtein()" 
+                        class="w-full bg-orange-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-orange-700 transition-colors duration-200 font-semibold"
+                    >
+                        Calculate Protein Needs
+                    </button>
+                    
+                    <div id="proteinResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetProtein()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Protein Guidelines -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Protein Recommendations</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">General Guidelines</h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• Sedentary adults: 0.8g per kg body weight</li>
+                            <li>• Active individuals: 1.0-1.2g per kg</li>
+                            <li>• Strength training: 1.2-1.6g per kg</li>
+                            <li>• Elite athletes: 1.6-2.2g per kg</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Good Protein Sources</h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• Chicken breast: 31g per 100g</li>
+                            <li>• Eggs: 6g per large egg</li>
+                            <li>• Greek yogurt: 20g per cup</li>
+                            <li>• Salmon: 25g per 100g</li>
+                            <li>• Beans: 15g per cup</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Feather icons
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+
+        function calculateProtein() {
+            const weight = parseFloat(document.getElementById('proteinWeight').value);
+            const age = parseFloat(document.getElementById('proteinAge').value);
+            const activityMultiplier = parseFloat(document.getElementById('activityLevel').value);
+            const goalMultiplier = parseFloat(document.getElementById('fitnessGoal').value);
+            const resultDiv = document.getElementById('proteinResult');
+
+            if (!weight || !age || !activityMultiplier || !goalMultiplier) {
+                resultDiv.innerHTML = '<div class="text-red-600">Please fill in all fields</div>';
+                resultDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Convert weight to kg
+            const weightKg = weight * 0.453592;
+            
+            // Base protein need
+            let baseProtein = 0.8; // g per kg body weight
+            
+            // Apply multipliers
+            const dailyProtein = Math.round(weightKg * baseProtein * activityMultiplier * goalMultiplier);
+            const proteinPerMeal = Math.round(dailyProtein / 3);
+            const proteinPerKg = Math.round((dailyProtein / weightKg) * 10) / 10;
+
+            const activityText = document.getElementById('activityLevel').selectedOptions[0].text;
+            const goalText = document.getElementById('fitnessGoal').selectedOptions[0].text;
+
+            resultDiv.innerHTML = `
+                <div class="bg-orange-50 border border-orange-200 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-orange-800 mb-2">Your Protein Needs</h3>
+                    <div class="space-y-2">
+                        <p><span class="font-medium">Activity Level:</span> ${activityText}</p>
+                        <p><span class="font-medium">Goal:</span> ${goalText}</p>
+                        <p class="text-xl font-bold text-orange-600">Daily Protein: ${dailyProtein}g</p>
+                        <p><span class="font-medium">Per meal:</span> ${proteinPerMeal}g</p>
+                        <p><span class="font-medium">Per kg body weight:</span> ${proteinPerKg}g</p>
+                    </div>
+                </div>
+            `;
+            resultDiv.classList.remove('hidden');
+        }
+
+        function resetProtein() {
+            document.getElementById('proteinWeight').value = '';
+            document.getElementById('proteinAge').value = '';
+            document.getElementById('activityLevel').value = '';
+            document.getElementById('fitnessGoal').value = '';
+            document.getElementById('proteinResult').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

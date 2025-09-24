@@ -65,6 +65,14 @@ function initializeCategoryFilters() {
                         targetSection = document.getElementById('converters');
                     } else if (category === 'utilities') {
                         targetSection = document.getElementById('utilities');
+                    } else if (category === 'fitness') {
+                        targetSection = document.getElementById('fitness');
+                    } else if (category === 'gaming') {
+                        targetSection = document.getElementById('gaming');
+                    } else if (category === 'real-estate') {
+                        targetSection = document.getElementById('real-estate');
+                    } else if (category === 'social-media') {
+                        targetSection = document.getElementById('social-media');
                     }
                 }
                 

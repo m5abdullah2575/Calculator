@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Pace Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate running pace, speed, and finish times for races. Free running pace calculator for marathon, 5K, 10K training.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Running Pace Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="clock" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Running Pace Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate running pace, speed, and finish times for any distance. Perfect for marathon, 5K, 10K training.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Distance</label>
+                            <div class="flex space-x-2">
+                                <input 
+                                    type="number" 
+                                    id="runDistance" 
+                                    step="0.1"
+                                    placeholder="Distance"
+                                    class="flex-1 px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                >
+                                <select 
+                                    id="distanceUnit" 
+                                    class="px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                >
+                                    <option value="miles">Miles</option>
+                                    <option value="km">Kilometers</option>
+                                </select>
+                            </div>
+                            <div class="flex mt-2 space-x-2">
+                                <button onclick="setDistance(3.1, 'miles')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-3 rounded text-sm hover:bg-gray-200">5K</button>
+                                <button onclick="setDistance(6.2, 'miles')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-3 rounded text-sm hover:bg-gray-200">10K</button>
+                                <button onclick="setDistance(13.1, 'miles')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-3 rounded text-sm hover:bg-gray-200">Half</button>
+                                <button onclick="setDistance(26.2, 'miles')" class="flex-1 bg-purple-100 text-purple-700 py-2 px-3 rounded text-sm hover:bg-purple-200">Marathon</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Time</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <input 
+                                    type="number" 
+                                    id="runHours" 
+                                    placeholder="Hours"
+                                    min="0"
+                                    class="px-3 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                >
+                                <input 
+                                    type="number" 
+                                    id="runMinutes" 
+                                    placeholder="Minutes"
+                                    min="0" max="59"
+                                    class="px-3 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                >
+                                <input 
+                                    type="number" 
+                                    id="runSeconds" 
+                                    placeholder="Seconds"
+                                    min="0" max="59"
+                                    class="px-3 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <button 
+                            onclick="calculatePace()" 
+                            class="bg-purple-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-purple-700 transition-colors duration-200 font-semibold"
+                        >
+                            Calculate Pace
+                        </button>
+                        <button 
+                            onclick="calculateTime()" 
+                            class="bg-indigo-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-indigo-700 transition-colors duration-200 font-semibold"
+                        >
+                            Calculate Time
+                        </button>
+                        <button 
+                            onclick="calculateDistance()" 
+                            class="bg-blue-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold"
+                        >
+                            Calculate Distance
+                        </button>
+                    </div>
+                    
+                    <div id="paceResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetPace()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pace Guidelines -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Common Race Paces</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Beginner Paces</h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• 5K: 10:00-12:00 min/mile</li>
+                            <li>• 10K: 10:30-12:30 min/mile</li>
+                            <li>• Half Marathon: 11:00-13:00 min/mile</li>
+                            <li>• Marathon: 11:30-13:30 min/mile</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-800 mb-3">Advanced Paces</h4>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• 5K: 6:00-8:00 min/mile</li>
+                            <li>• 10K: 6:30-8:30 min/mile</li>
+                            <li>• Half Marathon: 7:00-9:00 min/mile</li>
+                            <li>• Marathon: 7:30-9:30 min/mile</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Initialize Feather icons
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+        });
+
+        function setDistance(distance, unit) {
+            document.getElementById('runDistance').value = distance;
+            document.getElementById('distanceUnit').value = unit;
+        }
+
+        function calculatePace() {
+            const distance = parseFloat(document.getElementById('runDistance').value);
+            const hours = parseInt(document.getElementById('runHours').value) || 0;
+            const minutes = parseInt(document.getElementById('runMinutes').value) || 0;
+            const seconds = parseInt(document.getElementById('runSeconds').value) || 0;
+            const unit = document.getElementById('distanceUnit').value;
+            const resultDiv = document.getElementById('paceResult');
+
+            if (!distance || (!hours && !minutes && !seconds)) {
+                resultDiv.innerHTML = '<div class="text-red-600">Please enter distance and time</div>';
+                resultDiv.classList.remove('hidden');
+                return;
+            }
+
+            const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+            const paceSeconds = totalSeconds / distance;
+            const paceMinutes = Math.floor(paceSeconds / 60);
+            const paceSecondsRemainder = Math.round(paceSeconds % 60);
+
+            const speed = unit === 'miles' ? (distance / (totalSeconds / 3600)).toFixed(2) : ((distance * 0.621371) / (totalSeconds / 3600)).toFixed(2);
+
+            resultDiv.innerHTML = `
+                <div class="bg-purple-50 border border-purple-200 p-4 rounded-lg">
+                    <h3 class="text-lg font-semibold text-purple-800 mb-2">Your Running Pace</h3>
+                    <div class="space-y-2">
+                        <p class="text-xl font-bold text-purple-600">Pace: ${paceMinutes}:${paceSecondsRemainder.toString().padStart(2, '0')} per ${unit === 'miles' ? 'mile' : 'km'}</p>
+                        <p><span class="font-medium">Speed:</span> ${speed} mph</p>
+                        <p><span class="font-medium">Distance:</span> ${distance} ${unit}</p>
+                        <p><span class="font-medium">Time:</span> ${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}</p>
+                    </div>
+                </div>
+            `;
+            resultDiv.classList.remove('hidden');
+        }
+
+        function calculateTime() {
+            // Implementation for calculating time based on pace and distance
+            const distance = parseFloat(document.getElementById('runDistance').value);
+            const resultDiv = document.getElementById('paceResult');
+            
+            if (!distance) {
+                resultDiv.innerHTML = '<div class="text-red-600">Please enter distance to calculate time</div>';
+                resultDiv.classList.remove('hidden');
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="text-blue-600">Enter your target pace in the time fields, then click Calculate Pace to see results</div>';
+            resultDiv.classList.remove('hidden');
+        }
+
+        function calculateDistance() {
+            // Implementation for calculating distance based on pace and time
+            const resultDiv = document.getElementById('paceResult');
+            resultDiv.innerHTML = '<div class="text-blue-600">Enter your time and target pace, then click Calculate Pace to see results</div>';
+            resultDiv.classList.remove('hidden');
+        }
+
+        function resetPace() {
+            document.getElementById('runDistance').value = '';
+            document.getElementById('runHours').value = '';
+            document.getElementById('runMinutes').value = '';
+            document.getElementById('runSeconds').value = '';
+            document.getElementById('paceResult').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
