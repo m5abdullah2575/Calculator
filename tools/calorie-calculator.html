@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calorie Calculator - CalcHub Pro</title>
-    <meta name="description" content="Calculate your daily calorie needs based on age, gender, weight, height, and activity level.">
+    <title>Free Calorie Calculator - Calculate Daily Calories Needed | CalcHub Pro</title>
+    <meta name="description" content="Calculate your daily calorie needs with our advanced calorie calculator. Multiple BMR formulas, US/Metric units, body fat percentage, and detailed weight loss plans. Free and accurate calorie calculator.">
+    <meta name="keywords" content="calorie calculator, BMR calculator, TDEE calculator, daily calories, weight loss calculator, calories per day, basal metabolic rate, total daily energy expenditure">
+    <meta name="author" content="CalcHub Pro">
+    <meta property="og:title" content="Free Calorie Calculator - Calculate Daily Calories Needed">
+    <meta property="og:description" content="Advanced calorie calculator with multiple BMR formulas, unit systems, and comprehensive weight management guidance.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="/tools/calorie-calculator.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="../style.css">
@@ -50,18 +56,28 @@
                     <i data-feather="activity" class="w-12 h-12"></i>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold mb-4">Calorie Calculator</h1>
+            <h1 class="text-4xl font-bold mb-4">Advanced Calorie Calculator</h1>
             <p class="text-xl text-blue-100 max-w-2xl mx-auto">
-                Calculate your daily calorie needs based on your BMR and activity level for weight maintenance, loss, or gain.
+                Calculate your daily calorie needs with multiple BMR formulas, unit systems, and comprehensive weight management guidance. Get accurate TDEE calculations for weight loss, maintenance, or gain.
             </p>
         </div>
     </section>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="tool-container">
             <!-- Calculator Card -->
             <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Advanced Calorie Calculator</h2>
+                
+                <!-- Unit System Toggle -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-gray-100 p-1 rounded-lg">
+                        <button onclick="setUnitSystem('metric')" id="metricBtn" class="px-4 py-2 rounded-md bg-green-600 text-white font-medium">Metric Units</button>
+                        <button onclick="setUnitSystem('us')" id="usBtn" class="px-4 py-2 rounded-md text-gray-700 font-medium">US Units</button>
+                    </div>
+                </div>
+
                 <div class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
@@ -75,23 +91,27 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Age (years)</label>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Age (15-80 years)</label>
                             <input 
                                 type="number" 
                                 id="calorieAge" 
+                                min="15"
+                                max="80"
                                 placeholder="Enter your age"
                                 class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                             >
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Metric Units -->
+                    <div id="metricUnits" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (kg)</label>
                             <input 
                                 type="number" 
-                                id="calorieWeight" 
-                                placeholder="Enter your weight"
+                                id="calorieWeightKg" 
+                                step="0.1"
+                                placeholder="Enter your weight in kg"
                                 class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                             >
                         </div>
@@ -99,10 +119,41 @@
                             <label class="block text-lg font-semibold text-gray-900 mb-3">Height (cm)</label>
                             <input 
                                 type="number" 
-                                id="calorieHeight" 
-                                placeholder="Enter your height"
+                                id="calorieHeightCm" 
+                                placeholder="Enter your height in cm"
                                 class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                             >
+                        </div>
+                    </div>
+
+                    <!-- US Units -->
+                    <div id="usUnits" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (pounds)</label>
+                            <input 
+                                type="number" 
+                                id="calorieWeightLbs" 
+                                step="0.1"
+                                placeholder="Enter your weight in pounds"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Height</label>
+                            <div class="flex space-x-2">
+                                <input 
+                                    type="number" 
+                                    id="calorieHeightFt" 
+                                    placeholder="Feet"
+                                    class="w-1/2 px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                >
+                                <input 
+                                    type="number" 
+                                    id="calorieHeightIn" 
+                                    placeholder="Inches"
+                                    class="w-1/2 px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                                >
+                            </div>
                         </div>
                     </div>
                     
@@ -112,16 +163,62 @@
                             id="activityLevel" 
                             class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                         >
-                            <option value="1.2">Sedentary (little/no exercise)</option>
-                            <option value="1.375">Light Activity (light exercise 1-3 days/week)</option>
-                            <option value="1.55" selected>Moderate Activity (moderate exercise 3-5 days/week)</option>
-                            <option value="1.725">Active (hard exercise 6-7 days/week)</option>
-                            <option value="1.9">Very Active (very hard exercise, physical job)</option>
+                            <option value="1.0">Basal Metabolic Rate (BMR)</option>
+                            <option value="1.2">Sedentary: little or no exercise</option>
+                            <option value="1.375">Light: exercise 1-3 times/week</option>
+                            <option value="1.55" selected>Moderate: exercise 4-5 times/week</option>
+                            <option value="1.725">Active: daily exercise or intense exercise 3-4 times/week</option>
+                            <option value="1.9">Very Active: intense exercise 6-7 times/week</option>
+                            <option value="1.9">Extra Active: very intense exercise daily, or physical job</option>
                         </select>
+                    </div>
+
+                    <!-- BMR Formula Selection -->
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">BMR Estimation Formula <i data-feather="help-circle" class="w-4 h-4 inline text-blue-500"></i></label>
+                        <select 
+                            id="bmrFormula" 
+                            onchange="toggleBodyFatInput()"
+                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        >
+                            <option value="mifflin" selected>Mifflin St Jeor (Most Accurate)</option>
+                            <option value="harris">Revised Harris-Benedict</option>
+                            <option value="katch">Katch-McArdle (Requires Body Fat %)</option>
+                        </select>
+                    </div>
+
+                    <!-- Body Fat Input (for Katch-McArdle) -->
+                    <div id="bodyFatInput" class="hidden">
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Body Fat Percentage (%)</label>
+                        <input 
+                            type="number" 
+                            id="bodyFatPercentage" 
+                            min="5"
+                            max="50"
+                            step="0.1"
+                            placeholder="Enter your body fat percentage"
+                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        >
+                        <p class="text-sm text-gray-600 mt-2">Need help? <a href="../tools/body-fat-calculator.html" class="text-blue-600 hover:underline">Use our Body Fat Calculator</a></p>
+                    </div>
+
+                    <!-- Results Unit Selection -->
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Results Unit</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="resultUnit" value="calories" checked class="mr-2">
+                                <span>Calories</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="resultUnit" value="kilojoules" class="mr-2">
+                                <span>Kilojoules</span>
+                            </label>
+                        </div>
                     </div>
                     
                     <button 
-                        onclick="calculateCalories()" 
+                        onclick="calculateAdvancedCalories()" 
                         class="w-full bg-green-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-200 font-semibold"
                     >
                         Calculate Daily Calories
@@ -130,7 +227,7 @@
                     <div id="calorieResult" class="result-display hidden"></div>
                     
                     <button 
-                        onclick="resetCalorie()" 
+                        onclick="resetAdvancedCalorie()" 
                         class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
                     >
                         Reset
@@ -138,44 +235,198 @@
                 </div>
             </div>
 
+            <!-- Food Energy Converter -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6">Food Energy Converter</h3>
+                <p class="text-gray-600 mb-6">Convert between different food energy units including calories, kilojoules, and joules.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Energy Value</label>
+                        <input 
+                            type="number" 
+                            id="energyValue" 
+                            step="0.01"
+                            placeholder="Enter energy value"
+                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                    </div>
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">From Unit</label>
+                        <select 
+                            id="energyFromUnit" 
+                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        >
+                            <option value="calories">Calories (Nutritional, kcal)</option>
+                            <option value="cal">Calories (cal)</option>
+                            <option value="kilojoules">Kilojoules (kJ)</option>
+                            <option value="joules">Joules (J)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <button 
+                        onclick="convertFoodEnergy()" 
+                        class="w-full bg-blue-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold"
+                    >
+                        Convert Energy Units
+                    </button>
+                </div>
+                
+                <div id="energyConversionResult" class="result-display hidden mt-6"></div>
+            </div>
+
             <!-- Calorie Goals -->
             <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Calorie Goals for Different Objectives</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-red-50 p-4 rounded-lg text-center">
-                        <div class="text-lg font-bold text-red-600 mb-2">Weight Loss</div>
-                        <div class="text-sm text-red-800 mb-2">Moderate (0.5 kg/week)</div>
-                        <div class="text-red-700 font-semibold">-500 calories/day</div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Weight Management Calorie Goals</h3>
+                <div id="weightGoalsDisplay" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-red-50 p-4 rounded-lg text-center">
+                            <div class="text-lg font-bold text-red-600 mb-2">Moderate Weight Loss</div>
+                            <div class="text-sm text-red-800 mb-2">1 lb (0.5 kg) per week</div>
+                            <div class="text-red-700 font-semibold">-500 calories/day</div>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-lg text-center">
+                            <div class="text-lg font-bold text-orange-600 mb-2">Aggressive Weight Loss</div>
+                            <div class="text-sm text-orange-800 mb-2">2 lbs (1 kg) per week</div>
+                            <div class="text-orange-700 font-semibold">-1000 calories/day</div>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg text-center">
+                            <div class="text-lg font-bold text-gray-600 mb-2">Maintenance</div>
+                            <div class="text-sm text-gray-800 mb-2">Maintain current weight</div>
+                            <div class="text-gray-700 font-semibold">TDEE calories/day</div>
+                        </div>
                     </div>
-                    <div class="bg-gray-50 p-4 rounded-lg text-center">
-                        <div class="text-lg font-bold text-gray-600 mb-2">Maintenance</div>
-                        <div class="text-sm text-gray-800 mb-2">Maintain current weight</div>
-                        <div class="text-gray-700 font-semibold">TDEE calories/day</div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-lg text-center">
+                            <div class="text-lg font-bold text-green-600 mb-2">Moderate Weight Gain</div>
+                            <div class="text-sm text-green-800 mb-2">1 lb (0.5 kg) per week</div>
+                            <div class="text-green-700 font-semibold">+500 calories/day</div>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg text-center">
+                            <div class="text-lg font-bold text-blue-600 mb-2">Fast Weight Gain</div>
+                            <div class="text-sm text-blue-800 mb-2">2 lbs (1 kg) per week</div>
+                            <div class="text-blue-700 font-semibold">+1000 calories/day</div>
+                        </div>
                     </div>
-                    <div class="bg-green-50 p-4 rounded-lg text-center">
-                        <div class="text-lg font-bold text-green-600 mb-2">Weight Gain</div>
-                        <div class="text-sm text-green-800 mb-2">Moderate (0.5 kg/week)</div>
-                        <div class="text-green-700 font-semibold">+500 calories/day</div>
+                </div>
+                
+                <div class="mt-6 p-4 bg-yellow-50 rounded-lg">
+                    <div class="flex items-center mb-2">
+                        <i data-feather="alert-triangle" class="w-5 h-5 text-yellow-600 mr-2"></i>
+                        <h4 class="font-semibold text-yellow-800">Important Guidelines</h4>
                     </div>
+                    <ul class="text-sm text-yellow-700 space-y-1">
+                        <li>• 1 pound of fat = approximately 3,500 calories</li>
+                        <li>• Safe weight loss: 1-2 pounds per week maximum</li>
+                        <li>• Never go below 1,200 calories/day for women or 1,500 calories/day for men</li>
+                        <li>• Consult healthcare professionals for personalized advice</li>
+                    </ul>
                 </div>
             </div>
 
             <!-- BMR Formulas Info -->
             <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">BMR Calculation Methods</h3>
-                <div class="space-y-4">
-                    <div class="bg-blue-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-blue-800 mb-2">Mifflin-St Jeor Equation (Most Accurate)</h4>
-                        <div class="text-sm text-blue-700">
-                            <p><strong>Men:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age + 5</p>
-                            <p><strong>Women:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age - 161</p>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">BMR Calculation Methods & Formulas</h3>
+                <p class="text-gray-600 mb-6">Our calorie calculator uses three scientifically proven formulas to calculate your Basal Metabolic Rate (BMR). Each formula has its own strengths and accuracy for different populations.</p>
+                
+                <div class="space-y-6">
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-3">1. Mifflin-St Jeor Equation (Most Accurate - Default)</h4>
+                        <div class="text-sm text-blue-700 space-y-2">
+                            <p class="font-medium">Developed in 1990, considered the most accurate for the general population.</p>
+                            <p><strong>For Men:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age + 5</p>
+                            <p><strong>For Women:</strong> BMR = 10 × weight(kg) + 6.25 × height(cm) - 5 × age - 161</p>
+                            <p class="italic">Best for: Most people, general population accuracy</p>
                         </div>
                     </div>
-                    <div class="bg-green-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-green-800 mb-2">Total Daily Energy Expenditure (TDEE)</h4>
-                        <div class="text-sm text-green-700">
-                            <p>TDEE = BMR × Activity Factor</p>
-                            <p>This represents the total calories you burn in a day including exercise and daily activities.</p>
+                    
+                    <div class="bg-green-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-green-800 mb-3">2. Revised Harris-Benedict Equation</h4>
+                        <div class="text-sm text-green-700 space-y-2">
+                            <p class="font-medium">Updated version of the original 1919 Harris-Benedict equation, revised in 1984.</p>
+                            <p><strong>For Men:</strong> BMR = 13.397W + 4.799H - 5.677A + 88.362</p>
+                            <p><strong>For Women:</strong> BMR = 9.247W + 3.098H - 4.330A + 447.593</p>
+                            <p class="italic">Best for: Historical comparison, widely recognized formula</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-purple-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-purple-800 mb-3">3. Katch-McArdle Formula</h4>
+                        <div class="text-sm text-purple-700 space-y-2">
+                            <p class="font-medium">Uses lean body mass instead of total body weight for more accurate results.</p>
+                            <p><strong>Formula:</strong> BMR = 370 + 21.6 × (1 - F/100) × W</p>
+                            <p>Where F = body fat percentage, W = weight in kg</p>
+                            <p class="italic">Best for: People who know their body fat percentage, athletes, lean individuals</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-gray-800 mb-3">Total Daily Energy Expenditure (TDEE)</h4>
+                        <div class="text-sm text-gray-700 space-y-2">
+                            <p><strong>Formula:</strong> TDEE = BMR × Activity Factor</p>
+                            <p>TDEE represents the total calories you burn in a day including exercise, work, and daily activities.</p>
+                            <div class="mt-3">
+                                <p class="font-medium">Activity Factors:</p>
+                                <ul class="ml-4 space-y-1">
+                                    <li>• BMR Only: 1.0 (basal metabolic rate - calories at complete rest)</li>
+                                    <li>• Sedentary: 1.2 (little/no exercise, desk job)</li>
+                                    <li>• Light Activity: 1.375 (light exercise 1-3 times/week)</li>
+                                    <li>• Moderate Activity: 1.55 (moderate exercise 4-5 times/week)</li>
+                                    <li>• Active: 1.725 (daily exercise or intense exercise 3-4 times/week)</li>
+                                    <li>• Very Active: 1.9 (intense exercise 6-7 times/week)</li>
+                                    <li>• Extra Active: 1.9 (very intense exercise daily, physical job)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comprehensive Weight Loss Guide -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Complete Guide to Calorie-Based Weight Management</h3>
+                
+                <div class="space-y-6">
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-3">Understanding Calorie Deficit and Surplus</h4>
+                        <div class="text-sm text-blue-700 space-y-2">
+                            <p><strong>The 3,500 Calorie Rule:</strong> 1 pound of body fat equals approximately 3,500 calories.</p>
+                            <p><strong>Weight Loss:</strong> Create a calorie deficit by eating fewer calories than you burn.</p>
+                            <p><strong>Weight Gain:</strong> Create a calorie surplus by eating more calories than you burn.</p>
+                            <p><strong>Maintenance:</strong> Eat approximately the same number of calories you burn daily.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-green-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-green-800 mb-3">Safe Weight Loss Guidelines</h4>
+                        <div class="text-sm text-green-700 space-y-2">
+                            <ul class="space-y-1">
+                                <li>• <strong>Moderate Loss:</strong> 1-2 pounds per week (500-1000 calorie daily deficit)</li>
+                                <li>• <strong>Minimum Calories:</strong> Never go below 1,200 cal/day (women) or 1,500 cal/day (men)</li>
+                                <li>• <strong>Sustainable Rate:</strong> 1% of body weight per week maximum</li>
+                                <li>• <strong>Muscle Preservation:</strong> Include strength training to maintain lean mass</li>
+                                <li>• <strong>Nutrition Quality:</strong> Focus on nutrient-dense, whole foods</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-yellow-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-yellow-800 mb-3">Zigzag Calorie Cycling Method</h4>
+                        <div class="text-sm text-yellow-700 space-y-2">
+                            <p>Zigzag cycling involves alternating between higher and lower calorie days to prevent metabolic adaptation.</p>
+                            <p><strong>Example Weekly Plan:</strong></p>
+                            <ul class="ml-4 space-y-1">
+                                <li>• Monday: -500 calories (low day)</li>
+                                <li>• Tuesday: -300 calories (moderate day)</li>
+                                <li>• Wednesday: -700 calories (very low day)</li>
+                                <li>• Thursday: -300 calories (moderate day)</li>
+                                <li>• Friday: -500 calories (low day)</li>
+                                <li>• Saturday: +100 calories (refeed day)</li>
+                                <li>• Sunday: -300 calories (moderate day)</li>
+                            </ul>
+                            <p class="font-medium">Benefits: Prevents metabolic slowdown, improves adherence, maintains hormone levels</p>
                         </div>
                     </div>
                 </div>
@@ -203,28 +454,113 @@
                 </div>
             </div>
 
+            <!-- Calorie Counting Tips -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Effective Calorie Counting Tips & Strategies</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-green-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-green-800 mb-3">✅ Best Practices</h4>
+                        <ul class="text-sm text-green-700 space-y-2">
+                            <li>• Use a food scale for accurate portions</li>
+                            <li>• Track everything you eat and drink</li>
+                            <li>• Read nutrition labels carefully</li>
+                            <li>• Use calorie tracking apps for convenience</li>
+                            <li>• Meal prep to control portions</li>
+                            <li>• Stay consistent with tracking</li>
+                            <li>• Focus on nutrient-dense foods</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-red-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-red-800 mb-3">❌ Common Mistakes</h4>
+                        <ul class="text-sm text-red-700 space-y-2">
+                            <li>• Underestimating portion sizes</li>
+                            <li>• Forgetting to count beverages</li>
+                            <li>• Ignoring cooking oils and dressings</li>
+                            <li>• Not tracking weekend eating</li>
+                            <li>• Using generic food entries</li>
+                            <li>• Skipping meals to "save" calories</li>
+                            <li>• Setting unrealistic calorie goals</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-6">Frequently Asked Questions (FAQ)</h3>
+                
+                <div class="space-y-4">
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">How accurate are calorie calculators?</h4>
+                        <p class="text-gray-700 text-sm">Calorie calculators provide estimates based on scientific formulas. Individual variations in metabolism, body composition, and genetics can affect actual calorie needs by 10-20%. Use results as a starting point and adjust based on real-world results.</p>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Which BMR formula should I use?</h4>
+                        <p class="text-gray-700 text-sm">Mifflin-St Jeor is most accurate for the general population. Use Katch-McArdle if you know your body fat percentage and are relatively lean. Harris-Benedict is the oldest but still widely used formula.</p>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">How often should I recalculate my calories?</h4>
+                        <p class="text-gray-700 text-sm">Recalculate every 10-15 pounds of weight loss/gain, or every 3-4 months. Age and changes in activity level also warrant recalculation.</p>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Can I eat below my BMR?</h4>
+                        <p class="text-gray-700 text-sm">Eating significantly below BMR for extended periods can slow metabolism and cause muscle loss. Generally not recommended except under medical supervision.</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Why am I not losing weight despite a calorie deficit?</h4>
+                        <p class="text-gray-700 text-sm">Common reasons include: underestimating food intake, overestimating exercise calories, water retention, metabolic adaptation, or medical conditions. Track consistently for 2-3 weeks before making adjustments.</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- How to Use -->
             <div class="bg-green-50 rounded-xl p-6 mb-8">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                     <i data-feather="info" class="w-5 h-5 mr-2 text-green-600"></i>
-                    How to Use the Calorie Calculator
+                    How to Use the Advanced Calorie Calculator
                 </h3>
-                <ol class="space-y-2 text-gray-700">
+                <ol class="space-y-3 text-gray-700">
                     <li class="flex items-start">
                         <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
-                        Enter your basic information: gender, age, weight, and height
+                        <div>
+                            <strong>Choose Unit System:</strong> Select between Metric (kg/cm) or US (lbs/ft/in) units for your convenience
+                        </div>
                     </li>
                     <li class="flex items-start">
                         <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
-                        Select your activity level based on your daily exercise and lifestyle
+                        <div>
+                            <strong>Enter Personal Information:</strong> Input your gender, age (15-80), weight, and height accurately
+                        </div>
                     </li>
                     <li class="flex items-start">
                         <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
-                        Click "Calculate Daily Calories" to get your BMR and TDEE
+                        <div>
+                            <strong>Select Activity Level:</strong> Choose the option that best describes your weekly exercise routine
+                        </div>
                     </li>
                     <li class="flex items-start">
                         <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">4</span>
-                        Use the results to plan your daily calorie intake based on your goals
+                        <div>
+                            <strong>Choose BMR Formula:</strong> Select Mifflin-St Jeor (default), Harris-Benedict, or Katch-McArdle (requires body fat %)
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">5</span>
+                        <div>
+                            <strong>Select Result Unit:</strong> Choose to display results in Calories or Kilojoules
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">6</span>
+                        <div>
+                            <strong>Calculate & Apply:</strong> Click calculate to get your BMR, TDEE, and personalized weight management recommendations
+                        </div>
                     </li>
                 </ol>
             </div>
@@ -232,33 +568,387 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="flex items-center justify-center space-x-3 mb-4">
-                <div class="bg-blue-600 p-2 rounded-lg">
-                    <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold">CalcHub Pro</h3>
-                    <p class="text-xs text-gray-400">Professional Calculator Suite</p>
-                </div>
-            </div>
-            <p class="text-gray-400 text-sm mb-4">
-                © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
-            </p>
-            <div class="flex justify-center space-x-6 text-sm">
-                <a href="../index.html" class="text-gray-400 hover:text-white">Home</a>
-                <a href="../about.html" class="text-gray-400 hover:text-white">About</a>
-                <a href="../privacy.html" class="text-gray-400 hover:text-white">Privacy</a>
-                <a href="../contact.html" class="text-gray-400 hover:text-white">Contact</a>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
     <script src="../script.js"></script>
     <script>
-        // Initialize Feather icons
-        feather.replace();
+        // Advanced Calorie Calculator JavaScript Functions
+        
+        let currentUnitSystem = 'metric';
+        
+        // Load header and footer
+        loadComponent('header-placeholder', '../header.html');
+        loadComponent('footer-placeholder', '../footer.html');
+        
+        // Initialize components
+        document.addEventListener('DOMContentLoaded', function() {
+            feather.replace();
+            initializeAdvancedCalorieCalculator();
+        });
+        
+        function initializeAdvancedCalorieCalculator() {
+            // Set default unit system
+            setUnitSystem('metric');
+        }
+        
+        // Unit system management
+        function setUnitSystem(system) {
+            currentUnitSystem = system;
+            const metricBtn = document.getElementById('metricBtn');
+            const usBtn = document.getElementById('usBtn');
+            const metricUnits = document.getElementById('metricUnits');
+            const usUnits = document.getElementById('usUnits');
+            
+            if (system === 'metric') {
+                metricBtn.className = 'px-4 py-2 rounded-md bg-green-600 text-white font-medium';
+                usBtn.className = 'px-4 py-2 rounded-md text-gray-700 font-medium';
+                metricUnits.classList.remove('hidden');
+                usUnits.classList.add('hidden');
+            } else {
+                usBtn.className = 'px-4 py-2 rounded-md bg-green-600 text-white font-medium';
+                metricBtn.className = 'px-4 py-2 rounded-md text-gray-700 font-medium';
+                usUnits.classList.remove('hidden');
+                metricUnits.classList.add('hidden');
+            }
+        }
+        
+        // Toggle body fat input for Katch-McArdle formula
+        function toggleBodyFatInput() {
+            const formula = document.getElementById('bmrFormula').value;
+            const bodyFatInput = document.getElementById('bodyFatInput');
+            
+            if (formula === 'katch') {
+                bodyFatInput.classList.remove('hidden');
+            } else {
+                bodyFatInput.classList.add('hidden');
+            }
+        }
+        
+        // Get weight in kg regardless of unit system
+        function getWeightInKg() {
+            if (currentUnitSystem === 'metric') {
+                return parseFloat(document.getElementById('calorieWeightKg').value);
+            } else {
+                const weightLbs = parseFloat(document.getElementById('calorieWeightLbs').value);
+                return weightLbs / 2.20462; // Convert lbs to kg
+            }
+        }
+        
+        // Get height in cm regardless of unit system
+        function getHeightInCm() {
+            if (currentUnitSystem === 'metric') {
+                return parseFloat(document.getElementById('calorieHeightCm').value);
+            } else {
+                const feet = parseFloat(document.getElementById('calorieHeightFt').value) || 0;
+                const inches = parseFloat(document.getElementById('calorieHeightIn').value) || 0;
+                const totalInches = (feet * 12) + inches;
+                return totalInches * 2.54; // Convert inches to cm
+            }
+        }
+        
+        // Calculate BMR using selected formula
+        function calculateBMR(weight, height, age, gender, formula, bodyFat = null) {
+            let bmr = 0;
+            
+            switch (formula) {
+                case 'mifflin':
+                    if (gender === 'male') {
+                        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+                    } else {
+                        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+                    }
+                    break;
+                    
+                case 'harris':
+                    if (gender === 'male') {
+                        bmr = 13.397 * weight + 4.799 * height - 5.677 * age + 88.362;
+                    } else {
+                        bmr = 9.247 * weight + 3.098 * height - 4.330 * age + 447.593;
+                    }
+                    break;
+                    
+                case 'katch':
+                    if (bodyFat === null || bodyFat === 0) {
+                        throw new Error('Body fat percentage is required for Katch-McArdle formula');
+                    }
+                    const leanBodyMass = weight * (1 - bodyFat / 100);
+                    bmr = 370 + 21.6 * leanBodyMass;
+                    break;
+                    
+                default:
+                    throw new Error('Invalid BMR formula selected');
+            }
+            
+            return bmr;
+        }
+        
+        // Main calculation function
+        function calculateAdvancedCalories() {
+            try {
+                // Get form values
+                const gender = document.getElementById('calorieGender').value;
+                const age = parseInt(document.getElementById('calorieAge').value);
+                const activityLevel = parseFloat(document.getElementById('activityLevel').value);
+                const formula = document.getElementById('bmrFormula').value;
+                const resultUnit = document.querySelector('input[name="resultUnit"]:checked').value;
+                
+                // Get weight and height
+                const weight = getWeightInKg();
+                const height = getHeightInCm();
+                
+                // Validation
+                if (!weight || !height || !age || weight <= 0 || height <= 0 || age < 15 || age > 80) {
+                    throw new Error('Please enter valid values for all fields. Age must be between 15-80 years.');
+                }
+                
+                // Get body fat if needed
+                let bodyFat = null;
+                if (formula === 'katch') {
+                    bodyFat = parseFloat(document.getElementById('bodyFatPercentage').value);
+                    if (!bodyFat || bodyFat <= 0 || bodyFat >= 50) {
+                        throw new Error('Please enter a valid body fat percentage (5-50%)');
+                    }
+                }
+                
+                // Calculate BMR
+                const bmr = calculateBMR(weight, height, age, gender, formula, bodyFat);
+                const tdee = bmr * activityLevel;
+                
+                // Convert to requested units
+                let bmrDisplay = bmr;
+                let tdeeDisplay = tdee;
+                let unit = 'calories';
+                
+                if (resultUnit === 'kilojoules') {
+                    bmrDisplay = bmr * 4.184;
+                    tdeeDisplay = tdee * 4.184;
+                    unit = 'kJ';
+                }
+                
+                // Calculate weight management goals
+                const weightLoss500 = tdee - 500;
+                const weightLoss1000 = tdee - 1000;
+                const weightGain500 = tdee + 500;
+                const weightGain1000 = tdee + 1000;
+                
+                // Convert goal calories to display units
+                let goals = {
+                    loss500: weightLoss500,
+                    loss1000: weightLoss1000,
+                    maintenance: tdee,
+                    gain500: weightGain500,
+                    gain1000: weightGain1000
+                };
+                
+                if (resultUnit === 'kilojoules') {
+                    Object.keys(goals).forEach(key => {
+                        goals[key] = goals[key] * 4.184;
+                    });
+                }
+                
+                // Get formula name for display
+                const formulaNames = {
+                    'mifflin': 'Mifflin-St Jeor',
+                    'harris': 'Revised Harris-Benedict',
+                    'katch': 'Katch-McArdle'
+                };
+                
+                // Display results
+                const result = `
+                    <div class="space-y-6">
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-green-600 mb-2">Your Calorie Results</h3>
+                            <p class="text-gray-600">Based on ${formulaNames[formula]} formula</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-blue-50 p-4 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-blue-600">${Math.round(bmrDisplay).toLocaleString()}</div>
+                                <div class="text-sm text-blue-800">BMR (${unit}/day)</div>
+                                <div class="text-xs text-blue-600 mt-1">Calories at complete rest</div>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg text-center">
+                                <div class="text-2xl font-bold text-green-600">${Math.round(tdeeDisplay).toLocaleString()}</div>
+                                <div class="text-sm text-green-800">TDEE (${unit}/day)</div>
+                                <div class="text-xs text-green-600 mt-1">Total daily energy expenditure</div>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t pt-4">
+                            <h4 class="font-semibold text-gray-900 mb-3">Weight Management Goals (${unit}/day)</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">
+                                <div class="bg-red-50 p-3 rounded text-center">
+                                    <div class="font-semibold text-red-600">Moderate Weight Loss</div>
+                                    <div class="text-red-800">${Math.round(goals.loss500).toLocaleString()}</div>
+                                    <div class="text-xs text-red-600">-1 lb/week</div>
+                                </div>
+                                <div class="bg-orange-50 p-3 rounded text-center">
+                                    <div class="font-semibold text-orange-600">Fast Weight Loss</div>
+                                    <div class="text-orange-800">${Math.round(goals.loss1000).toLocaleString()}</div>
+                                    <div class="text-xs text-orange-600">-2 lbs/week</div>
+                                </div>
+                                <div class="bg-gray-50 p-3 rounded text-center">
+                                    <div class="font-semibold text-gray-600">Maintenance</div>
+                                    <div class="text-gray-800">${Math.round(goals.maintenance).toLocaleString()}</div>
+                                    <div class="text-xs text-gray-600">Current weight</div>
+                                </div>
+                                <div class="bg-green-50 p-3 rounded text-center">
+                                    <div class="font-semibold text-green-600">Moderate Weight Gain</div>
+                                    <div class="text-green-800">${Math.round(goals.gain500).toLocaleString()}</div>
+                                    <div class="text-xs text-green-600">+1 lb/week</div>
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded text-center">
+                                    <div class="font-semibold text-blue-600">Fast Weight Gain</div>
+                                    <div class="text-blue-800">${Math.round(goals.gain1000).toLocaleString()}</div>
+                                    <div class="text-xs text-blue-600">+2 lbs/week</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i data-feather="info" class="w-4 h-4 text-yellow-600 mr-2"></i>
+                                <span class="font-semibold text-yellow-800">Important Notes</span>
+                            </div>
+                            <ul class="text-xs text-yellow-700 space-y-1">
+                                <li>• These are estimates - individual needs may vary by ±10-20%</li>
+                                <li>• Monitor your progress and adjust based on real results</li>
+                                <li>• Consult healthcare professionals for personalized advice</li>
+                                <li>• Never go below 1,200 cal/day (women) or 1,500 cal/day (men)</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                
+                showResult('calorieResult', result);
+                
+                // Re-initialize feather icons
+                feather.replace();
+                
+            } catch (error) {
+                showResult('calorieResult', error.message, true);
+            }
+        }
+        
+        // Food energy converter function
+        function convertFoodEnergy() {
+            try {
+                const value = parseFloat(document.getElementById('energyValue').value);
+                const fromUnit = document.getElementById('energyFromUnit').value;
+                
+                if (!value || value <= 0) {
+                    throw new Error('Please enter a valid energy value');
+                }
+                
+                // Conversion factors to calories (kcal)
+                const toCalories = {
+                    'calories': 1,           // kcal
+                    'cal': 0.001,           // cal to kcal
+                    'kilojoules': 0.239006, // kJ to kcal
+                    'joules': 0.000239006   // J to kcal
+                };
+                
+                // Convert input to calories first
+                const calories = value * toCalories[fromUnit];
+                
+                // Convert to all units
+                const results = {
+                    calories: calories,                    // kcal
+                    cal: calories * 1000,                 // cal
+                    kilojoules: calories * 4.184,         // kJ
+                    joules: calories * 4184               // J
+                };
+                
+                const unitLabels = {
+                    'calories': 'Calories (kcal)',
+                    'cal': 'calories (cal)',
+                    'kilojoules': 'Kilojoules (kJ)',
+                    'joules': 'Joules (J)'
+                };
+                
+                const result = `
+                    <div class="space-y-4">
+                        <div class="text-center">
+                            <h4 class="text-lg font-bold text-blue-600 mb-2">Energy Conversion Results</h4>
+                            <p class="text-gray-600">${value.toLocaleString()} ${unitLabels[fromUnit]} equals:</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            ${Object.entries(results).map(([unit, val]) => `
+                                <div class="bg-blue-50 p-3 rounded-lg text-center">
+                                    <div class="text-lg font-bold text-blue-600">${val.toLocaleString()}</div>
+                                    <div class="text-sm text-blue-800">${unitLabels[unit]}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="text-sm text-blue-700">
+                                <p class="font-medium mb-2">Quick Reference:</p>
+                                <ul class="space-y-1 text-xs">
+                                    <li>• 1 kcal = 1,000 cal = 4.184 kJ = 4,184 J</li>
+                                    <li>• 1 kJ = 0.239 kcal = 239 cal = 1,000 J</li>
+                                    <li>• Food labels use "Calories" which are actually kilocalories (kcal)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                showResult('energyConversionResult', result);
+                
+            } catch (error) {
+                showResult('energyConversionResult', error.message, true);
+            }
+        }
+        
+        // Reset function
+        function resetAdvancedCalorie() {
+            // Reset all form fields
+            document.getElementById('calorieGender').value = 'male';
+            document.getElementById('calorieAge').value = '';
+            document.getElementById('calorieWeightKg').value = '';
+            document.getElementById('calorieHeightCm').value = '';
+            document.getElementById('calorieWeightLbs').value = '';
+            document.getElementById('calorieHeightFt').value = '';
+            document.getElementById('calorieHeightIn').value = '';
+            document.getElementById('activityLevel').value = '1.55';
+            document.getElementById('bmrFormula').value = 'mifflin';
+            document.getElementById('bodyFatPercentage').value = '';
+            document.querySelector('input[name="resultUnit"][value="calories"]').checked = true;
+            
+            // Reset energy converter
+            document.getElementById('energyValue').value = '';
+            document.getElementById('energyFromUnit').value = 'calories';
+            
+            // Hide results
+            document.getElementById('calorieResult').classList.add('hidden');
+            document.getElementById('energyConversionResult').classList.add('hidden');
+            
+            // Hide body fat input
+            document.getElementById('bodyFatInput').classList.add('hidden');
+            
+            // Reset to metric units
+            setUnitSystem('metric');
+        }
+        
+        // Utility function to show results
+        function showResult(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = message;
+            element.className = isError ? 'result-display error' : 'result-display success';
+            element.classList.remove('hidden');
+        }
+        
+        // Load component function
+        function loadComponent(placeholderId, url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById(placeholderId).innerHTML = html;
+                })
+                .catch(error => console.error('Error loading component:', error));
+        }
     </script>
 </body>
 </html>
