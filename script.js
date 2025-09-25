@@ -190,6 +190,225 @@ function resetBMI() {
     hideResult('bmiResult');
 }
 
+// Advanced BMI Calculator Functions
+function switchUnit(unitType) {
+    // Hide all input sections
+    document.querySelectorAll('.unit-inputs').forEach(section => {
+        section.classList.add('hidden');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.unit-tab').forEach(tab => {
+        tab.classList.remove('active');
+        tab.classList.remove('text-blue-600', 'border-blue-600');
+        tab.classList.add('text-gray-500', 'border-transparent');
+    });
+    
+    // Show selected input section and activate tab
+    const selectedTab = document.getElementById(unitType + 'Tab');
+    const selectedInput = document.getElementById(unitType + 'Inputs');
+    
+    selectedTab.classList.add('active', 'text-blue-600', 'border-blue-600');
+    selectedTab.classList.remove('text-gray-500', 'border-transparent');
+    selectedInput.classList.remove('hidden');
+}
+
+function convertToKgCm(unitType) {
+    let weightKg, heightCm;
+    
+    try {
+        if (unitType === 'us') {
+            const feet = validateInput(document.getElementById('heightFeet').value, 'Feet');
+            const inches = validateInput(document.getElementById('heightInches').value || '0', 'Inches');
+            const pounds = validateInput(document.getElementById('weightPounds').value, 'Weight in pounds');
+            
+            heightCm = (feet * 12 + inches) * 2.54;
+            weightKg = pounds * 0.453592;
+        } else if (unitType === 'metric') {
+            heightCm = validateInput(document.getElementById('heightCm').value, 'Height in cm');
+            weightKg = validateInput(document.getElementById('weightKg').value, 'Weight in kg');
+        } else if (unitType === 'other') {
+            const heightValue = validateInput(document.getElementById('heightOther').value, 'Height');
+            const heightUnit = document.getElementById('heightUnit').value;
+            const weightValue = validateInput(document.getElementById('weightOther').value, 'Weight');
+            const weightUnit = document.getElementById('weightUnit').value;
+            
+            // Convert height to cm
+            switch (heightUnit) {
+                case 'm': heightCm = heightValue * 100; break;
+                case 'ft': heightCm = heightValue * 30.48; break;
+                case 'in': heightCm = heightValue * 2.54; break;
+                default: heightCm = heightValue; // cm
+            }
+            
+            // Convert weight to kg
+            switch (weightUnit) {
+                case 'lbs': weightKg = weightValue * 0.453592; break;
+                case 'st': weightKg = weightValue * 6.35029; break;
+                case 'g': weightKg = weightValue / 1000; break;
+                default: weightKg = weightValue; // kg
+            }
+        }
+        
+        return { weightKg, heightCm };
+    } catch (error) {
+        throw error;
+    }
+}
+
+function getBMICategory(bmi) {
+    if (bmi < 16) return { category: 'Severe Thinness', color: '#dc2626' };
+    else if (bmi < 17) return { category: 'Moderate Thinness', color: '#ea580c' };
+    else if (bmi < 18.5) return { category: 'Mild Thinness', color: '#d97706' };
+    else if (bmi < 25) return { category: 'Normal', color: '#059669' };
+    else if (bmi < 30) return { category: 'Overweight', color: '#d97706' };
+    else if (bmi < 35) return { category: 'Obese Class I', color: '#dc2626' };
+    else if (bmi < 40) return { category: 'Obese Class II', color: '#b91c1c' };
+    else return { category: 'Obese Class III', color: '#991b1b' };
+}
+
+function calculateHealthyWeightRange(heightCm) {
+    const heightM = heightCm / 100;
+    const minWeight = 18.5 * heightM * heightM;
+    const maxWeight = 24.9 * heightM * heightM;
+    return { minWeight, maxWeight };
+}
+
+function calculateBMIPrime(bmi) {
+    return bmi / 25;
+}
+
+function calculatePonderalIndex(weightKg, heightCm) {
+    const heightM = heightCm / 100;
+    return weightKg / (heightM * heightM * heightM);
+}
+
+function calculateAdvancedBMI() {
+    try {
+        // Determine which unit system is active
+        const activeTab = document.querySelector('.unit-tab.active');
+        const unitType = activeTab.id.replace('Tab', '');
+        
+        // Get age and gender
+        const age = parseInt(document.getElementById('bmiAge').value) || null;
+        const gender = document.getElementById('bmiGender').value;
+        
+        // Convert to standard units (kg, cm)
+        const { weightKg, heightCm } = convertToKgCm(unitType);
+        
+        if (weightKg <= 0 || heightCm <= 0) {
+            throw new Error('Weight and height must be positive numbers');
+        }
+        
+        if (age && (age < 2 || age > 120)) {
+            throw new Error('Age must be between 2 and 120 years');
+        }
+        
+        // Calculate BMI
+        const heightM = heightCm / 100;
+        const bmi = weightKg / (heightM * heightM);
+        
+        // Get BMI category
+        const { category, color } = getBMICategory(bmi);
+        
+        // Calculate additional metrics
+        const { minWeight, maxWeight } = calculateHealthyWeightRange(heightCm);
+        const bmiPrime = calculateBMIPrime(bmi);
+        const ponderalIndex = calculatePonderalIndex(weightKg, heightCm);
+        
+        // Calculate BMI position for indicator (0-100%)
+        let bmiPosition = 0;
+        if (bmi < 18.5) bmiPosition = (bmi / 18.5) * 25;
+        else if (bmi < 25) bmiPosition = 25 + ((bmi - 18.5) / 6.5) * 25;
+        else if (bmi < 30) bmiPosition = 50 + ((bmi - 25) / 5) * 25;
+        else bmiPosition = Math.min(75 + ((bmi - 30) / 10) * 25, 100);
+        
+        // Create enhanced result display
+        const result = `
+            <div class="bmi-result-card">
+                <div class="text-center mb-4">
+                    <div class="bmi-value">${bmi.toFixed(1)}</div>
+                    <div class="bmi-category" style="color: ${color};">${category}</div>
+                </div>
+                
+                <div class="bmi-indicator">
+                    <div class="bmi-marker" style="left: ${bmiPosition}%"></div>
+                </div>
+                <div class="flex justify-between text-xs text-gray-600 mb-4">
+                    <span>Underweight</span>
+                    <span>Normal</span>
+                    <span>Overweight</span>
+                    <span>Obese</span>
+                </div>
+                
+                <div class="bmi-details">
+                    <div class="bmi-detail-item">
+                        <div class="bmi-detail-label">Healthy BMI Range</div>
+                        <div class="bmi-detail-value">18.5 - 25.0 kg/m²</div>
+                    </div>
+                    <div class="bmi-detail-item">
+                        <div class="bmi-detail-label">Healthy Weight Range</div>
+                        <div class="bmi-detail-value">${minWeight.toFixed(1)} - ${maxWeight.toFixed(1)} kg</div>
+                    </div>
+                    <div class="bmi-detail-item">
+                        <div class="bmi-detail-label">BMI Prime</div>
+                        <div class="bmi-detail-value">${bmiPrime.toFixed(2)}</div>
+                    </div>
+                    <div class="bmi-detail-item">
+                        <div class="bmi-detail-label">Ponderal Index</div>
+                        <div class="bmi-detail-value">${ponderalIndex.toFixed(1)} kg/m³</div>
+                    </div>
+                </div>
+                
+                ${age ? `
+                <div class="mt-4 p-3 bg-blue-50 rounded-lg">
+                    <h4 class="font-semibold text-blue-900 mb-2">Age-Based Considerations</h4>
+                    <p class="text-sm text-blue-800">
+                        ${age < 20 ? 
+                            'For children and teens, BMI percentiles are more appropriate than adult BMI categories. Consult with a healthcare provider for proper assessment.' :
+                            age > 65 ? 
+                                'For adults over 65, slightly higher BMI values may be associated with better health outcomes. Individual assessment is recommended.' :
+                                'Your BMI falls within the adult reference ranges. Consider consulting a healthcare provider for personalized health advice.'
+                        }
+                    </p>
+                </div>
+                ` : ''}
+            </div>
+        `;
+        
+        showResult('bmiResult', result);
+    } catch (error) {
+        showResult('bmiResult', error.message, true);
+    }
+}
+
+function resetAdvancedBMI() {
+    // Reset age and gender
+    document.getElementById('bmiAge').value = '';
+    document.getElementById('bmiGender').value = 'male';
+    
+    // Reset US inputs
+    document.getElementById('heightFeet').value = '';
+    document.getElementById('heightInches').value = '';
+    document.getElementById('weightPounds').value = '';
+    
+    // Reset metric inputs
+    document.getElementById('heightCm').value = '';
+    document.getElementById('weightKg').value = '';
+    
+    // Reset other inputs
+    document.getElementById('heightOther').value = '';
+    document.getElementById('weightOther').value = '';
+    document.getElementById('heightUnit').value = 'cm';
+    document.getElementById('weightUnit').value = 'kg';
+    
+    // Reset to US units
+    switchUnit('us');
+    
+    // Hide result
+    hideResult('bmiResult');
+}
+
 // BMR Calculator
 function calculateBMR() {
     try {

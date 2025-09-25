@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMI Calculator - CalcHub Pro</title>
-    <meta name="description" content="Calculate your Body Mass Index (BMI) and health category. Free BMI calculator with instant results.">
+    <title>BMI Calculator - Body Mass Index Calculator | Free BMI Calculator with Age & Gender</title>
+    <meta name="description" content="Calculate your Body Mass Index (BMI) with our advanced BMI calculator. Supports metric & imperial units, age-based calculations, BMI Prime, Ponderal Index & healthy weight ranges. Get instant results!">
+    <meta name="keywords" content="BMI calculator, body mass index, BMI chart, healthy weight, BMI prime, ponderal index, weight calculator, health calculator">
+    <meta property="og:title" content="BMI Calculator - Advanced Body Mass Index Calculator">
+    <meta property="og:description" content="Calculate your BMI with age and gender considerations. Get BMI Prime, healthy weight ranges, and detailed health insights.">
+    <meta property="og:type" content="website">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "BMI Calculator",
+      "description": "Advanced BMI calculator with age and gender considerations, BMI Prime, and Ponderal Index calculations",
+      "applicationCategory": "HealthApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="../style.css">
@@ -50,9 +68,9 @@
                     <i data-feather="activity" class="w-12 h-12"></i>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold mb-4">BMI Calculator</h1>
+            <h1 class="text-4xl font-bold mb-4">Advanced BMI Calculator</h1>
             <p class="text-xl text-blue-100 max-w-2xl mx-auto">
-                Calculate your Body Mass Index (BMI) to understand your health category and ideal weight range.
+                Calculate your Body Mass Index (BMI) with age and gender considerations. Get BMI Prime, Ponderal Index, and healthy weight ranges.
             </p>
         </div>
     </section>
@@ -62,30 +80,153 @@
         <div class="tool-container">
             <!-- Calculator Card -->
             <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <!-- Unit Switching Tabs -->
+                <div class="mb-6">
+                    <div class="flex flex-wrap justify-center border-b border-gray-200">
+                        <button onclick="switchUnit('us')" id="usTab" class="unit-tab active px-6 py-3 text-sm font-medium text-blue-600 border-b-2 border-blue-600 rounded-t-lg hover:text-blue-800 hover:border-blue-800">
+                            US Units
+                        </button>
+                        <button onclick="switchUnit('metric')" id="metricTab" class="unit-tab px-6 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
+                            Metric Units
+                        </button>
+                        <button onclick="switchUnit('other')" id="otherTab" class="unit-tab px-6 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
+                            Other Units
+                        </button>
+                    </div>
+                </div>
+
                 <div class="space-y-6">
+                    <!-- Age and Gender Section -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (kg)</label>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Age</label>
                             <input 
                                 type="number" 
-                                id="bmiWeight" 
-                                placeholder="Enter your weight"
+                                id="bmiAge" 
+                                placeholder="ages: 2 - 120"
+                                min="2"
+                                max="120"
                                 class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                         </div>
                         <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Height (cm)</label>
-                            <input 
-                                type="number" 
-                                id="bmiHeight" 
-                                placeholder="Enter your height"
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Gender</label>
+                            <select 
+                                id="bmiGender"
                                 class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Height and Weight Section - US Units -->
+                    <div id="usInputs" class="unit-inputs">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Height</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input 
+                                        type="number" 
+                                        id="heightFeet" 
+                                        placeholder="feet"
+                                        class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                    <input 
+                                        type="number" 
+                                        id="heightInches" 
+                                        placeholder="inches"
+                                        min="0"
+                                        max="11"
+                                        class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Weight</label>
+                                <input 
+                                    type="number" 
+                                    id="weightPounds" 
+                                    placeholder="pounds"
+                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Height and Weight Section - Metric Units -->
+                    <div id="metricInputs" class="unit-inputs hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Height</label>
+                                <input 
+                                    type="number" 
+                                    id="heightCm" 
+                                    placeholder="cm"
+                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Weight</label>
+                                <input 
+                                    type="number" 
+                                    id="weightKg" 
+                                    placeholder="kg"
+                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Height and Weight Section - Other Units -->
+                    <div id="otherInputs" class="unit-inputs hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Height</label>
+                                <div class="flex space-x-2">
+                                    <input 
+                                        type="number" 
+                                        id="heightOther" 
+                                        placeholder="Height value"
+                                        class="flex-1 px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                    <select 
+                                        id="heightUnit"
+                                        class="px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        <option value="cm">cm</option>
+                                        <option value="m">m</option>
+                                        <option value="ft">ft</option>
+                                        <option value="in">in</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Weight</label>
+                                <div class="flex space-x-2">
+                                    <input 
+                                        type="number" 
+                                        id="weightOther" 
+                                        placeholder="Weight value"
+                                        class="flex-1 px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                    <select 
+                                        id="weightUnit"
+                                        class="px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        <option value="kg">kg</option>
+                                        <option value="lbs">lbs</option>
+                                        <option value="st">st</option>
+                                        <option value="g">g</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
                     <button 
-                        onclick="calculateBMI()" 
+                        onclick="calculateAdvancedBMI()" 
                         class="w-full bg-green-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-200 font-semibold"
                     >
                         Calculate BMI
@@ -94,7 +235,7 @@
                     <div id="bmiResult" class="result-display hidden"></div>
                     
                     <button 
-                        onclick="resetBMI()" 
+                        onclick="resetAdvancedBMI()" 
                         class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
                     >
                         Reset
@@ -129,22 +270,244 @@
             <div class="bg-green-50 rounded-xl p-6 mb-8">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                     <i data-feather="info" class="w-5 h-5 mr-2 text-green-600"></i>
-                    How to Use the BMI Calculator
+                    How to Use the Advanced BMI Calculator
                 </h3>
                 <ol class="space-y-2 text-gray-700">
                     <li class="flex items-start">
                         <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
-                        Enter your weight in kilograms
+                        Select your preferred unit system (US Units, Metric Units, or Other Units)
                     </li>
                     <li class="flex items-start">
                         <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
-                        Enter your height in centimeters
+                        Enter your age (optional) and select your gender
                     </li>
                     <li class="flex items-start">
                         <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
-                        Click "Calculate BMI" to get your result and health category
+                        Input your height and weight using the selected unit system
+                    </li>
+                    <li class="flex items-start">
+                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">4</span>
+                        Click "Calculate BMI" to get comprehensive results including BMI Prime and Ponderal Index
                     </li>
                 </ol>
+            </div>
+
+            <!-- BMI Education Section -->
+            <div class="space-y-8 mb-8">
+                <!-- BMI Introduction -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Understanding Body Mass Index (BMI)</h2>
+                    <div class="prose max-w-none text-gray-700">
+                        <p class="text-lg mb-4">
+                            BMI is a measurement of a person's leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height.
+                        </p>
+                        <p class="mb-4">
+                            Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between. These ranges of BMI vary based on factors such as region and age, and are sometimes further divided into subcategories such as severely underweight or very severely obese.
+                        </p>
+                        <p class="mb-4">
+                            Being overweight or underweight can have significant health effects, so while BMI is an imperfect measure of healthy body weight, it is a useful indicator of whether any additional testing or action is required.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- BMI Categories Table -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">BMI Categories for Adults</h2>
+                    <p class="text-gray-700 mb-6">
+                        This is the World Health Organization's (WHO) recommended body weight based on BMI values for adults. It is used for both men and women, age 20 or older.
+                    </p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50">
+                                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-900">Classification</th>
+                                    <th class="border border-gray-300 px-4 py-3 text-left font-semibold text-gray-900">BMI Range (kg/m²)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="border border-gray-300 px-4 py-2">Severe Thinness</td><td class="border border-gray-300 px-4 py-2 text-red-600 font-semibold">&lt; 16</td></tr>
+                                <tr class="bg-gray-50"><td class="border border-gray-300 px-4 py-2">Moderate Thinness</td><td class="border border-gray-300 px-4 py-2 text-orange-600 font-semibold">16 - 17</td></tr>
+                                <tr><td class="border border-gray-300 px-4 py-2">Mild Thinness</td><td class="border border-gray-300 px-4 py-2 text-yellow-600 font-semibold">17 - 18.5</td></tr>
+                                <tr class="bg-gray-50"><td class="border border-gray-300 px-4 py-2">Normal</td><td class="border border-gray-300 px-4 py-2 text-green-600 font-semibold">18.5 - 25</td></tr>
+                                <tr><td class="border border-gray-300 px-4 py-2">Overweight</td><td class="border border-gray-300 px-4 py-2 text-yellow-600 font-semibold">25 - 30</td></tr>
+                                <tr class="bg-gray-50"><td class="border border-gray-300 px-4 py-2">Obese Class I</td><td class="border border-gray-300 px-4 py-2 text-red-600 font-semibold">30 - 35</td></tr>
+                                <tr><td class="border border-gray-300 px-4 py-2">Obese Class II</td><td class="border border-gray-300 px-4 py-2 text-red-700 font-semibold">35 - 40</td></tr>
+                                <tr class="bg-gray-50"><td class="border border-gray-300 px-4 py-2">Obese Class III</td><td class="border border-gray-300 px-4 py-2 text-red-800 font-semibold">&gt; 40</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Health Risks -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Health Risks Associated with BMI Categories</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-red-600 mb-4">Risks of Being Overweight</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start">
+                                    <i data-feather="alert-triangle" class="w-4 h-4 text-red-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    High blood pressure
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-triangle" class="w-4 h-4 text-red-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Higher LDL cholesterol, lower HDL cholesterol, high triglycerides
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-triangle" class="w-4 h-4 text-red-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Type II diabetes
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-triangle" class="w-4 h-4 text-red-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Coronary heart disease and stroke
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-triangle" class="w-4 h-4 text-red-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Sleep apnea and breathing problems
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-triangle" class="w-4 h-4 text-red-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Certain cancers (endometrial, breast, colon, kidney, gallbladder, liver)
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-triangle" class="w-4 h-4 text-red-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Mental health issues including depression and anxiety
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-blue-600 mb-4">Risks of Being Underweight</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-blue-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Malnutrition, vitamin deficiencies, anemia
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-blue-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Osteoporosis (increased bone weakness)
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-blue-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Decreased immune function
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-blue-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Growth and development issues in children and teenagers
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-blue-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Reproductive issues for women due to hormonal imbalances
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-blue-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Higher risk of complications during surgery
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-blue-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    Increased risk of mortality compared to healthy BMI
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BMI Limitations -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Limitations of BMI</h2>
+                    <div class="prose max-w-none text-gray-700">
+                        <p class="mb-4">
+                            Although BMI is a widely used and useful indicator of healthy body weight, it does have its limitations. BMI is only an estimate that cannot take body composition into account.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                            <div class="bg-yellow-50 p-6 rounded-lg">
+                                <h3 class="text-lg font-semibold text-yellow-800 mb-3">In Adults</h3>
+                                <ul class="space-y-2 text-yellow-700 text-sm">
+                                    <li>• BMI measures excess body weight, not excess body fat</li>
+                                    <li>• Doesn't account for age, sex, ethnicity, muscle mass, body fat, and activity level</li>
+                                    <li>• Older adults tend to have more body fat than younger adults with the same BMI</li>
+                                    <li>• Women tend to have more body fat than men for an equivalent BMI</li>
+                                    <li>• Muscular individuals and athletes may have higher BMIs due to muscle mass</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h3 class="text-lg font-semibold text-blue-800 mb-3">In Children and Adolescents</h3>
+                                <ul class="space-y-2 text-blue-700 text-sm">
+                                    <li>• Height and sexual maturation can influence BMI and body fat</li>
+                                    <li>• BMI is better for obese children than overweight children</li>
+                                    <li>• BMI differences can be due to fat-free mass variations</li>
+                                    <li>• BMI percentiles are more appropriate than adult categories</li>
+                                    <li>• Individual assessment is crucial for proper evaluation</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-green-50 rounded-lg">
+                            <p class="text-green-800">
+                                <strong>Important:</strong> BMI is fairly indicative of body fat for 90-95% of the population and can effectively be used along with other measures to help determine an individual's healthy body weight.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BMI Formulas -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">BMI Calculation Formulas</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-blue-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-blue-800 mb-4">US/Imperial Units</h3>
+                            <div class="font-mono text-center text-lg bg-white p-4 rounded border">
+                                BMI = 703 × (weight in lbs) / (height in inches)²
+                            </div>
+                            <p class="text-sm text-blue-700 mt-3">
+                                Example: 5'10" (70 inches), 160 lbs<br>
+                                BMI = 703 × 160 / 70² = 23.0
+                            </p>
+                        </div>
+                        <div class="bg-green-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-green-800 mb-4">Metric Units</h3>
+                            <div class="font-mono text-center text-lg bg-white p-4 rounded border">
+                                BMI = (weight in kg) / (height in meters)²
+                            </div>
+                            <p class="text-sm text-green-700 mt-3">
+                                Example: 178 cm (1.78 m), 72.6 kg<br>
+                                BMI = 72.6 / 1.78² = 23.0
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- BMI Prime and Ponderal Index -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Advanced BMI Measurements</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-purple-600 mb-4">BMI Prime</h3>
+                            <p class="text-gray-700 mb-4">
+                                BMI prime is the ratio of a person's measured BMI to the upper limit of BMI that is considered "normal" (25 kg/m²).
+                            </p>
+                            <div class="font-mono text-center text-lg bg-purple-50 p-4 rounded border mb-4">
+                                BMI Prime = BMI / 25
+                            </div>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• &lt; 0.74: Underweight</li>
+                                <li>• 0.74 - 1: Normal</li>
+                                <li>• 1 - 1.2: Overweight</li>
+                                <li>• &gt; 1.2: Obese</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-orange-600 mb-4">Ponderal Index</h3>
+                            <p class="text-gray-700 mb-4">
+                                The Ponderal Index is more reliable for very tall or short individuals, while BMI tends to be less accurate at height extremes.
+                            </p>
+                            <div class="font-mono text-center text-lg bg-orange-50 p-4 rounded border mb-4">
+                                PI = (weight in kg) / (height in meters)³
+                            </div>
+                            <p class="text-sm text-gray-600">
+                                The PI uses the cube of height instead of the square, making it more accurate for individuals at height extremes.
+                            </p>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </main>
