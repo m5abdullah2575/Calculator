@@ -3011,3 +3011,572 @@ function resetTeamGenerator() {
     document.getElementById('participantCount').textContent = '0';
     hideResult('teamResult');
 }
+
+// Car Loan Calculator
+function calculateCarLoan() {
+    try {
+        const carPrice = validateInput(document.getElementById('carPrice').value, 'Car Price');
+        const downPayment = parseFloat(document.getElementById('downPayment').value) || 0;
+        const interestRate = validateInput(document.getElementById('interestRate').value, 'Interest Rate');
+        const loanTerm = parseInt(document.getElementById('loanTerm').value);
+        
+        const loanAmount = carPrice - downPayment;
+        const monthlyRate = interestRate / 100 / 12;
+        const numPayments = loanTerm * 12;
+        
+        const monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+        const totalPaid = monthlyPayment * numPayments;
+        const totalInterest = totalPaid - loanAmount;
+        
+        let result = `<div class="space-y-4">`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+        result += `<div class="bg-blue-50 p-4 rounded-lg"><span class="font-semibold">Monthly Payment:</span><br><span class="text-2xl font-bold text-blue-600">$${monthlyPayment.toFixed(2)}</span></div>`;
+        result += `<div class="bg-green-50 p-4 rounded-lg"><span class="font-semibold">Total Interest:</span><br><span class="text-2xl font-bold text-green-600">$${totalInterest.toFixed(2)}</span></div>`;
+        result += `<div class="bg-purple-50 p-4 rounded-lg"><span class="font-semibold">Total Amount:</span><br><span class="text-2xl font-bold text-purple-600">$${totalPaid.toFixed(2)}</span></div>`;
+        result += `<div class="bg-orange-50 p-4 rounded-lg"><span class="font-semibold">Loan Amount:</span><br><span class="text-2xl font-bold text-orange-600">$${loanAmount.toFixed(2)}</span></div>`;
+        result += `</div></div>`;
+        
+        showResult('carLoanResult', result);
+    } catch (error) {
+        showResult('carLoanResult', error.message, true);
+    }
+}
+
+function resetCarLoan() {
+    document.getElementById('carPrice').value = '';
+    document.getElementById('downPayment').value = '';
+    document.getElementById('interestRate').value = '';
+    document.getElementById('loanTerm').value = '5';
+    hideResult('carLoanResult');
+}
+
+// Student Loan Calculator
+function calculateStudentLoan() {
+    try {
+        const loanAmount = validateInput(document.getElementById('studentLoanAmount').value, 'Loan Amount');
+        const interestRate = validateInput(document.getElementById('studentInterestRate').value, 'Interest Rate');
+        const loanTerm = parseInt(document.getElementById('studentLoanTerm').value);
+        const repaymentPlan = document.getElementById('repaymentPlan').value;
+        
+        const monthlyRate = interestRate / 100 / 12;
+        const numPayments = loanTerm * 12;
+        
+        let monthlyPayment, totalPaid, totalInterest;
+        
+        if (repaymentPlan === 'standard') {
+            monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+            totalPaid = monthlyPayment * numPayments;
+        } else {
+            monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
+            totalPaid = monthlyPayment * numPayments;
+        }
+        
+        totalInterest = totalPaid - loanAmount;
+        
+        let result = `<div class="space-y-4">`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+        result += `<div class="bg-blue-50 p-4 rounded-lg"><span class="font-semibold">Monthly Payment:</span><br><span class="text-2xl font-bold text-blue-600">$${monthlyPayment.toFixed(2)}</span></div>`;
+        result += `<div class="bg-green-50 p-4 rounded-lg"><span class="font-semibold">Total Interest:</span><br><span class="text-2xl font-bold text-green-600">$${totalInterest.toFixed(2)}</span></div>`;
+        result += `<div class="bg-purple-50 p-4 rounded-lg"><span class="font-semibold">Total Amount:</span><br><span class="text-2xl font-bold text-purple-600">$${totalPaid.toFixed(2)}</span></div>`;
+        result += `<div class="bg-orange-50 p-4 rounded-lg"><span class="font-semibold">Repayment Plan:</span><br><span class="text-2xl font-bold text-orange-600">${repaymentPlan}</span></div>`;
+        result += `</div></div>`;
+        
+        showResult('studentLoanResult', result);
+    } catch (error) {
+        showResult('studentLoanResult', error.message, true);
+    }
+}
+
+function resetStudentLoan() {
+    document.getElementById('studentLoanAmount').value = '';
+    document.getElementById('studentInterestRate').value = '';
+    document.getElementById('studentLoanTerm').value = '10';
+    document.getElementById('repaymentPlan').value = 'standard';
+    hideResult('studentLoanResult');
+}
+
+// Gaming PC Builder Calculator
+function calculateGamingPC() {
+    try {
+        const cpuPrice = parseFloat(document.getElementById('cpuPrice').value) || 0;
+        const gpuPrice = parseFloat(document.getElementById('gpuPrice').value) || 0;
+        const ramPrice = parseFloat(document.getElementById('ramPrice').value) || 0;
+        const storagePrice = parseFloat(document.getElementById('storagePrice').value) || 0;
+        const motherboardPrice = parseFloat(document.getElementById('motherboardPrice').value) || 0;
+        const psuPrice = parseFloat(document.getElementById('psuPrice').value) || 0;
+        const casePrice = parseFloat(document.getElementById('casePrice').value) || 0;
+        const coolingPrice = parseFloat(document.getElementById('coolingPrice').value) || 0;
+        
+        const totalCost = cpuPrice + gpuPrice + ramPrice + storagePrice + motherboardPrice + psuPrice + casePrice + coolingPrice;
+        const tax = totalCost * 0.08; // Estimated 8% tax
+        const totalWithTax = totalCost + tax;
+        
+        let result = `<div class="space-y-4">`;
+        result += `<h3 class="text-lg font-semibold">Build Breakdown:</h3>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">`;
+        if (cpuPrice > 0) result += `<div>CPU: $${cpuPrice.toFixed(2)}</div>`;
+        if (gpuPrice > 0) result += `<div>GPU: $${gpuPrice.toFixed(2)}</div>`;
+        if (ramPrice > 0) result += `<div>RAM: $${ramPrice.toFixed(2)}</div>`;
+        if (storagePrice > 0) result += `<div>Storage: $${storagePrice.toFixed(2)}</div>`;
+        if (motherboardPrice > 0) result += `<div>Motherboard: $${motherboardPrice.toFixed(2)}</div>`;
+        if (psuPrice > 0) result += `<div>PSU: $${psuPrice.toFixed(2)}</div>`;
+        if (casePrice > 0) result += `<div>Case: $${casePrice.toFixed(2)}</div>`;
+        if (coolingPrice > 0) result += `<div>Cooling: $${coolingPrice.toFixed(2)}</div>`;
+        result += `</div>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-3 gap-4">`;
+        result += `<div class="bg-blue-50 p-4 rounded-lg"><span class="font-semibold">Subtotal:</span><br><span class="text-2xl font-bold text-blue-600">$${totalCost.toFixed(2)}</span></div>`;
+        result += `<div class="bg-green-50 p-4 rounded-lg"><span class="font-semibold">Est. Tax:</span><br><span class="text-2xl font-bold text-green-600">$${tax.toFixed(2)}</span></div>`;
+        result += `<div class="bg-purple-50 p-4 rounded-lg"><span class="font-semibold">Total Cost:</span><br><span class="text-2xl font-bold text-purple-600">$${totalWithTax.toFixed(2)}</span></div>`;
+        result += `</div></div>`;
+        
+        showResult('gamingPCResult', result);
+    } catch (error) {
+        showResult('gamingPCResult', error.message, true);
+    }
+}
+
+function resetGamingPC() {
+    document.getElementById('cpuPrice').value = '';
+    document.getElementById('gpuPrice').value = '';
+    document.getElementById('ramPrice').value = '';
+    document.getElementById('storagePrice').value = '';
+    document.getElementById('motherboardPrice').value = '';
+    document.getElementById('psuPrice').value = '';
+    document.getElementById('casePrice').value = '';
+    document.getElementById('coolingPrice').value = '';
+    hideResult('gamingPCResult');
+}
+
+// Wedding Budget Calculator
+function calculateWeddingBudget() {
+    try {
+        const totalBudget = validateInput(document.getElementById('totalBudget').value, 'Total Budget');
+        const guestCount = validateInput(document.getElementById('guestCount').value, 'Guest Count');
+        const venueCost = parseFloat(document.getElementById('venueCost').value) || 0;
+        const cateringCost = parseFloat(document.getElementById('cateringCost').value) || 0;
+        const photographyCost = parseFloat(document.getElementById('photographyCost').value) || 0;
+        const musicCost = parseFloat(document.getElementById('musicCost').value) || 0;
+        const decorationsCost = parseFloat(document.getElementById('decorationsCost').value) || 0;
+        const otherCosts = parseFloat(document.getElementById('otherCosts').value) || 0;
+        
+        const totalCateringCost = cateringCost * guestCount;
+        const totalExpenses = venueCost + totalCateringCost + photographyCost + musicCost + decorationsCost + otherCosts;
+        const remaining = totalBudget - totalExpenses;
+        const perGuestCost = totalExpenses / guestCount;
+        
+        let result = `<div class="space-y-4">`;
+        result += `<h3 class="text-lg font-semibold">Wedding Budget Breakdown:</h3>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">`;
+        result += `<div>Venue: $${venueCost.toFixed(2)}</div>`;
+        result += `<div>Catering (${guestCount} guests): $${totalCateringCost.toFixed(2)}</div>`;
+        result += `<div>Photography: $${photographyCost.toFixed(2)}</div>`;
+        result += `<div>Music/DJ: $${musicCost.toFixed(2)}</div>`;
+        result += `<div>Decorations: $${decorationsCost.toFixed(2)}</div>`;
+        result += `<div>Other: $${otherCosts.toFixed(2)}</div>`;
+        result += `</div>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">`;
+        result += `<div class="bg-blue-50 p-4 rounded-lg"><span class="font-semibold">Total Expenses:</span><br><span class="text-2xl font-bold text-blue-600">$${totalExpenses.toFixed(2)}</span></div>`;
+        result += `<div class="bg-${remaining >= 0 ? 'green' : 'red'}-50 p-4 rounded-lg"><span class="font-semibold">${remaining >= 0 ? 'Remaining' : 'Over Budget'}:</span><br><span class="text-2xl font-bold text-${remaining >= 0 ? 'green' : 'red'}-600">$${Math.abs(remaining).toFixed(2)}</span></div>`;
+        result += `<div class="bg-purple-50 p-4 rounded-lg"><span class="font-semibold">Per Guest:</span><br><span class="text-2xl font-bold text-purple-600">$${perGuestCost.toFixed(2)}</span></div>`;
+        result += `<div class="bg-orange-50 p-4 rounded-lg"><span class="font-semibold">Total Budget:</span><br><span class="text-2xl font-bold text-orange-600">$${totalBudget.toFixed(2)}</span></div>`;
+        result += `</div></div>`;
+        
+        showResult('weddingBudgetResult', result);
+    } catch (error) {
+        showResult('weddingBudgetResult', error.message, true);
+    }
+}
+
+function resetWeddingBudget() {
+    document.getElementById('totalBudget').value = '';
+    document.getElementById('guestCount').value = '';
+    document.getElementById('venueCost').value = '';
+    document.getElementById('cateringCost').value = '';
+    document.getElementById('photographyCost').value = '';
+    document.getElementById('musicCost').value = '';
+    document.getElementById('decorationsCost').value = '';
+    document.getElementById('otherCosts').value = '';
+    hideResult('weddingBudgetResult');
+}
+
+// Sleep Schedule Calculator
+function calculateSleepSchedule() {
+    try {
+        const wakeUpTime = document.getElementById('wakeUpTime').value;
+        const ageGroup = document.getElementById('ageGroup').value;
+        const sleepQuality = document.getElementById('sleepQuality').value;
+        const fallAsleepTime = parseInt(document.getElementById('fallAsleepTime').value);
+        
+        if (!wakeUpTime) throw new Error('Wake-up time is required');
+        
+        let recommendedSleep = 8; // default hours
+        if (ageGroup === 'teenager') recommendedSleep = 9;
+        else if (ageGroup === 'young-adult') recommendedSleep = 8;
+        else if (ageGroup === 'adult') recommendedSleep = 7.5;
+        else if (ageGroup === 'older-adult') recommendedSleep = 7;
+        
+        const [hours, minutes] = wakeUpTime.split(':').map(Number);
+        const wakeUpDate = new Date();
+        wakeUpDate.setHours(hours, minutes, 0, 0);
+        
+        const sleepTime = new Date(wakeUpDate.getTime() - (recommendedSleep * 60 + fallAsleepTime) * 60 * 1000);
+        const bedTime = new Date(sleepTime.getTime() - fallAsleepTime * 60 * 1000);
+        
+        const formatTime = (date) => {
+            return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+        };
+        
+        let result = `<div class="space-y-4">`;
+        result += `<h3 class="text-lg font-semibold">Your Optimal Sleep Schedule:</h3>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+        result += `<div class="bg-blue-50 p-4 rounded-lg"><span class="font-semibold">Bedtime:</span><br><span class="text-2xl font-bold text-blue-600">${formatTime(bedTime)}</span></div>`;
+        result += `<div class="bg-green-50 p-4 rounded-lg"><span class="font-semibold">Sleep Time:</span><br><span class="text-2xl font-bold text-green-600">${formatTime(sleepTime)}</span></div>`;
+        result += `<div class="bg-purple-50 p-4 rounded-lg"><span class="font-semibold">Wake Up:</span><br><span class="text-2xl font-bold text-purple-600">${formatTime(wakeUpDate)}</span></div>`;
+        result += `<div class="bg-orange-50 p-4 rounded-lg"><span class="font-semibold">Sleep Duration:</span><br><span class="text-2xl font-bold text-orange-600">${recommendedSleep} hours</span></div>`;
+        result += `</div>`;
+        result += `<div class="text-sm text-gray-600">`;
+        result += `<p><strong>Tips:</strong> Try to maintain consistent sleep times, avoid screens 1 hour before bedtime, and keep your bedroom cool and dark.</p>`;
+        result += `</div></div>`;
+        
+        showResult('sleepScheduleResult', result);
+    } catch (error) {
+        showResult('sleepScheduleResult', error.message, true);
+    }
+}
+
+function resetSleepSchedule() {
+    document.getElementById('wakeUpTime').value = '';
+    document.getElementById('ageGroup').value = 'young-adult';
+    document.getElementById('sleepQuality').value = 'normal';
+    document.getElementById('fallAsleepTime').value = '15';
+    hideResult('sleepScheduleResult');
+}
+
+// Flight Cost Calculator
+function calculateFlightCost() {
+    try {
+        const basePrice = validateInput(document.getElementById('basePrice').value, 'Base Price');
+        const passengerCount = validateInput(document.getElementById('passengerCount').value, 'Passenger Count');
+        const tripType = document.getElementById('tripType').value;
+        const baggageFees = parseFloat(document.getElementById('baggageFees').value) || 0;
+        const seatFees = parseFloat(document.getElementById('seatFees').value) || 0;
+        const insurance = parseFloat(document.getElementById('insurance').value) || 0;
+        
+        let totalTicketCost = basePrice;
+        if (tripType === 'round-trip') {
+            totalTicketCost = basePrice; // assuming base price already includes round trip
+        }
+        
+        const ticketTotal = totalTicketCost * passengerCount;
+        const totalFees = (baggageFees + seatFees + insurance) * passengerCount;
+        const taxes = ticketTotal * 0.15; // Estimated 15% in taxes and fees
+        const grandTotal = ticketTotal + totalFees + taxes;
+        
+        let result = `<div class="space-y-4">`;
+        result += `<h3 class="text-lg font-semibold">Flight Cost Breakdown:</h3>`;
+        result += `<div class="text-sm space-y-1">`;
+        result += `<div>Base tickets (${passengerCount} passenger${passengerCount > 1 ? 's' : ''}): $${ticketTotal.toFixed(2)}</div>`;
+        result += `<div>Baggage fees: $${(baggageFees * passengerCount).toFixed(2)}</div>`;
+        result += `<div>Seat selection: $${(seatFees * passengerCount).toFixed(2)}</div>`;
+        result += `<div>Travel insurance: $${(insurance * passengerCount).toFixed(2)}</div>`;
+        result += `<div>Taxes & fees: $${taxes.toFixed(2)}</div>`;
+        result += `</div>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-3 gap-4">`;
+        result += `<div class="bg-blue-50 p-4 rounded-lg"><span class="font-semibold">Tickets Total:</span><br><span class="text-2xl font-bold text-blue-600">$${ticketTotal.toFixed(2)}</span></div>`;
+        result += `<div class="bg-green-50 p-4 rounded-lg"><span class="font-semibold">Per Person:</span><br><span class="text-2xl font-bold text-green-600">$${(grandTotal / passengerCount).toFixed(2)}</span></div>`;
+        result += `<div class="bg-purple-50 p-4 rounded-lg"><span class="font-semibold">Grand Total:</span><br><span class="text-2xl font-bold text-purple-600">$${grandTotal.toFixed(2)}</span></div>`;
+        result += `</div></div>`;
+        
+        showResult('flightCostResult', result);
+    } catch (error) {
+        showResult('flightCostResult', error.message, true);
+    }
+}
+
+function resetFlightCost() {
+    document.getElementById('basePrice').value = '';
+    document.getElementById('passengerCount').value = '1';
+    document.getElementById('tripType').value = 'round-trip';
+    document.getElementById('baggageFees').value = '';
+    document.getElementById('seatFees').value = '';
+    document.getElementById('insurance').value = '';
+    hideResult('flightCostResult');
+}
+
+// Recipe Scaling Calculator
+function calculateRecipeScaling() {
+    try {
+        const originalServings = validateInput(document.getElementById('originalServings').value, 'Original Servings');
+        const desiredServings = validateInput(document.getElementById('desiredServings').value, 'Desired Servings');
+        
+        const scalingFactor = desiredServings / originalServings;
+        
+        const ingredientRows = document.querySelectorAll('.ingredient-row');
+        const ingredients = [];
+        
+        ingredientRows.forEach(row => {
+            const name = row.querySelector('.ingredient-name').value.trim();
+            const amount = parseFloat(row.querySelector('.ingredient-amount').value);
+            const unit = row.querySelector('.ingredient-unit').value.trim();
+            
+            if (name && amount && unit) {
+                const scaledAmount = amount * scalingFactor;
+                ingredients.push({ name, originalAmount: amount, scaledAmount, unit });
+            }
+        });
+        
+        if (ingredients.length === 0) {
+            throw new Error('Please add at least one ingredient');
+        }
+        
+        let result = `<div class="space-y-4">`;
+        result += `<h3 class="text-lg font-semibold">Scaled Recipe (${originalServings} → ${desiredServings} servings):</h3>`;
+        result += `<div class="bg-blue-50 p-4 rounded-lg"><span class="font-semibold">Scaling Factor:</span> ${scalingFactor.toFixed(2)}x</div>`;
+        result += `<div class="space-y-2">`;
+        
+        ingredients.forEach(ingredient => {
+            result += `<div class="flex justify-between items-center p-3 bg-white rounded border">`;
+            result += `<span class="font-medium">${ingredient.name}</span>`;
+            result += `<span class="text-gray-600">${ingredient.originalAmount} ${ingredient.unit} → <strong class="text-blue-600">${ingredient.scaledAmount.toFixed(2)} ${ingredient.unit}</strong></span>`;
+            result += `</div>`;
+        });
+        
+        result += `</div></div>`;
+        
+        showResult('recipeScalingResult', result);
+    } catch (error) {
+        showResult('recipeScalingResult', error.message, true);
+    }
+}
+
+function addIngredientRow() {
+    const container = document.getElementById('ingredientsList');
+    const newRow = document.createElement('div');
+    newRow.className = 'grid grid-cols-1 md:grid-cols-3 gap-3 ingredient-row';
+    newRow.innerHTML = `
+        <input type="text" placeholder="Ingredient name" class="ingredient-name px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <input type="number" step="0.01" placeholder="Amount" class="ingredient-amount px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        <input type="text" placeholder="Unit (cups, tbsp, etc.)" class="ingredient-unit px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+    `;
+    container.appendChild(newRow);
+}
+
+function resetRecipeScaling() {
+    document.getElementById('originalServings').value = '';
+    document.getElementById('desiredServings').value = '';
+    // Reset to only one ingredient row
+    const container = document.getElementById('ingredientsList');
+    container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 ingredient-row">
+            <input type="text" placeholder="Ingredient name" class="ingredient-name px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <input type="number" step="0.01" placeholder="Amount" class="ingredient-amount px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <input type="text" placeholder="Unit (cups, tbsp, etc.)" class="ingredient-unit px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+        </div>
+    `;
+    hideResult('recipeScalingResult');
+}
+
+// Relationship Compatibility Calculator
+function calculateCompatibility() {
+    try {
+        const hobbies = parseInt(document.getElementById('hobbiesCompatibility').value);
+        const goals = parseInt(document.getElementById('goalsCompatibility').value);
+        const communication = parseInt(document.getElementById('communicationCompatibility').value);
+        const values = parseInt(document.getElementById('valuesCompatibility').value);
+        const lifestyle = parseInt(document.getElementById('lifestyleCompatibility').value);
+        const emotional = parseInt(document.getElementById('emotionalCompatibility').value);
+        
+        const totalScore = hobbies + goals + communication + values + lifestyle + emotional;
+        const averageScore = totalScore / 6;
+        const percentage = (averageScore / 10) * 100;
+        
+        let compatibilityLevel, color, advice;
+        if (percentage >= 85) {
+            compatibilityLevel = 'Excellent';
+            color = 'green';
+            advice = 'You have exceptional compatibility! This suggests a strong foundation for a lasting relationship.';
+        } else if (percentage >= 70) {
+            compatibilityLevel = 'Very Good';
+            color = 'blue';
+            advice = 'Great compatibility! You share many important values and interests.';
+        } else if (percentage >= 55) {
+            compatibilityLevel = 'Good';
+            color = 'yellow';
+            advice = 'Good compatibility with room for growth. Focus on improving communication and shared interests.';
+        } else if (percentage >= 40) {
+            compatibilityLevel = 'Fair';
+            color = 'orange';
+            advice = 'Some challenges ahead. Consider working on areas of disagreement and finding common ground.';
+        } else {
+            compatibilityLevel = 'Needs Work';
+            color = 'red';
+            advice = 'Significant differences detected. Open communication and compromise will be essential.';
+        }
+        
+        let result = `<div class="space-y-4">`;
+        result += `<div class="text-center">`;
+        result += `<div class="bg-${color}-50 p-6 rounded-lg">`;
+        result += `<div class="text-4xl font-bold text-${color}-600 mb-2">${percentage.toFixed(1)}%</div>`;
+        result += `<div class="text-xl font-semibold text-${color}-800">${compatibilityLevel}</div>`;
+        result += `</div></div>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-sm">`;
+        result += `<div>Hobbies & Activities: ${hobbies}/10</div>`;
+        result += `<div>Life Goals: ${goals}/10</div>`;
+        result += `<div>Communication: ${communication}/10</div>`;
+        result += `<div>Values & Beliefs: ${values}/10</div>`;
+        result += `<div>Lifestyle: ${lifestyle}/10</div>`;
+        result += `<div>Emotional Connection: ${emotional}/10</div>`;
+        result += `</div>`;
+        result += `<div class="bg-gray-50 p-4 rounded-lg">`;
+        result += `<p class="text-sm"><strong>Assessment:</strong> ${advice}</p>`;
+        result += `</div></div>`;
+        
+        showResult('compatibilityResult', result);
+    } catch (error) {
+        showResult('compatibilityResult', error.message, true);
+    }
+}
+
+function resetCompatibility() {
+    // Reset all sliders to 5
+    ['hobbies', 'goals', 'communication', 'values', 'lifestyle', 'emotional'].forEach(category => {
+        document.getElementById(category + 'Compatibility').value = '5';
+        document.getElementById(category + 'Value').textContent = '5';
+    });
+    hideResult('compatibilityResult');
+}
+
+// Party Planning Calculator
+function calculatePartyPlanning() {
+    try {
+        const guestNumber = validateInput(document.getElementById('guestNumber').value, 'Number of Guests');
+        const partyType = document.getElementById('partyType').value;
+        const duration = validateInput(document.getElementById('partyDuration').value, 'Duration');
+        const budgetPerPerson = parseFloat(document.getElementById('budgetPerPerson').value) || 0;
+        const foodStyle = document.getElementById('foodStyle').value;
+        const venueType = document.getElementById('venueType').value;
+        
+        // Calculate food recommendations based on party type and style
+        let foodMultiplier = 1;
+        if (partyType === 'cocktail') foodMultiplier = 0.7;
+        else if (partyType === 'dinner') foodMultiplier = 1.2;
+        else if (partyType === 'barbecue') foodMultiplier = 1.3;
+        
+        // Estimated costs per person based on party type
+        let estimatedCostPerPerson = 25; // base cost
+        if (partyType === 'wedding') estimatedCostPerPerson = 150;
+        else if (partyType === 'corporate') estimatedCostPerPerson = 45;
+        else if (partyType === 'dinner') estimatedCostPerPerson = 35;
+        else if (partyType === 'cocktail') estimatedCostPerPerson = 20;
+        
+        const totalBudget = budgetPerPerson > 0 ? budgetPerPerson * guestNumber : estimatedCostPerPerson * guestNumber;
+        
+        // Food calculations
+        const appetizers = Math.ceil(guestNumber * 6 * foodMultiplier); // pieces per person
+        const mainCourse = guestNumber * 1.2; // servings
+        const drinks = Math.ceil(guestNumber * duration * 2); // drinks per hour per person
+        const dessert = Math.ceil(guestNumber * 0.8); // servings
+        
+        // Additional supplies
+        const plates = Math.ceil(guestNumber * 1.5);
+        const napkins = Math.ceil(guestNumber * 3);
+        const cups = Math.ceil(guestNumber * duration * 1.5);
+        
+        let result = `<div class="space-y-4">`;
+        result += `<h3 class="text-lg font-semibold">Party Planning for ${guestNumber} Guests</h3>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
+        result += `<div class="bg-blue-50 p-4 rounded-lg"><span class="font-semibold">Total Budget:</span><br><span class="text-2xl font-bold text-blue-600">$${totalBudget.toFixed(2)}</span></div>`;
+        result += `<div class="bg-green-50 p-4 rounded-lg"><span class="font-semibold">Per Person:</span><br><span class="text-2xl font-bold text-green-600">$${(totalBudget / guestNumber).toFixed(2)}</span></div>`;
+        result += `</div>`;
+        
+        result += `<div class="space-y-3">`;
+        result += `<h4 class="font-semibold">Food & Drink Recommendations:</h4>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">`;
+        result += `<div>• Appetizers: ${appetizers} pieces</div>`;
+        result += `<div>• Main course: ${mainCourse.toFixed(0)} servings</div>`;
+        result += `<div>• Drinks: ${drinks} total drinks</div>`;
+        result += `<div>• Dessert: ${dessert} servings</div>`;
+        result += `</div>`;
+        
+        result += `<h4 class="font-semibold">Supplies Needed:</h4>`;
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">`;
+        result += `<div>• Plates: ${plates}</div>`;
+        result += `<div>• Napkins: ${napkins}</div>`;
+        result += `<div>• Cups: ${cups}</div>`;
+        result += `<div>• Tables for ${Math.ceil(guestNumber / 8)} groups</div>`;
+        result += `</div></div></div>`;
+        
+        showResult('partyPlanningResult', result);
+    } catch (error) {
+        showResult('partyPlanningResult', error.message, true);
+    }
+}
+
+function resetPartyPlanning() {
+    document.getElementById('guestNumber').value = '';
+    document.getElementById('partyType').value = 'birthday';
+    document.getElementById('partyDuration').value = '4';
+    document.getElementById('budgetPerPerson').value = '';
+    document.getElementById('foodStyle').value = 'buffet';
+    document.getElementById('venueType').value = 'home';
+    hideResult('partyPlanningResult');
+}
+
+// Property Tax Calculator
+function calculatePropertyTax() {
+    try {
+        const propertyValue = validateInput(document.getElementById('propertyValue').value, 'Property Value');
+        const assessmentRatio = parseFloat(document.getElementById('assessmentRatio').value) || 100;
+        const taxRate = validateInput(document.getElementById('taxRate').value, 'Tax Rate');
+        const taxRateFormat = document.getElementById('taxRateFormat').value;
+        const homesteadExemption = parseFloat(document.getElementById('homesteadExemption').value) || 0;
+        const otherExemptions = parseFloat(document.getElementById('otherExemptions').value) || 0;
+        
+        const assessedValue = propertyValue * (assessmentRatio / 100);
+        const totalExemptions = homesteadExemption + otherExemptions;
+        const taxableValue = Math.max(0, assessedValue - totalExemptions);
+        
+        let effectiveTaxRate = taxRate;
+        if (taxRateFormat === 'mills') {
+            effectiveTaxRate = taxRate / 1000; // mills to percentage
+        } else if (taxRateFormat === 'per1000') {
+            effectiveTaxRate = taxRate / 10; // per $1000 to percentage
+        }
+        
+        const annualTax = (taxableValue * effectiveTaxRate) / 100;
+        const monthlyTax = annualTax / 12;
+        const effectiveRate = (annualTax / propertyValue) * 100;
+        
+        let result = `<div class="space-y-4">`;
+        result += `<h3 class="text-lg font-semibold">Property Tax Calculation:</h3>`;
+        result += `<div class="space-y-2 text-sm">`;
+        result += `<div>Property Value: $${propertyValue.toLocaleString()}</div>`;
+        result += `<div>Assessment Ratio: ${assessmentRatio}%</div>`;
+        result += `<div>Assessed Value: $${assessedValue.toLocaleString()}</div>`;
+        result += `<div>Total Exemptions: $${totalExemptions.toLocaleString()}</div>`;
+        result += `<div>Taxable Value: $${taxableValue.toLocaleString()}</div>`;
+        result += `<div>Tax Rate: ${effectiveTaxRate.toFixed(3)}%</div>`;
+        result += `</div>`;
+        
+        result += `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">`;
+        result += `<div class="bg-blue-50 p-4 rounded-lg"><span class="font-semibold">Annual Tax:</span><br><span class="text-2xl font-bold text-blue-600">$${annualTax.toFixed(2)}</span></div>`;
+        result += `<div class="bg-green-50 p-4 rounded-lg"><span class="font-semibold">Monthly Tax:</span><br><span class="text-2xl font-bold text-green-600">$${monthlyTax.toFixed(2)}</span></div>`;
+        result += `<div class="bg-purple-50 p-4 rounded-lg"><span class="font-semibold">Effective Rate:</span><br><span class="text-2xl font-bold text-purple-600">${effectiveRate.toFixed(3)}%</span></div>`;
+        result += `<div class="bg-orange-50 p-4 rounded-lg"><span class="font-semibold">Tax per $1000:</span><br><span class="text-2xl font-bold text-orange-600">$${((annualTax / propertyValue) * 1000).toFixed(2)}</span></div>`;
+        result += `</div></div>`;
+        
+        showResult('propertyTaxResult', result);
+    } catch (error) {
+        showResult('propertyTaxResult', error.message, true);
+    }
+}
+
+function resetPropertyTax() {
+    document.getElementById('propertyValue').value = '';
+    document.getElementById('assessmentRatio').value = '100';
+    document.getElementById('taxRate').value = '';
+    document.getElementById('taxRateFormat').value = 'percentage';
+    document.getElementById('homesteadExemption').value = '0';
+    document.getElementById('otherExemptions').value = '0';
+    hideResult('propertyTaxResult');
+}

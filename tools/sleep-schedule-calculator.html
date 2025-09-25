@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Schedule Calculator - CalcHub Pro</title>
+    <meta name="description" content="Calculate optimal bedtime and wake-up time based on sleep cycles. Improve your sleep quality with science-based timing.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-blue-600 p-2 rounded-lg">
+                        <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CalcHub Pro</h1>
+                        <p class="text-xs text-gray-500">Professional Calculator Suite</p>
+                    </div>
+                </div>
+                <nav class="flex items-center space-x-4">
+                    <button onclick="history.back()" class="text-gray-600 hover:text-blue-600 flex items-center">
+                        <i data-feather="arrow-left" class="w-4 h-4 mr-1"></i>
+                        Back
+                    </button>
+                    <a href="../index.html" class="text-blue-600 font-medium flex items-center">
+                        <i data-feather="home" class="w-4 h-4 mr-1"></i>
+                        Home
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tool Header -->
+    <section class="tool-header">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <nav class="breadcrumb justify-center text-blue-200">
+                <a href="../index.html" class="text-blue-200 hover:text-white">Home</a>
+                <i data-feather="chevron-right" class="w-4 h-4"></i>
+                <span>Sleep Schedule Calculator</span>
+            </nav>
+            <div class="flex items-center justify-center mb-4">
+                <div class="bg-white bg-opacity-20 p-4 rounded-xl">
+                    <i data-feather="moon" class="w-12 h-12"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl font-bold mb-4">Sleep Schedule Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                Calculate your optimal bedtime and wake-up time based on natural sleep cycles for better rest and energy.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="tool-container">
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">What time do you want to wake up?</label>
+                            <input 
+                                type="time" 
+                                id="wakeUpTime" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Age Group</label>
+                            <select 
+                                id="ageGroup"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                <option value="teenager">Teenager (14-17 years)</option>
+                                <option value="young-adult" selected>Young Adult (18-25 years)</option>
+                                <option value="adult">Adult (26-64 years)</option>
+                                <option value="older-adult">Older Adult (65+ years)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Sleep Quality Preference</label>
+                            <select 
+                                id="sleepQuality"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                <option value="light">Light Sleeper</option>
+                                <option value="normal" selected>Normal Sleeper</option>
+                                <option value="deep">Deep Sleeper</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Time to Fall Asleep (minutes)</label>
+                            <input 
+                                type="number" 
+                                id="fallAsleepTime" 
+                                value="15"
+                                min="5"
+                                max="60"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="calculateSleepSchedule()" 
+                        class="w-full bg-green-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-200 font-semibold"
+                    >
+                        Calculate Optimal Sleep Schedule
+                    </button>
+                    
+                    <div id="sleepScheduleResult" class="result-display hidden"></div>
+                    
+                    <button 
+                        onclick="resetSleepSchedule()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                    >
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sleep Cycle Info -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Understanding Sleep Cycles</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-blue-600 mb-1">90 min</div>
+                        <div class="text-sm font-medium text-blue-800">Average Cycle</div>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-green-600 mb-1">4-6</div>
+                        <div class="text-sm font-medium text-green-800">Cycles per Night</div>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-purple-600 mb-1">7-9 hrs</div>
+                        <div class="text-sm font-medium text-purple-800">Recommended Sleep</div>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg text-center">
+                        <div class="text-2xl font-bold text-orange-600 mb-1">15 min</div>
+                        <div class="text-sm font-medium text-orange-800">Time to Fall Asleep</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../script.js"></script>
+    <script>
+        // Initialize Feather icons
+        feather.replace();
+    </script>
+</body>
+</html>
