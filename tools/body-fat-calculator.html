@@ -3,8 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Body Fat Calculator - CalcHub Pro</title>
-    <meta name="description" content="Calculate body fat percentage using various methods including Navy, Army, and YMCA formulas.">
+    <title>Body Fat Calculator - Free Online Body Fat Percentage Calculator | U.S. Navy Method & BMI | CalcHub Pro</title>
+    <meta name="description" content="Calculate your body fat percentage with our advanced body fat calculator. Uses U.S. Navy method & BMI formulas. Get body fat mass, lean body mass, ideal body fat percentage. Free, accurate & instant results. Supports metric & imperial units.">
+    <meta name="keywords" content="body fat calculator, body fat percentage calculator, navy body fat calculator, BMI body fat, body composition calculator, lean body mass calculator, body fat mass calculator, ideal body fat percentage, free body fat calculator, online body fat calculator">
+    <meta name="author" content="CalcHub Pro">
+    <meta name="robots" content="index, follow">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Body Fat Calculator - Free Online Body Fat Percentage Calculator">
+    <meta property="og:description" content="Calculate your body fat percentage with our advanced body fat calculator using U.S. Navy method & BMI formulas. Get detailed results including body fat mass and lean body mass.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CalcHub Pro">
+    
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Body Fat Calculator - Free Online Body Fat Percentage Calculator">
+    <meta name="twitter:description" content="Calculate your body fat percentage using U.S. Navy method & BMI formulas. Get instant, accurate results with our free online calculator."
+    
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Body Fat Calculator",
+        "description": "Advanced body fat percentage calculator using U.S. Navy method and BMI formulas. Calculate body fat mass, lean body mass, and ideal body fat percentage.",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "CalcHub Pro"
+        },
+        "keywords": "body fat calculator, body fat percentage, U.S. Navy method, BMI calculator, body composition"
+    }
+    </script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="../style.css">
@@ -50,166 +86,305 @@
                     <i data-feather="user" class="w-12 h-12"></i>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold mb-4">Body Fat Calculator</h1>
-            <p class="text-xl text-blue-100 max-w-2xl mx-auto">
-                Calculate your body fat percentage using proven methods including Navy, Army, and YMCA formulas.
+            <h1 class="text-4xl font-bold mb-4">Advanced Body Fat Calculator</h1>
+            <p class="text-xl text-blue-100 max-w-3xl mx-auto">
+                Calculate your total body fat percentage using the U.S. Navy method and BMI formulas. Get detailed results including body fat mass, lean body mass, and ideal body fat percentage for your age.
             </p>
         </div>
     </section>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="tool-container">
-            <!-- Calculator Card -->
-            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-lg font-semibold text-gray-900 mb-3">Calculation Method</label>
-                        <select 
-                            id="bodyFatMethod" 
-                            onchange="updateMeasurementFields()"
-                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                        >
-                            <option value="navy">US Navy Method</option>
-                            <option value="army">US Army Method</option>
-                            <option value="ymca">YMCA Method</option>
-                        </select>
+            <!-- Main Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 sm:p-8 mb-8">
+                <!-- Unit System Tabs -->
+                <div class="flex flex-wrap justify-center mb-6">
+                    <div class="bg-gray-100 p-1 rounded-lg inline-flex">
+                        <button id="usUnitsTab" onclick="switchUnitSystem('us')" class="px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 bg-blue-600 text-white">
+                            US Units
+                        </button>
+                        <button id="metricUnitsTab" onclick="switchUnitSystem('metric')" class="px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 text-gray-600 hover:text-gray-900">
+                            Metric Units
+                        </button>
                     </div>
-                    
+                </div>
+
+                <form id="bodyFatForm" class="space-y-6">
+                    <!-- Basic Information -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Gender</label>
-                            <select 
-                                id="bodyFatGender" 
-                                onchange="updateMeasurementFields()"
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                            >
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">Gender</label>
+                            <select id="gender" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Age (years)</label>
-                            <input 
-                                type="number" 
-                                id="bodyFatAge" 
-                                placeholder="Enter age"
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                            >
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">Age</label>
+                            <input type="number" id="age" placeholder="Years" min="1" max="120" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Height (cm)</label>
-                            <input 
-                                type="number" 
-                                id="bodyFatHeight" 
-                                placeholder="Enter height"
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                            >
+                            <label class="block text-sm font-semibold text-gray-900 mb-2">Weight</label>
+                            <div class="flex">
+                                <input type="number" id="weight" placeholder="Weight" step="0.1" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <span id="weightUnit" class="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-sm text-gray-600">pounds</span>
+                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Dynamic measurement fields -->
-                    <div id="measurementFields"></div>
-                    
-                    <button 
-                        onclick="calculateBodyFat()" 
-                        class="w-full bg-orange-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-orange-700 transition-colors duration-200 font-semibold"
-                    >
-                        Calculate Body Fat
-                    </button>
-                    
-                    <div id="bodyFatResult" class="result-display hidden"></div>
-                    
-                    <button 
-                        onclick="resetBodyFat()" 
-                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
-                    >
-                        Reset
-                    </button>
+
+                    <!-- Height Section -->
+                    <div id="heightSection">
+                        <!-- US Units Height -->
+                        <div id="heightUS" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-900 mb-2">Height</label>
+                                <div class="flex space-x-2">
+                                    <div class="flex">
+                                        <input type="number" id="heightFeet" placeholder="0" min="0" max="10" class="w-20 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <span class="px-2 py-2 bg-gray-100 border border-l-0 border-gray-300 text-sm text-gray-600">feet</span>
+                                    </div>
+                                    <div class="flex">
+                                        <input type="number" id="heightInches" placeholder="0" min="0" max="11" step="0.25" class="w-20 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <span class="px-2 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-sm text-gray-600">inches</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Metric Units Height -->
+                        <div id="heightMetric" class="hidden">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-900 mb-2">Height</label>
+                                <div class="flex max-w-xs">
+                                    <input type="number" id="heightCm" placeholder="Height" min="1" max="300" step="0.5" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <span class="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-sm text-gray-600">cm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Measurement Fields -->
+                    <div id="measurementFields">
+                        <!-- US Units Measurements -->
+                        <div id="measurementsUS">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="neckWaistUS">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-900 mb-2">Neck</label>
+                                    <div class="flex max-w-xs">
+                                        <input type="number" id="neckInches" placeholder="Neck circumference" min="1" max="50" step="0.25" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <span class="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-sm text-gray-600">inches</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-900 mb-2">Waist</label>
+                                    <div class="flex max-w-xs">
+                                        <input type="number" id="waistInches" placeholder="Waist circumference" min="1" max="80" step="0.25" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <span class="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-sm text-gray-600">inches</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6" id="hipFieldUS" style="display: none;">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-900 mb-2">Hip</label>
+                                    <div class="flex max-w-xs">
+                                        <input type="number" id="hipInches" placeholder="Hip circumference" min="1" max="80" step="0.25" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <span class="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-sm text-gray-600">inches</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Metric Units Measurements -->
+                        <div id="measurementsMetric" class="hidden">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="neckWaistMetric">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-900 mb-2">Neck</label>
+                                    <div class="flex max-w-xs">
+                                        <input type="number" id="neckCm" placeholder="Neck circumference" min="1" max="200" step="0.5" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <span class="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-sm text-gray-600">cm</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-900 mb-2">Waist</label>
+                                    <div class="flex max-w-xs">
+                                        <input type="number" id="waistCm" placeholder="Waist circumference" min="1" max="200" step="0.5" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <span class="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-sm text-gray-600">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6" id="hipFieldMetric" style="display: none;">
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-900 mb-2">Hip</label>
+                                    <div class="flex max-w-xs">
+                                        <input type="number" id="hipCm" placeholder="Hip circumference" min="1" max="200" step="0.5" class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        <span class="px-3 py-2 bg-gray-100 border border-l-0 border-gray-300 rounded-r-md text-sm text-gray-600">cm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculate Button -->
+                    <div class="text-center">
+                        <button type="button" onclick="calculateBodyFat()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200">
+                            Calculate
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Results Section -->
+                <div id="results" class="mt-8 hidden">
+                    <div class="bg-blue-50 rounded-lg p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4 text-center">Result</h3>
+                        <div class="text-center mb-6">
+                            <div class="text-4xl font-bold text-blue-600 mb-2" id="bodyFatPercentage">0.0%</div>
+                            <div class="text-lg text-gray-700" id="bodyFatCategory">-</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="detailedResults">
+                            <!-- Results will be populated by JavaScript -->
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Body Fat Categories -->
+            <!-- Body Fat Categories Reference -->
             <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Body Fat Percentage Categories</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <h3 class="text-xl font-semibold text-gray-900 mb-6">The American Council on Exercise Body Fat Categorization</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="border border-gray-300 px-4 py-2 text-left font-semibold">Description</th>
+                                <th class="border border-gray-300 px-4 py-2 text-center font-semibold">Women</th>
+                                <th class="border border-gray-300 px-4 py-2 text-center font-semibold">Men</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2 font-medium">Essential fat</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">10-13%</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">2-5%</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="border border-gray-300 px-4 py-2 font-medium">Athletes</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">14-20%</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">6-13%</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2 font-medium">Fitness</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">21-24%</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">14-17%</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="border border-gray-300 px-4 py-2 font-medium">Average</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">25-31%</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">18-24%</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 px-4 py-2 font-medium">Obese</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">32+%</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">25+%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Ideal Body Fat Reference -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-6">Jackson & Pollock Ideal Body Fat Percentages</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="border border-gray-300 px-4 py-2 text-center font-semibold">Age</th>
+                                <th class="border border-gray-300 px-4 py-2 text-center font-semibold">Women</th>
+                                <th class="border border-gray-300 px-4 py-2 text-center font-semibold">Men</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="border border-gray-300 px-4 py-2 text-center">20</td><td class="border border-gray-300 px-4 py-2 text-center">17.7%</td><td class="border border-gray-300 px-4 py-2 text-center">8.5%</td></tr>
+                            <tr class="bg-gray-50"><td class="border border-gray-300 px-4 py-2 text-center">25</td><td class="border border-gray-300 px-4 py-2 text-center">18.4%</td><td class="border border-gray-300 px-4 py-2 text-center">10.5%</td></tr>
+                            <tr><td class="border border-gray-300 px-4 py-2 text-center">30</td><td class="border border-gray-300 px-4 py-2 text-center">19.3%</td><td class="border border-gray-300 px-4 py-2 text-center">12.7%</td></tr>
+                            <tr class="bg-gray-50"><td class="border border-gray-300 px-4 py-2 text-center">35</td><td class="border border-gray-300 px-4 py-2 text-center">21.5%</td><td class="border border-gray-300 px-4 py-2 text-center">13.7%</td></tr>
+                            <tr><td class="border border-gray-300 px-4 py-2 text-center">40</td><td class="border border-gray-300 px-4 py-2 text-center">22.2%</td><td class="border border-gray-300 px-4 py-2 text-center">15.3%</td></tr>
+                            <tr class="bg-gray-50"><td class="border border-gray-300 px-4 py-2 text-center">45</td><td class="border border-gray-300 px-4 py-2 text-center">22.9%</td><td class="border border-gray-300 px-4 py-2 text-center">16.4%</td></tr>
+                            <tr><td class="border border-gray-300 px-4 py-2 text-center">50</td><td class="border border-gray-300 px-4 py-2 text-center">25.2%</td><td class="border border-gray-300 px-4 py-2 text-center">18.9%</td></tr>
+                            <tr class="bg-gray-50"><td class="border border-gray-300 px-4 py-2 text-center">55</td><td class="border border-gray-300 px-4 py-2 text-center">26.3%</td><td class="border border-gray-300 px-4 py-2 text-center">20.9%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Educational Content -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-6">Understanding Body Fat Percentage</h2>
+                
+                <div class="prose max-w-none text-gray-700 space-y-6">
                     <div>
-                        <h4 class="font-semibold text-gray-800 mb-3">Men</h4>
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
-                                <span class="font-medium text-blue-800">Essential Fat</span>
-                                <span class="text-blue-600">2-5%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                                <span class="font-medium text-green-800">Athletic</span>
-                                <span class="text-green-600">6-13%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
-                                <span class="font-medium text-yellow-800">Fitness</span>
-                                <span class="text-yellow-600">14-17%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
-                                <span class="font-medium text-orange-800">Average</span>
-                                <span class="text-orange-600">18-24%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-red-50 rounded-lg">
-                                <span class="font-medium text-red-800">Obese</span>
-                                <span class="text-red-600">25%+</span>
-                            </div>
-                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">What is Body Fat?</h3>
+                        <p>Body fat, scientifically known as adipose tissue, serves several important functions in the human body. Its primary purpose is to store lipids from which the body creates energy. Additionally, it secretes important hormones, provides cushioning for organs, and helps with insulation.</p>
                     </div>
+
                     <div>
-                        <h4 class="font-semibold text-gray-800 mb-3">Women</h4>
-                        <div class="space-y-2">
-                            <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
-                                <span class="font-medium text-blue-800">Essential Fat</span>
-                                <span class="text-blue-600">10-13%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                                <span class="font-medium text-green-800">Athletic</span>
-                                <span class="text-green-600">14-20%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg">
-                                <span class="font-medium text-yellow-800">Fitness</span>
-                                <span class="text-yellow-600">21-24%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
-                                <span class="font-medium text-orange-800">Average</span>
-                                <span class="text-orange-600">25-31%</span>
-                            </div>
-                            <div class="flex justify-between items-center p-3 bg-red-50 rounded-lg">
-                                <span class="font-medium text-red-800">Obese</span>
-                                <span class="text-red-600">32%+</span>
-                            </div>
-                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">U.S. Navy Method</h3>
+                        <p>The U.S. Navy method is one of the most widely used techniques for estimating body fat percentage. It uses circumference measurements along with height and weight to calculate body fat. This method is based on equations developed at the Naval Health Research Center by Hodgdon and Beckett in 1984.</p>
+                        <ul class="list-disc list-inside mt-3 space-y-1">
+                            <li><strong>For men:</strong> Requires neck and waist measurements</li>
+                            <li><strong>For women:</strong> Requires neck, waist, and hip measurements</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">BMI Method</h3>
+                        <p>The BMI method estimates body fat percentage using Body Mass Index, age, and gender. While not as accurate as circumference-based methods, it provides a quick estimate when measurements aren't available.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Health Implications</h3>
+                        <p>Maintaining an appropriate body fat percentage is important for overall health. Too little body fat can be as harmful as too much. Essential body fat is necessary for normal physiological function, while excess body fat can lead to various health complications including cardiovascular disease, diabetes, and reduced life expectancy.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-3">How to Measure</h3>
+                        <p>For accurate measurements:</p>
+                        <ul class="list-disc list-inside mt-3 space-y-1">
+                            <li><strong>Neck:</strong> Measure just below the larynx, with tape sloping downward</li>
+                            <li><strong>Waist:</strong> For men, measure at navel level; for women, at the narrowest point</li>
+                            <li><strong>Hip (women only):</strong> Measure at the largest horizontal circumference</li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- How to Use -->
-            <div class="bg-orange-50 rounded-xl p-6 mb-8">
+            <!-- Related Tools -->
+            <div class="bg-blue-50 rounded-xl p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                    <i data-feather="info" class="w-5 h-5 mr-2 text-orange-600"></i>
-                    How to Use the Body Fat Calculator
+                    <i data-feather="link" class="w-5 h-5 mr-2 text-blue-600"></i>
+                    Related Calculators
                 </h3>
-                <ol class="space-y-2 text-gray-700">
-                    <li class="flex items-start">
-                        <span class="bg-orange-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
-                        Choose your preferred calculation method (Navy, Army, or YMCA)
-                    </li>
-                    <li class="flex items-start">
-                        <span class="bg-orange-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
-                        Select your gender and enter your age and height
-                    </li>
-                    <li class="flex items-start">
-                        <span class="bg-orange-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
-                        Take the required body measurements and enter them
-                    </li>
-                    <li class="flex items-start">
-                        <span class="bg-orange-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">4</span>
-                        Click "Calculate Body Fat" to get your body fat percentage and category
-                    </li>
-                </ol>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <a href="bmi-calculator.html" class="block p-4 bg-white rounded-lg hover:shadow-md transition-shadow duration-200">
+                        <div class="flex items-center space-x-3">
+                            <i data-feather="activity" class="w-5 h-5 text-blue-600"></i>
+                            <span class="font-medium text-gray-900">BMI Calculator</span>
+                        </div>
+                    </a>
+                    <a href="calorie-calculator.html" class="block p-4 bg-white rounded-lg hover:shadow-md transition-shadow duration-200">
+                        <div class="flex items-center space-x-3">
+                            <i data-feather="target" class="w-5 h-5 text-blue-600"></i>
+                            <span class="font-medium text-gray-900">Calorie Calculator</span>
+                        </div>
+                    </a>
+                    <a href="ideal-weight-calculator.html" class="block p-4 bg-white rounded-lg hover:shadow-md transition-shadow duration-200">
+                        <div class="flex items-center space-x-3">
+                            <i data-feather="target" class="w-5 h-5 text-blue-600"></i>
+                            <span class="font-medium text-gray-900">Ideal Weight</span>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </main>
@@ -243,78 +418,272 @@
         // Initialize Feather icons
         feather.replace();
         
-        function updateMeasurementFields() {
-            const method = document.getElementById('bodyFatMethod').value;
-            const gender = document.getElementById('bodyFatGender').value;
-            const measurementFields = document.getElementById('measurementFields');
+        // Current unit system
+        let currentUnit = 'us';
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateGenderFields();
             
-            let html = '';
+            // Add event listener for gender change
+            document.getElementById('gender').addEventListener('change', updateGenderFields);
+        });
+
+        // Switch between unit systems
+        function switchUnitSystem(unit) {
+            currentUnit = unit;
             
-            if (method === 'navy') {
-                if (gender === 'male') {
-                    html = `
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Neck Circumference (cm)</label>
-                                <input type="number" id="neckCirc" placeholder="Measure around neck" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Waist Circumference (cm)</label>
-                                <input type="number" id="waistCirc" placeholder="Measure around waist" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    html = `
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Neck Circumference (cm)</label>
-                                <input type="number" id="neckCirc" placeholder="Measure around neck" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Waist Circumference (cm)</label>
-                                <input type="number" id="waistCirc" placeholder="Measure around waist" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                            </div>
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Hip Circumference (cm)</label>
-                                <input type="number" id="hipCirc" placeholder="Measure around hips" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                            </div>
-                        </div>
-                    `;
-                }
-            } else if (method === 'army') {
-                html = `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (kg)</label>
-                            <input type="number" id="bodyWeight" placeholder="Enter weight" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Waist Circumference (cm)</label>
-                            <input type="number" id="waistCirc" placeholder="Measure around waist" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                        </div>
-                    </div>
-                `;
-            } else if (method === 'ymca') {
-                html = `
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (kg)</label>
-                            <input type="number" id="bodyWeight" placeholder="Enter weight" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                        </div>
-                        <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Waist Circumference (cm)</label>
-                            <input type="number" id="waistCirc" placeholder="Measure around waist" class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent">
-                        </div>
-                    </div>
-                `;
+            // Update tab appearance
+            const usTab = document.getElementById('usUnitsTab');
+            const metricTab = document.getElementById('metricUnitsTab');
+            
+            if (unit === 'us') {
+                usTab.className = 'px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 bg-blue-600 text-white';
+                metricTab.className = 'px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 text-gray-600 hover:text-gray-900';
+                
+                // Show US units, hide metric
+                document.getElementById('heightUS').classList.remove('hidden');
+                document.getElementById('heightMetric').classList.add('hidden');
+                document.getElementById('measurementsUS').classList.remove('hidden');
+                document.getElementById('measurementsMetric').classList.add('hidden');
+                
+                // Update weight unit
+                document.getElementById('weightUnit').textContent = 'pounds';
+            } else {
+                metricTab.className = 'px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 bg-blue-600 text-white';
+                usTab.className = 'px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 text-gray-600 hover:text-gray-900';
+                
+                // Show metric units, hide US
+                document.getElementById('heightMetric').classList.remove('hidden');
+                document.getElementById('heightUS').classList.add('hidden');
+                document.getElementById('measurementsMetric').classList.remove('hidden');
+                document.getElementById('measurementsUS').classList.add('hidden');
+                
+                // Update weight unit
+                document.getElementById('weightUnit').textContent = 'kg';
             }
             
-            measurementFields.innerHTML = html;
+            // Clear results
+            document.getElementById('results').classList.add('hidden');
         }
-        
-        // Initialize the measurement fields
-        updateMeasurementFields();
+
+        // Update fields based on gender
+        function updateGenderFields() {
+            const gender = document.getElementById('gender').value;
+            
+            // Show/hide hip field based on gender (women need hip measurement)
+            if (gender === 'female') {
+                document.getElementById('hipFieldUS').style.display = 'block';
+                document.getElementById('hipFieldMetric').style.display = 'block';
+            } else {
+                document.getElementById('hipFieldUS').style.display = 'none';
+                document.getElementById('hipFieldMetric').style.display = 'none';
+            }
+            
+            // Clear results
+            document.getElementById('results').classList.add('hidden');
+        }
+
+        // Get ideal body fat percentage by age and gender (Jackson & Pollock)
+        function getIdealBodyFat(age, gender) {
+            const ages = [20, 25, 30, 35, 40, 45, 50, 55];
+            const maleIdeal = [8.5, 10.5, 12.7, 13.7, 15.3, 16.4, 18.9, 20.9];
+            const femaleIdeal = [17.7, 18.4, 19.3, 21.5, 22.2, 22.9, 25.2, 26.3];
+            
+            const idealValues = gender === 'male' ? maleIdeal : femaleIdeal;
+            
+            // Find closest age
+            let closestIndex = 0;
+            let minDiff = Math.abs(age - ages[0]);
+            
+            for (let i = 1; i < ages.length; i++) {
+                const diff = Math.abs(age - ages[i]);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closestIndex = i;
+                }
+            }
+            
+            return idealValues[closestIndex];
+        }
+
+        // Get body fat category
+        function getBodyFatCategory(bodyFat, gender) {
+            if (gender === 'male') {
+                if (bodyFat <= 5) return 'Essential fat';
+                if (bodyFat <= 13) return 'Athletes';
+                if (bodyFat <= 17) return 'Fitness';
+                if (bodyFat <= 24) return 'Average';
+                return 'Obese';
+            } else {
+                if (bodyFat <= 13) return 'Essential fat';
+                if (bodyFat <= 20) return 'Athletes';
+                if (bodyFat <= 24) return 'Fitness';
+                if (bodyFat <= 31) return 'Average';
+                return 'Obese';
+            }
+        }
+
+        // Calculate body fat using U.S. Navy Method
+        function calculateNavyBodyFat(gender, height, neck, waist, hip = 0) {
+            let bodyFat;
+            
+            if (gender === 'male') {
+                // Male formula
+                bodyFat = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
+            } else {
+                // Female formula
+                bodyFat = 495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(height)) - 450;
+            }
+            
+            return Math.max(0, Math.min(100, bodyFat));
+        }
+
+        // Calculate body fat using BMI Method
+        function calculateBMIBodyFat(bmi, age, gender) {
+            let bodyFat;
+            
+            if (gender === 'male') {
+                bodyFat = 1.20 * bmi + 0.23 * age - 16.2;
+            } else {
+                bodyFat = 1.20 * bmi + 0.23 * age - 5.4;
+            }
+            
+            return Math.max(0, Math.min(100, bodyFat));
+        }
+
+        // Main calculation function
+        function calculateBodyFat() {
+            try {
+                // Get basic values
+                const gender = document.getElementById('gender').value;
+                const age = parseFloat(document.getElementById('age').value);
+                const weight = parseFloat(document.getElementById('weight').value);
+                
+                // Validate basic inputs
+                if (!age || !weight) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                
+                let height, neck, waist, hip = 0;
+                let weightKg = weight;
+                let heightCm;
+                
+                // Convert units and get measurements
+                if (currentUnit === 'us') {
+                    const heightFeet = parseFloat(document.getElementById('heightFeet').value) || 0;
+                    const heightInchesInput = parseFloat(document.getElementById('heightInches').value) || 0;
+                    const neckInchesInput = parseFloat(document.getElementById('neckInches').value) || 0;
+                    const waistInchesInput = parseFloat(document.getElementById('waistInches').value) || 0;
+                    
+                    // Convert to centimeters
+                    heightCm = (heightFeet * 12 + heightInchesInput) * 2.54;
+                    height = heightCm;
+                    neck = neckInchesInput * 2.54;
+                    waist = waistInchesInput * 2.54;
+                    weightKg = weight * 0.453592; // pounds to kg
+                    
+                    if (gender === 'female') {
+                        const hipInchesInput = parseFloat(document.getElementById('hipInches').value) || 0;
+                        hip = hipInchesInput * 2.54;
+                    }
+                } else {
+                    heightCm = parseFloat(document.getElementById('heightCm').value);
+                    height = heightCm;
+                    neck = parseFloat(document.getElementById('neckCm').value);
+                    waist = parseFloat(document.getElementById('waistCm').value);
+                    
+                    if (gender === 'female') {
+                        hip = parseFloat(document.getElementById('hipCm').value) || 0;
+                    }
+                }
+                
+                // Validate measurements
+                if (!height || !neck || !waist || (gender === 'female' && !hip)) {
+                    alert('Please fill in all measurement fields.');
+                    return;
+                }
+                
+                // Calculate BMI
+                const heightM = heightCm / 100;
+                const bmi = weightKg / (heightM * heightM);
+                
+                // Calculate body fat percentages
+                const navyBodyFat = calculateNavyBodyFat(gender, height, neck, waist, hip);
+                const bmiBodyFat = calculateBMIBodyFat(bmi, age, gender);
+                
+                // Calculate additional metrics
+                const bodyFatMass = (navyBodyFat / 100) * weightKg;
+                const leanBodyMass = weightKg - bodyFatMass;
+                const idealBodyFat = getIdealBodyFat(age, gender);
+                const bodyFatToLose = Math.max(0, bodyFatMass - (idealBodyFat / 100) * weightKg);
+                const category = getBodyFatCategory(navyBodyFat, gender);
+                
+                // Display results
+                displayResults(navyBodyFat, bmiBodyFat, category, bodyFatMass, leanBodyMass, idealBodyFat, bodyFatToLose, weightKg);
+                
+            } catch (error) {
+                console.error('Calculation error:', error);
+                alert('An error occurred during calculation. Please check your inputs.');
+            }
+        }
+
+        // Display calculation results
+        function displayResults(navyBodyFat, bmiBodyFat, category, bodyFatMass, leanBodyMass, idealBodyFat, bodyFatToLose, weight) {
+            // Update main result
+            document.getElementById('bodyFatPercentage').textContent = navyBodyFat.toFixed(1) + '%';
+            document.getElementById('bodyFatCategory').textContent = category;
+            
+            // Create detailed results
+            const detailedResults = document.getElementById('detailedResults');
+            const weightUnit = currentUnit === 'us' ? 'lbs' : 'kg';
+            const displayWeight = currentUnit === 'us' ? weight * 2.20462 : weight;
+            const displayBodyFatMass = currentUnit === 'us' ? bodyFatMass * 2.20462 : bodyFatMass;
+            const displayLeanMass = currentUnit === 'us' ? leanBodyMass * 2.20462 : leanBodyMass;
+            const displayFatToLose = currentUnit === 'us' ? bodyFatToLose * 2.20462 : bodyFatToLose;
+            
+            detailedResults.innerHTML = `
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                        <span class="font-medium text-gray-700">Body Fat (U.S. Navy Method):</span>
+                        <span class="font-semibold text-gray-900">${navyBodyFat.toFixed(1)}%</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                        <span class="font-medium text-gray-700">Body Fat Category:</span>
+                        <span class="font-semibold text-gray-900">${category}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                        <span class="font-medium text-gray-700">Body Fat Mass:</span>
+                        <span class="font-semibold text-gray-900">${displayBodyFatMass.toFixed(1)} ${weightUnit}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                        <span class="font-medium text-gray-700">Lean Body Mass:</span>
+                        <span class="font-semibold text-gray-900">${displayLeanMass.toFixed(1)} ${weightUnit}</span>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                        <span class="font-medium text-gray-700">Ideal Body Fat for Given Age:</span>
+                        <span class="font-semibold text-gray-900">${idealBodyFat.toFixed(1)}%</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-200">
+                        <span class="font-medium text-gray-700">Body Fat to Lose to Reach Ideal:</span>
+                        <span class="font-semibold text-gray-900">${displayFatToLose.toFixed(1)} ${weightUnit}</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="font-medium text-gray-700">Body Fat (BMI method):</span>
+                        <span class="font-semibold text-gray-900">${bmiBodyFat.toFixed(1)}%</span>
+                    </div>
+                </div>
+            `;
+            
+            // Show results
+            document.getElementById('results').classList.remove('hidden');
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     </script>
 </body>
 </html>
