@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CalcHub Pro - 95+ Professional Calculators & Converters</title>
-    <meta name="description" content="Access 95+ professional calculators and converters across 14+ categories. Fast, accurate, and always free. No signup required.">
+    <title>CalcHub Pro - 80+ Professional Calculators & Converters</title>
+    <meta name="description" content="Access 80+ professional calculators and converters across 10+ categories. Fast, accurate, and always free. No signup required.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="style.css">
@@ -34,8 +34,8 @@
                         </span>
                     </h1>
                     <p class="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                        Access <span class="font-semibold text-blue-600">95+ professional calculators</span> and converters across 
-                        <span class="font-semibold text-purple-600">14+ categories</span>. 
+                        Access <span class="font-semibold text-blue-600">80+ professional calculators</span> and converters across 
+                        <span class="font-semibold text-purple-600">10+ categories</span>. 
                         Fast, accurate, and always free.
                     </p>
                 </div>
@@ -51,7 +51,7 @@
                                     <input
                                         type="text"
                                         id="searchInput"
-                                        placeholder="Search 95+ calculators (e.g., BMI, mortgage, calories...)"
+                                        placeholder="Search 80+ calculators (e.g., BMI, mortgage, calories...)"
                                         class="w-full pl-12 pr-4 py-4 text-lg bg-transparent border-0 focus:outline-none focus:ring-0 placeholder-gray-400"
                                     >
                                 </div>
@@ -94,7 +94,7 @@
                 <div class="text-center group">
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 group-hover:shadow-lg transition-all duration-200">
                         <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent mb-2">
-                            95+
+                            80+
                         </div>
                         <div class="text-gray-600 font-medium">Calculators</div>
                     </div>
@@ -102,7 +102,7 @@
                 <div class="text-center group">
                     <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 group-hover:shadow-lg transition-all duration-200">
                         <div class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-600 to-green-700 bg-clip-text text-transparent mb-2">
-                            14
+                            10
                         </div>
                         <div class="text-gray-600 font-medium">Categories</div>
                     </div>
@@ -144,17 +144,33 @@
                     <i data-feather="grid" class="w-4 h-4 mr-2"></i>
                     All Tools
                 </button>
-                <button class="category-filter" data-category="business">
-                    <i data-feather="briefcase" class="w-4 h-4 mr-2"></i>
-                    Business
+                <button class="category-filter" data-category="health">
+                    <i data-feather="heart" class="w-4 h-4 mr-2"></i>
+                    Health & Fitness
                 </button>
                 <button class="category-filter" data-category="financial">
                     <i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i>
                     Financial
                 </button>
-                <button class="category-filter" data-category="fitness">
-                    <i data-feather="zap" class="w-4 h-4 mr-2"></i>
-                    Fitness
+                <button class="category-filter" data-category="business">
+                    <i data-feather="briefcase" class="w-4 h-4 mr-2"></i>
+                    Business
+                </button>
+                <button class="category-filter" data-category="converters">
+                    <i data-feather="refresh-cw" class="w-4 h-4 mr-2"></i>
+                    Converters
+                </button>
+                <button class="category-filter" data-category="basic">
+                    <i data-feather="plus" class="w-4 h-4 mr-2"></i>
+                    Basic Math
+                </button>
+                <button class="category-filter" data-category="engineering">
+                    <i data-feather="settings" class="w-4 h-4 mr-2"></i>
+                    Engineering
+                </button>
+                <button class="category-filter" data-category="utilities">
+                    <i data-feather="tool" class="w-4 h-4 mr-2"></i>
+                    Utilities
                 </button>
                 <button class="category-filter" data-category="gaming">
                     <i data-feather="monitor" class="w-4 h-4 mr-2"></i>
@@ -163,30 +179,6 @@
                 <button class="category-filter" data-category="real-estate">
                     <i data-feather="home" class="w-4 h-4 mr-2"></i>
                     Real Estate
-                </button>
-                <button class="category-filter" data-category="social-media">
-                    <i data-feather="thumbs-up" class="w-4 h-4 mr-2"></i>
-                    Social Media
-                </button>
-                <button class="category-filter" data-category="health">
-                    <i data-feather="heart" class="w-4 h-4 mr-2"></i>
-                    Health
-                </button>
-                <button class="category-filter" data-category="basic">
-                    <i data-feather="plus" class="w-4 h-4 mr-2"></i>
-                    Basic
-                </button>
-                <button class="category-filter" data-category="engineering">
-                    <i data-feather="settings" class="w-4 h-4 mr-2"></i>
-                    Science
-                </button>
-                <button class="category-filter" data-category="converters">
-                    <i data-feather="refresh-cw" class="w-4 h-4 mr-2"></i>
-                    Converters
-                </button>
-                <button class="category-filter" data-category="utilities">
-                    <i data-feather="tool" class="w-4 h-4 mr-2"></i>
-                    Utilities
                 </button>
             </div>
         </div>
@@ -197,19 +189,83 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div id="toolsContainer">
                 
-                <!-- Fitness & Sports Calculators -->
-                <section class="mb-16" id="fitness">
+                <!-- Health & Fitness Calculators -->
+                <section class="mb-16" id="health">
                     <div class="flex items-center mb-8">
                         <div class="bg-gradient-to-br from-red-500 to-pink-500 p-3 rounded-xl mr-4">
-                            <i data-feather="zap" class="w-6 h-6 text-white"></i>
+                            <i data-feather="heart" class="w-6 h-6 text-white"></i>
                         </div>
                         <div>
-                            <h2 class="text-3xl font-bold text-gray-900">Fitness & Sports Calculators</h2>
-                            <p class="text-gray-600 mt-1">Health, fitness, and sports performance tools</p>
+                            <h2 class="text-3xl font-bold text-gray-900">Health & Fitness Calculators</h2>
+                            <p class="text-gray-600 mt-1">Health, fitness, and wellness calculation tools</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Calories Burned Calculator -->
+                        <a href="tools/age-calculator.html" class="tool-card group" data-tool="age-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-red-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-red-100 to-red-200 p-3 rounded-xl">
+                                        <i data-feather="calendar" class="w-6 h-6 text-red-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-red-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Age Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate exact age in years, months, and days</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/bmi-calculator.html" class="tool-card group" data-tool="bmi-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="activity" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">BMI Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate Body Mass Index and health category</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/bmr-calculator.html" class="tool-card group" data-tool="bmr-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="zap" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">BMR Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate Basal Metabolic Rate</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/body-fat-calculator.html" class="tool-card group" data-tool="body-fat-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="user" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Body Fat Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate body fat percentage</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/calorie-calculator.html" class="tool-card group" data-tool="calorie-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-orange-100 to-orange-200 p-3 rounded-xl">
+                                        <i data-feather="target" class="w-6 h-6 text-orange-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-orange-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Calorie Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate daily calorie needs</p>
+                            </div>
+                        </a>
+
                         <a href="tools/calories-burned-calculator.html" class="tool-card group" data-tool="calories-burned-calculator">
                             <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-red-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                                 <div class="flex items-center justify-between mb-4">
@@ -223,7 +279,71 @@
                             </div>
                         </a>
 
-                        <!-- Protein Intake Calculator -->
+                        <a href="tools/blood-pressure-calculator.html" class="tool-card group" data-tool="blood-pressure-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-red-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-red-100 to-red-200 p-3 rounded-xl">
+                                        <i data-feather="heart" class="w-6 h-6 text-red-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-red-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Blood Pressure</h3>
+                                <p class="text-sm text-gray-600">Analyze blood pressure readings</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/heart-rate-zone-calculator.html" class="tool-card group" data-tool="heart-rate-zone-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-pink-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-pink-100 to-pink-200 p-3 rounded-xl">
+                                        <i data-feather="activity" class="w-6 h-6 text-pink-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-pink-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Heart Rate Zones</h3>
+                                <p class="text-sm text-gray-600">Calculate optimal training heart rates</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/ideal-weight-calculator.html" class="tool-card group" data-tool="ideal-weight-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="target" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Ideal Weight</h3>
+                                <p class="text-sm text-gray-600">Calculate ideal body weight range</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/ovulation-calculator.html" class="tool-card group" data-tool="ovulation-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="calendar" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Ovulation Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate fertility and ovulation dates</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/pregnancy-calculator.html" class="tool-card group" data-tool="pregnancy-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-pink-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-pink-100 to-pink-200 p-3 rounded-xl">
+                                        <i data-feather="heart" class="w-6 h-6 text-pink-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-pink-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Pregnancy Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate due date and pregnancy weeks</p>
+                            </div>
+                        </a>
+
                         <a href="tools/protein-intake-calculator.html" class="tool-card group" data-tool="protein-intake-calculator">
                             <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                                 <div class="flex items-center justify-between mb-4">
@@ -237,7 +357,6 @@
                             </div>
                         </a>
 
-                        <!-- Running Pace Calculator -->
                         <a href="tools/running-pace-calculator.html" class="tool-card group" data-tool="running-pace-calculator">
                             <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                                 <div class="flex items-center justify-between mb-4">
@@ -251,41 +370,923 @@
                             </div>
                         </a>
 
-                        <!-- BMI Calculator -->
-                        <a href="tools/bmi-calculator.html" class="tool-card group" data-tool="bmi-calculator">
-                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                        <a href="tools/water-intake-calculator.html" class="tool-card group" data-tool="water-intake-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                                 <div class="flex items-center justify-between mb-4">
-                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
-                                        <i data-feather="activity" class="w-6 h-6 text-green-600"></i>
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="droplet" class="w-6 h-6 text-blue-600"></i>
                                     </div>
-                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
                                 </div>
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2">BMI Calculator</h3>
-                                <p class="text-sm text-gray-600">Calculate Body Mass Index</p>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Water Intake</h3>
+                                <p class="text-sm text-gray-600">Calculate daily water needs</p>
                             </div>
-                        </a>
-                    </div>
-                    <div class="text-center mt-8">
-                        <a href="#health" class="inline-flex items-center text-red-600 hover:text-red-700 font-medium">
-                            View all fitness calculators
-                            <i data-feather="arrow-right" class="w-4 h-4 ml-1"></i>
                         </a>
                     </div>
                 </section>
 
-                <!-- Gaming Calculators -->
+                <!-- Financial & Investment Calculators -->
+                <section class="mb-16" id="financial">
+                    <div class="flex items-center mb-8">
+                        <div class="bg-gradient-to-br from-green-500 to-emerald-500 p-3 rounded-xl mr-4">
+                            <i data-feather="dollar-sign" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900">Financial & Investment Calculators</h2>
+                            <p class="text-gray-600 mt-1">Money, investment, and financial planning tools</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <a href="tools/bitcoin-mining-calculator.html" class="tool-card group" data-tool="bitcoin-mining-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-yellow-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-3 rounded-xl">
+                                        <i data-feather="cpu" class="w-6 h-6 text-yellow-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-yellow-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Bitcoin Mining</h3>
+                                <p class="text-sm text-gray-600">Calculate mining profitability</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/compound-interest-calculator.html" class="tool-card group" data-tool="compound-interest-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="trending-up" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Compound Interest</h3>
+                                <p class="text-sm text-gray-600">Calculate compound interest growth</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/crypto-profit-calculator.html" class="tool-card group" data-tool="crypto-profit-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="trending-up" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Crypto Profit</h3>
+                                <p class="text-sm text-gray-600">Calculate cryptocurrency profits</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/currency-converter.html" class="tool-card group" data-tool="currency-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="dollar-sign" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Currency Converter</h3>
+                                <p class="text-sm text-gray-600">Convert between world currencies</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/investment-return-calculator.html" class="tool-card group" data-tool="investment-return-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="bar-chart" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Investment Return</h3>
+                                <p class="text-sm text-gray-600">Calculate investment returns</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/loan-comparison-calculator.html" class="tool-card group" data-tool="loan-comparison-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-orange-100 to-orange-200 p-3 rounded-xl">
+                                        <i data-feather="compare" class="w-6 h-6 text-orange-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-orange-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Loan Comparison</h3>
+                                <p class="text-sm text-gray-600">Compare different loan options</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/loan-emi-calculator.html" class="tool-card group" data-tool="loan-emi-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="credit-card" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Loan EMI</h3>
+                                <p class="text-sm text-gray-600">Calculate loan EMI payments</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/mortgage-calculator.html" class="tool-card group" data-tool="mortgage-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-indigo-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-indigo-100 to-indigo-200 p-3 rounded-xl">
+                                        <i data-feather="home" class="w-6 h-6 text-indigo-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-indigo-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Mortgage Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate monthly mortgage payments</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/retirement-calculator.html" class="tool-card group" data-tool="retirement-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="clock" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Retirement Planning</h3>
+                                <p class="text-sm text-gray-600">Plan for retirement savings</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/roi-calculator.html" class="tool-card group" data-tool="roi-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="trending-up" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">ROI Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate return on investment</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/simple-interest-calculator.html" class="tool-card group" data-tool="simple-interest-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="percent" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Simple Interest</h3>
+                                <p class="text-sm text-gray-600">Calculate simple interest</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/sip-calculator.html" class="tool-card group" data-tool="sip-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-emerald-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-emerald-100 to-emerald-200 p-3 rounded-xl">
+                                        <i data-feather="repeat" class="w-6 h-6 text-emerald-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">SIP Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate systematic investment plan</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Business & Professional Calculators -->
+                <section class="mb-16" id="business">
+                    <div class="flex items-center mb-8">
+                        <div class="bg-gradient-to-br from-purple-500 to-indigo-500 p-3 rounded-xl mr-4">
+                            <i data-feather="briefcase" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900">Business & Professional Calculators</h2>
+                            <p class="text-gray-600 mt-1">Essential business and professional tools</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <a href="tools/break-even-calculator.html" class="tool-card group" data-tool="break-even-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="target" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Break Even</h3>
+                                <p class="text-sm text-gray-600">Calculate break-even point</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/discount-calculator.html" class="tool-card group" data-tool="discount-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="percent" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Discount Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate discounts and sale prices</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/freelance-rate-calculator.html" class="tool-card group" data-tool="freelance-rate-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="dollar-sign" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Freelance Rate</h3>
+                                <p class="text-sm text-gray-600">Calculate freelance hourly rates</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/grade-calculator.html" class="tool-card group" data-tool="grade-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-yellow-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-3 rounded-xl">
+                                        <i data-feather="star" class="w-6 h-6 text-yellow-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-yellow-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Grade Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate grades and percentages</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/gpa-calculator.html" class="tool-card group" data-tool="gpa-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-indigo-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-indigo-100 to-indigo-200 p-3 rounded-xl">
+                                        <i data-feather="award" class="w-6 h-6 text-indigo-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-indigo-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">GPA Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate grade point average</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/hourly-vs-salary-calculator.html" class="tool-card group" data-tool="hourly-vs-salary-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="clock" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Hourly vs Salary</h3>
+                                <p class="text-sm text-gray-600">Compare hourly and salary pay</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/markup-calculator.html" class="tool-card group" data-tool="markup-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-orange-100 to-orange-200 p-3 rounded-xl">
+                                        <i data-feather="trending-up" class="w-6 h-6 text-orange-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-orange-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Markup Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate markup and selling price</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/profit-margin-calculator.html" class="tool-card group" data-tool="profit-margin-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-emerald-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-emerald-100 to-emerald-200 p-3 rounded-xl">
+                                        <i data-feather="bar-chart" class="w-6 h-6 text-emerald-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Profit Margin</h3>
+                                <p class="text-sm text-gray-600">Calculate profit margins</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/salary-calculator.html" class="tool-card group" data-tool="salary-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="dollar-sign" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Salary Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate salary conversions</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/study-time-calculator.html" class="tool-card group" data-tool="study-time-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="book" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Study Time</h3>
+                                <p class="text-sm text-gray-600">Plan optimal study schedules</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/tax-calculator.html" class="tool-card group" data-tool="tax-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-red-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-red-100 to-red-200 p-3 rounded-xl">
+                                        <i data-feather="file-text" class="w-6 h-6 text-red-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-red-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Tax Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate income taxes</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/tip-calculator.html" class="tool-card group" data-tool="tip-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="credit-card" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Tip Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate tips and bill splits</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Converters & Units -->
+                <section class="mb-16" id="converters">
+                    <div class="flex items-center mb-8">
+                        <div class="bg-gradient-to-br from-cyan-500 to-blue-500 p-3 rounded-xl mr-4">
+                            <i data-feather="refresh-cw" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900">Converters & Units</h2>
+                            <p class="text-gray-600 mt-1">Unit conversion and measurement tools</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <a href="tools/area-calculator.html" class="tool-card group" data-tool="area-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-cyan-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-cyan-100 to-cyan-200 p-3 rounded-xl">
+                                        <i data-feather="square" class="w-6 h-6 text-cyan-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-cyan-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Area Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate area of shapes</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/circle-calculator.html" class="tool-card group" data-tool="circle-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="circle" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Circle Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate circle measurements</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/color-code-converter.html" class="tool-card group" data-tool="color-code-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-rainbow-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-pink-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="droplet" class="w-6 h-6 text-pink-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-pink-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Color Converter</h3>
+                                <p class="text-sm text-gray-600">Convert color codes (HEX, RGB, HSL)</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/data-storage-converter.html" class="tool-card group" data-tool="data-storage-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="hard-drive" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Data Storage</h3>
+                                <p class="text-sm text-gray-600">Convert bytes, KB, MB, GB, TB</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/energy-calculator.html" class="tool-card group" data-tool="energy-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-yellow-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-3 rounded-xl">
+                                        <i data-feather="zap" class="w-6 h-6 text-yellow-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-yellow-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Energy Calculator</h3>
+                                <p class="text-sm text-gray-600">Convert energy units</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/length-converter.html" class="tool-card group" data-tool="length-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="ruler" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Length Converter</h3>
+                                <p class="text-sm text-gray-600">Convert length measurements</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/pressure-converter.html" class="tool-card group" data-tool="pressure-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-indigo-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-indigo-100 to-indigo-200 p-3 rounded-xl">
+                                        <i data-feather="gauge" class="w-6 h-6 text-indigo-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-indigo-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Pressure Converter</h3>
+                                <p class="text-sm text-gray-600">Convert pressure units</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/recipe-converter.html" class="tool-card group" data-tool="recipe-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-orange-100 to-orange-200 p-3 rounded-xl">
+                                        <i data-feather="coffee" class="w-6 h-6 text-orange-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-orange-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Recipe Converter</h3>
+                                <p class="text-sm text-gray-600">Scale recipe measurements</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/speed-calculator.html" class="tool-card group" data-tool="speed-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-red-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-red-100 to-red-200 p-3 rounded-xl">
+                                        <i data-feather="zap" class="w-6 h-6 text-red-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-red-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Speed Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate speed, distance, time</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/temperature-converter.html" class="tool-card group" data-tool="temperature-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="thermometer" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Temperature</h3>
+                                <p class="text-sm text-gray-600">Convert Celsius, Fahrenheit, Kelvin</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/time-calculator.html" class="tool-card group" data-tool="time-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="clock" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Time Calculator</h3>
+                                <p class="text-sm text-gray-600">Add, subtract time durations</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/time-zone-converter.html" class="tool-card group" data-tool="time-zone-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-emerald-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-emerald-100 to-emerald-200 p-3 rounded-xl">
+                                        <i data-feather="globe" class="w-6 h-6 text-emerald-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Time Zone</h3>
+                                <p class="text-sm text-gray-600">Convert between time zones</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/triangle-calculator.html" class="tool-card group" data-tool="triangle-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-yellow-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-3 rounded-xl">
+                                        <i data-feather="triangle" class="w-6 h-6 text-yellow-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-yellow-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Triangle Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate triangle properties</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/unit-converter-pro.html" class="tool-card group" data-tool="unit-converter-pro">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-gradient-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-indigo-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="shuffle" class="w-6 h-6 text-indigo-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-indigo-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Unit Converter Pro</h3>
+                                <p class="text-sm text-gray-600">Universal unit converter</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/volume-converter.html" class="tool-card group" data-tool="volume-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-cyan-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-cyan-100 to-cyan-200 p-3 rounded-xl">
+                                        <i data-feather="box" class="w-6 h-6 text-cyan-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-cyan-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Volume Converter</h3>
+                                <p class="text-sm text-gray-600">Convert volume measurements</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/weight-converter.html" class="tool-card group" data-tool="weight-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="scale" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Weight Converter</h3>
+                                <p class="text-sm text-gray-600">Convert weight and mass units</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Basic Math Calculators -->
+                <section class="mb-16" id="basic">
+                    <div class="flex items-center mb-8">
+                        <div class="bg-gradient-to-br from-gray-500 to-gray-600 p-3 rounded-xl mr-4">
+                            <i data-feather="plus" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900">Basic Math Calculators</h2>
+                            <p class="text-gray-600 mt-1">Essential mathematical calculation tools</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <a href="tools/fraction-calculator.html" class="tool-card group" data-tool="fraction-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-gray-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-gray-100 to-gray-200 p-3 rounded-xl">
+                                        <i data-feather="divide" class="w-6 h-6 text-gray-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-gray-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Fraction Calculator</h3>
+                                <p class="text-sm text-gray-600">Add, subtract, multiply fractions</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/percentage-calculator.html" class="tool-card group" data-tool="percentage-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="percent" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Percentage</h3>
+                                <p class="text-sm text-gray-600">Calculate percentages and changes</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/scientific-calculator.html" class="tool-card group" data-tool="scientific-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="plus" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Scientific</h3>
+                                <p class="text-sm text-gray-600">Advanced scientific calculator</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/statistics-calculator.html" class="tool-card group" data-tool="statistics-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="bar-chart-2" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Statistics</h3>
+                                <p class="text-sm text-gray-600">Calculate mean, median, mode</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/quadratic-equation-solver.html" class="tool-card group" data-tool="quadratic-equation-solver">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-orange-100 to-orange-200 p-3 rounded-xl">
+                                        <i data-feather="trending-up" class="w-6 h-6 text-orange-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-orange-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Quadratic Solver</h3>
+                                <p class="text-sm text-gray-600">Solve quadratic equations</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Engineering & Science -->
+                <section class="mb-16" id="engineering">
+                    <div class="flex items-center mb-8">
+                        <div class="bg-gradient-to-br from-teal-500 to-cyan-500 p-3 rounded-xl mr-4">
+                            <i data-feather="settings" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900">Engineering & Science</h2>
+                            <p class="text-gray-600 mt-1">Technical and scientific calculation tools</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <a href="tools/carbon-footprint-calculator.html" class="tool-card group" data-tool="carbon-footprint-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="leaf" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Carbon Footprint</h3>
+                                <p class="text-sm text-gray-600">Calculate environmental impact</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/chemical-calculator.html" class="tool-card group" data-tool="chemical-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="beaker" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Chemical Calculator</h3>
+                                <p class="text-sm text-gray-600">Chemistry calculations and formulas</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/electricity-calculator.html" class="tool-card group" data-tool="electricity-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-yellow-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-3 rounded-xl">
+                                        <i data-feather="zap" class="w-6 h-6 text-yellow-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-yellow-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Electricity</h3>
+                                <p class="text-sm text-gray-600">Calculate electrical values</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/physics-calculator.html" class="tool-card group" data-tool="physics-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="atom" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Physics Calculator</h3>
+                                <p class="text-sm text-gray-600">Physics formulas and calculations</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/subnet-calculator.html" class="tool-card group" data-tool="subnet-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-teal-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-teal-100 to-teal-200 p-3 rounded-xl">
+                                        <i data-feather="wifi" class="w-6 h-6 text-teal-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-teal-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Subnet Calculator</h3>
+                                <p class="text-sm text-gray-600">Network subnet calculations</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Utilities & Tools -->
+                <section class="mb-16" id="utilities">
+                    <div class="flex items-center mb-8">
+                        <div class="bg-gradient-to-br from-slate-500 to-gray-600 p-3 rounded-xl mr-4">
+                            <i data-feather="tool" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900">Utilities & Tools</h2>
+                            <p class="text-gray-600 mt-1">Useful utility and text processing tools</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <a href="tools/base64-encoder.html" class="tool-card group" data-tool="base64-encoder">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-slate-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-slate-100 to-slate-200 p-3 rounded-xl">
+                                        <i data-feather="code" class="w-6 h-6 text-slate-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-slate-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Base64 Encoder</h3>
+                                <p class="text-sm text-gray-600">Encode and decode Base64</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/binary-converter.html" class="tool-card group" data-tool="binary-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
+                                        <i data-feather="binary" class="w-6 h-6 text-green-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Binary Converter</h3>
+                                <p class="text-sm text-gray-600">Convert binary, decimal, hex</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/date-difference-calculator.html" class="tool-card group" data-tool="date-difference-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
+                                        <i data-feather="calendar" class="w-6 h-6 text-blue-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Date Difference</h3>
+                                <p class="text-sm text-gray-600">Calculate date differences</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/fuel-cost-calculator.html" class="tool-card group" data-tool="fuel-cost-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-orange-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-orange-100 to-orange-200 p-3 rounded-xl">
+                                        <i data-feather="truck" class="w-6 h-6 text-orange-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-orange-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Fuel Cost</h3>
+                                <p class="text-sm text-gray-600">Calculate trip fuel costs</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/hash-generator.html" class="tool-card group" data-tool="hash-generator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-purple-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 p-3 rounded-xl">
+                                        <i data-feather="hash" class="w-6 h-6 text-purple-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Hash Generator</h3>
+                                <p class="text-sm text-gray-600">Generate MD5, SHA hashes</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/password-generator.html" class="tool-card group" data-tool="password-generator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-red-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-red-100 to-red-200 p-3 rounded-xl">
+                                        <i data-feather="lock" class="w-6 h-6 text-red-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-red-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Password Generator</h3>
+                                <p class="text-sm text-gray-600">Generate secure passwords</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/qr-generator.html" class="tool-card group" data-tool="qr-generator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-indigo-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-indigo-100 to-indigo-200 p-3 rounded-xl">
+                                        <i data-feather="square" class="w-6 h-6 text-indigo-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-indigo-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">QR Generator</h3>
+                                <p class="text-sm text-gray-600">Generate QR codes</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/random-number-generator.html" class="tool-card group" data-tool="random-number-generator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-yellow-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-3 rounded-xl">
+                                        <i data-feather="shuffle" class="w-6 h-6 text-yellow-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-yellow-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Random Number</h3>
+                                <p class="text-sm text-gray-600">Generate random numbers</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/random-team-generator.html" class="tool-card group" data-tool="random-team-generator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-teal-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-teal-100 to-teal-200 p-3 rounded-xl">
+                                        <i data-feather="users" class="w-6 h-6 text-teal-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-teal-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Team Generator</h3>
+                                <p class="text-sm text-gray-600">Generate random teams</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/text-case-converter.html" class="tool-card group" data-tool="text-case-converter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-emerald-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-emerald-100 to-emerald-200 p-3 rounded-xl">
+                                        <i data-feather="type" class="w-6 h-6 text-emerald-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-emerald-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Text Case</h3>
+                                <p class="text-sm text-gray-600">Convert text case formats</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/travel-time-calculator.html" class="tool-card group" data-tool="travel-time-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-cyan-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-cyan-100 to-cyan-200 p-3 rounded-xl">
+                                        <i data-feather="map-pin" class="w-6 h-6 text-cyan-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-cyan-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Travel Time</h3>
+                                <p class="text-sm text-gray-600">Calculate travel time and distance</p>
+                            </div>
+                        </a>
+
+                        <a href="tools/word-counter.html" class="tool-card group" data-tool="word-counter">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-pink-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-pink-100 to-pink-200 p-3 rounded-xl">
+                                        <i data-feather="edit-3" class="w-6 h-6 text-pink-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-pink-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Word Counter</h3>
+                                <p class="text-sm text-gray-600">Count words, characters, paragraphs</p>
+                            </div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Gaming & Entertainment -->
                 <section class="mb-16" id="gaming">
                     <div class="flex items-center mb-8">
                         <div class="bg-gradient-to-br from-indigo-500 to-purple-500 p-3 rounded-xl mr-4">
                             <i data-feather="monitor" class="w-6 h-6 text-white"></i>
                         </div>
                         <div>
-                            <h2 class="text-3xl font-bold text-gray-900">Gaming Calculators</h2>
-                            <p class="text-gray-600 mt-1">Gaming performance and optimization tools</p>
+                            <h2 class="text-3xl font-bold text-gray-900">Gaming & Entertainment</h2>
+                            <p class="text-gray-600 mt-1">Gaming and fun calculation tools</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Gaming Sensitivity Calculator -->
                         <a href="tools/gaming-sensitivity-calculator.html" class="tool-card group" data-tool="gaming-sensitivity-calculator">
                             <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-indigo-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                                 <div class="flex items-center justify-between mb-4">
@@ -298,22 +1299,34 @@
                                 <p class="text-sm text-gray-600">Convert sensitivity between games</p>
                             </div>
                         </a>
+
+                        <a href="tools/love-calculator.html" class="tool-card group" data-tool="love-calculator">
+                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-pink-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="bg-gradient-to-br from-pink-100 to-pink-200 p-3 rounded-xl">
+                                        <i data-feather="heart" class="w-6 h-6 text-pink-600"></i>
+                                    </div>
+                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-pink-500 transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Love Calculator</h3>
+                                <p class="text-sm text-gray-600">Calculate love compatibility</p>
+                            </div>
+                        </a>
                     </div>
                 </section>
 
-                <!-- Real Estate Calculators -->
+                <!-- Real Estate -->
                 <section class="mb-16" id="real-estate">
                     <div class="flex items-center mb-8">
                         <div class="bg-gradient-to-br from-cyan-500 to-blue-500 p-3 rounded-xl mr-4">
                             <i data-feather="home" class="w-6 h-6 text-white"></i>
                         </div>
                         <div>
-                            <h2 class="text-3xl font-bold text-gray-900">Real Estate Calculators</h2>
+                            <h2 class="text-3xl font-bold text-gray-900">Real Estate</h2>
                             <p class="text-gray-600 mt-1">Property investment and home buying tools</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Rent vs Buy Calculator -->
                         <a href="tools/rent-vs-buy-calculator.html" class="tool-card group" data-tool="rent-vs-buy-calculator">
                             <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-cyan-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                                 <div class="flex items-center justify-between mb-4">
@@ -324,20 +1337,6 @@
                                 </div>
                                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Rent vs Buy</h3>
                                 <p class="text-sm text-gray-600">Should you rent or buy a home?</p>
-                            </div>
-                        </a>
-
-                        <!-- Mortgage Calculator -->
-                        <a href="tools/mortgage-calculator.html" class="tool-card group" data-tool="mortgage-calculator">
-                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
-                                        <i data-feather="home" class="w-6 h-6 text-blue-600"></i>
-                                    </div>
-                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
-                                </div>
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Mortgage Calculator</h3>
-                                <p class="text-sm text-gray-600">Calculate monthly mortgage payments</p>
                             </div>
                         </a>
                     </div>
@@ -355,7 +1354,6 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Social Media Engagement Calculator -->
                         <a href="tools/social-media-engagement-calculator.html" class="tool-card group" data-tool="social-media-engagement-calculator">
                             <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-pink-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                                 <div class="flex items-center justify-between mb-4">
@@ -371,64 +1369,6 @@
                     </div>
                 </section>
 
-                <!-- Continue with other existing sections but with modern styling... -->
-                <!-- For brevity, I'll include one more example section -->
-
-                <!-- Business Calculators -->
-                <section class="mb-16" id="business">
-                    <div class="flex items-center mb-8">
-                        <div class="bg-gradient-to-br from-purple-500 to-indigo-500 p-3 rounded-xl mr-4">
-                            <i data-feather="briefcase" class="w-6 h-6 text-white"></i>
-                        </div>
-                        <div>
-                            <h2 class="text-3xl font-bold text-gray-900">Business Calculators</h2>
-                            <p class="text-gray-600 mt-1">Essential business and finance planning tools</p>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <!-- Salary Calculator -->
-                        <a href="tools/salary-calculator.html" class="tool-card group" data-tool="salary-calculator">
-                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-green-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="bg-gradient-to-br from-green-100 to-green-200 p-3 rounded-xl">
-                                        <i data-feather="dollar-sign" class="w-6 h-6 text-green-600"></i>
-                                    </div>
-                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-green-500 transition-colors"></i>
-                                </div>
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2">Salary Calculator</h3>
-                                <p class="text-sm text-gray-600">Convert between hourly, monthly, annual salaries</p>
-                            </div>
-                        </a>
-
-                        <!-- ROI Calculator -->
-                        <a href="tools/roi-calculator.html" class="tool-card group" data-tool="roi-calculator">
-                            <div class="bg-white rounded-2xl border-2 border-gray-100 p-6 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                                <div class="flex items-center justify-between mb-4">
-                                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 p-3 rounded-xl">
-                                        <i data-feather="trending-up" class="w-6 h-6 text-blue-600"></i>
-                                    </div>
-                                    <i data-feather="arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-blue-500 transition-colors"></i>
-                                </div>
-                                <h3 class="text-lg font-semibold text-gray-900 mb-2">ROI Calculator</h3>
-                                <p class="text-sm text-gray-600">Calculate return on investment percentage</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="text-center mt-8">
-                        <a href="#business" class="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium">
-                            View all business calculators
-                            <i data-feather="arrow-right" class="w-4 h-4 ml-1"></i>
-                        </a>
-                    </div>
-                </section>
-
-                <!-- Show More Categories Button -->
-                <div class="text-center py-12">
-                    <button id="show-more-categories" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-semibold shadow-lg">
-                        Explore All 95+ Calculators
-                    </button>
-                </div>
-
             </div>
         </div>
     </main>
@@ -436,37 +1376,32 @@
     <!-- Footer -->
     <div id="footer-placeholder"></div>
 
-    <!-- Scripts -->
+    <!-- JavaScript -->
     <script src="script.js"></script>
     <script>
-        // Initialize Feather icons
-        feather.replace();
-        
-        // Load header and footer
+        // Initialize all JavaScript components
         document.addEventListener('DOMContentLoaded', function() {
-            // Load header
-            fetch('header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-placeholder').innerHTML = data;
-                    feather.replace();
-                });
+            // Initialize Feather icons
+            feather.replace();
             
-            // Load footer
-            fetch('footer.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('footer-placeholder').innerHTML = data;
-                    feather.replace();
-                });
+            // Load header and footer
+            loadComponent('header-placeholder', 'header.html');
+            loadComponent('footer-placeholder', 'footer.html');
+            
+            // Initialize search and category filters
+            initializeSearch();
+            initializeCategoryFilters();
         });
 
-        // Initialize search and category filters
-        if (typeof initializeSearch === 'function') {
-            initializeSearch();
-        }
-        if (typeof initializeCategoryFilters === 'function') {
-            initializeCategoryFilters();
+        // Function to load header and footer components
+        function loadComponent(elementId, fileName) {
+            fetch(fileName)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(elementId).innerHTML = data;
+                    feather.replace();
+                })
+                .catch(error => console.log('Component load error:', error));
         }
     </script>
 </body>
