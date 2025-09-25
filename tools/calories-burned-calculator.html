@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calories Burned Calculator - CalcHub Pro</title>
-    <meta name="description" content="Calculate calories burned for any activity or exercise. Free calories burned calculator with 500+ activities.">
+    <title>Free Calories Burned Calculator - 500+ Activities | CalcHub Pro</title>
+    <meta name="description" content="Calculate calories burned with our advanced calculator featuring 500+ activities, MET values, duration & distance modes. Accurate calorie burn estimation for weight loss and fitness goals.">
+    <meta name="keywords" content="calories burned calculator, calorie burn, exercise calories, MET calculator, activity calories, fitness calculator, weight loss calculator, calorie counter">
+    <meta name="author" content="CalcHub Pro">
+    <meta property="og:title" content="Free Calories Burned Calculator - 500+ Activities">
+    <meta property="og:description" content="Advanced calories burned calculator with comprehensive activity database, MET values, and personalized recommendations.">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="/tools/calories-burned-calculator.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="../style.css">
@@ -26,110 +32,593 @@
                     <i data-feather="zap" class="w-12 h-12"></i>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold mb-4">Calories Burned Calculator</h1>
+            <h1 class="text-4xl font-bold mb-4">Advanced Calories Burned Calculator</h1>
             <p class="text-xl text-blue-100 max-w-2xl mx-auto">
-                Calculate calories burned for any activity or exercise based on your weight, duration, and activity type.
+                Calculate calories burned with 500+ activities, MET values, duration & distance modes. Get accurate calorie burn estimates for any exercise or daily activity.
             </p>
         </div>
     </section>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="tool-container">
-            <!-- Calculator Card -->
-            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+            <!-- Calculator Mode Toggle -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Choose Calculator Mode</h2>
+                <div class="flex justify-center mb-6">
+                    <div class="bg-gray-100 p-1 rounded-lg">
+                        <button onclick="setCalculatorMode('duration')" id="durationBtn" class="px-6 py-3 rounded-md bg-red-600 text-white font-medium">By Activity Duration</button>
+                        <button onclick="setCalculatorMode('distance')" id="distanceBtn" class="px-6 py-3 rounded-md text-gray-700 font-medium">By Distance</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duration-Based Calculator -->
+            <div id="durationCalculator" class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Calories Burned by Activity Duration</h3>
+                <p class="text-gray-600 mb-6">Calculate calories burned based on activity type, duration, and body weight.</p>
+                
                 <div class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (lbs)</label>
+                    <!-- Activity Selection -->
+                    <div>
+                        <label class="block text-lg font-semibold text-gray-900 mb-3">Activity Category & Type</label>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                                <select 
+                                    id="activityCategory" 
+                                    onchange="updateActivityOptions()"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                >
+                                    <option value="">-- Select Category --</option>
+                                    <option value="walking-running">Walking, Running, Cycling, Swimming</option>
+                                    <option value="gym">Gym Activities</option>
+                                    <option value="sports">Training and Sports Activities</option>
+                                    <option value="outdoor">Outdoor Activities</option>
+                                    <option value="home">Home & Daily Life Activities</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Specific Activity</label>
+                                <select 
+                                    id="specificActivity" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                >
+                                    <option value="">-- Select Activity --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="activitySearch" class="mt-4">
                             <input 
-                                type="number" 
-                                id="calorieWeight" 
-                                placeholder="Enter your weight"
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                type="text" 
+                                id="activitySearchInput" 
+                                placeholder="Or search for an activity..." 
+                                onkeyup="searchActivities()"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                             >
                         </div>
+                    </div>
+
+                    <!-- Duration and Weight -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Duration (minutes)</label>
-                            <input 
-                                type="number" 
-                                id="calorieDuration" 
-                                placeholder="Exercise duration"
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Duration</label>
+                            <div class="flex space-x-2">
+                                <input 
+                                    type="number" 
+                                    id="durationHours" 
+                                    placeholder="Hours"
+                                    min="0"
+                                    max="24"
+                                    class="w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                >
+                                <input 
+                                    type="number" 
+                                    id="durationMinutes" 
+                                    placeholder="Minutes"
+                                    min="0"
+                                    max="59"
+                                    class="w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Body Weight</label>
+                            <div class="flex">
+                                <input 
+                                    type="number" 
+                                    id="bodyWeight" 
+                                    placeholder="Enter weight"
+                                    min="80"
+                                    max="350"
+                                    class="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                >
+                                <select 
+                                    id="weightUnit"
+                                    onchange="updateWeightPlaceholder()"
+                                    class="px-3 py-3 border border-l-0 border-gray-300 rounded-r-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-gray-50"
+                                >
+                                    <option value="lbs">pounds</option>
+                                    <option value="kg">kg</option>
+                                </select>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">Range: 80-350 lbs or 35-160 kg</p>
+                        </div>
+                        <div class="flex items-end">
+                            <button 
+                                onclick="calculateDurationCalories()" 
+                                class="w-full bg-red-600 text-white text-lg py-3 px-6 rounded-lg hover:bg-red-700 transition-colors duration-200 font-semibold"
                             >
+                                Calculate
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="durationResult" class="result-display hidden"></div>
+                </div>
+            </div>
+
+            <!-- Distance-Based Calculator -->
+            <div id="distanceCalculator" class="bg-white rounded-xl shadow-lg p-8 mb-8 hidden">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Calories Burned by Distance</h3>
+                <p class="text-gray-600 mb-6">Calculate calories burned by walking, running, or cycling a specific distance.</p>
+                
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Activity</label>
+                            <select 
+                                id="distanceActivity" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                            >
+                                <option value="walking">Walking</option>
+                                <option value="running">Running</option>
+                                <option value="cycling">Cycling</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Speed/Pace</label>
+                            <div class="flex">
+                                <input 
+                                    type="number" 
+                                    id="speedValue" 
+                                    placeholder="Speed"
+                                    step="0.1"
+                                    class="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                >
+                                <select 
+                                    id="speedUnit"
+                                    class="px-3 py-3 border border-l-0 border-gray-300 rounded-r-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-gray-50"
+                                >
+                                    <option value="mph">mph</option>
+                                    <option value="kmh">km/h</option>
+                                    <option value="minmile">min/mile</option>
+                                    <option value="minkm">min/km</option>
+                                </select>
+                            </div>
+                            <div class="mt-2 text-sm">
+                                <button onclick="setPresetSpeed('slow')" class="text-blue-600 hover:underline mr-2">slow</button>
+                                <button onclick="setPresetSpeed('moderate')" class="text-blue-600 hover:underline mr-2">moderate</button>
+                                <button onclick="setPresetSpeed('fast')" class="text-blue-600 hover:underline mr-2">fast</button>
+                                <button onclick="setPresetSpeed('very fast')" class="text-blue-600 hover:underline">very fast</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Distance</label>
+                            <div class="flex">
+                                <input 
+                                    type="number" 
+                                    id="distanceValue" 
+                                    placeholder="Distance"
+                                    step="0.1"
+                                    class="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                >
+                                <select 
+                                    id="distanceUnit"
+                                    class="px-3 py-3 border border-l-0 border-gray-300 rounded-r-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-gray-50"
+                                >
+                                    <option value="miles">miles</option>
+                                    <option value="km">km</option>
+                                    <option value="yards">yards</option>
+                                    <option value="meters">meters</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Body Weight</label>
+                            <div class="flex">
+                                <input 
+                                    type="number" 
+                                    id="distanceBodyWeight" 
+                                    placeholder="Weight"
+                                    min="80"
+                                    max="350"
+                                    class="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                >
+                                <select 
+                                    id="distanceWeightUnit"
+                                    class="px-3 py-3 border border-l-0 border-gray-300 rounded-r-lg focus:ring-2 focus:ring-red-500 focus:border-transparent bg-gray-50"
+                                >
+                                    <option value="lbs">pounds</option>
+                                    <option value="kg">kg</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button 
+                        onclick="calculateDistanceCalories()" 
+                        class="w-full bg-red-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-red-700 transition-colors duration-200 font-semibold"
+                    >
+                        Calculate Distance Calories
+                    </button>
+                    
+                    <div id="distanceResult" class="result-display hidden"></div>
+                </div>
+            </div>
+
+            <!-- Reset Button -->
+            <div class="text-center mb-8">
+                <button 
+                    onclick="resetAllCalculators()" 
+                    class="bg-gray-300 text-gray-700 py-3 px-8 rounded-lg hover:bg-gray-400 transition-colors duration-200 font-semibold"
+                >
+                    Reset All Fields
+                </button>
+            </div>
+
+            <!-- MET Values and Factors -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6">Understanding MET Values & Calorie Burn</h3>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-4">What are MET Values?</h4>
+                        <div class="bg-blue-50 p-6 rounded-lg space-y-4">
+                            <p class="text-gray-700">
+                                <strong>MET (Metabolic Equivalent of Task)</strong> is a physiological measure expressing the energy cost of physical activities.
+                            </p>
+                            <div class="bg-white p-4 rounded border-l-4 border-blue-500">
+                                <p class="text-sm text-gray-700 font-medium">Formula:</p>
+                                <p class="text-lg font-mono text-blue-800">Calories = (MET × Weight in kg × Time in hours)</p>
+                            </div>
+                            <ul class="text-gray-700 space-y-2">
+                                <li>• <strong>1 MET</strong> = energy used at rest (sitting quietly)</li>
+                                <li>• <strong>3-6 METs</strong> = light to moderate activities</li>
+                                <li>• <strong>6+ METs</strong> = vigorous activities</li>
+                                <li>• <strong>Based on:</strong> healthy 40-year-old male, 70kg</li>
+                            </ul>
                         </div>
                     </div>
                     
                     <div>
-                        <label class="block text-lg font-semibold text-gray-900 mb-3">Activity Type</label>
-                        <select 
-                            id="activityType" 
-                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                        >
-                            <option value="">Select an activity</option>
-                            <option value="3.0">Walking (2.5 mph)</option>
-                            <option value="4.0">Walking (3.5 mph)</option>
-                            <option value="6.0">Running (5 mph)</option>
-                            <option value="8.0">Running (6 mph)</option>
-                            <option value="11.5">Running (8 mph)</option>
-                            <option value="4.0">Cycling (leisure)</option>
-                            <option value="8.0">Cycling (moderate)</option>
-                            <option value="12.0">Cycling (vigorous)</option>
-                            <option value="6.0">Swimming (leisure)</option>
-                            <option value="8.0">Swimming (moderate)</option>
-                            <option value="10.0">Swimming (vigorous)</option>
-                            <option value="3.0">Yoga</option>
-                            <option value="6.0">Weight Training</option>
-                            <option value="7.0">Basketball</option>
-                            <option value="8.0">Soccer</option>
-                            <option value="6.0">Tennis</option>
-                            <option value="5.0">Dancing</option>
-                            <option value="4.0">Housework</option>
-                            <option value="3.5">Gardening</option>
-                        </select>
+                        <h4 class="text-xl font-semibold text-gray-800 mb-4">Activity Intensity Levels</h4>
+                        <div class="space-y-4">
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-green-800 mb-2">Light Intensity (2-4 METs)</h5>
+                                <p class="text-sm text-green-700 mb-2">Examples: Walking slowly, light housework, stretching</p>
+                                <div class="text-xs text-green-600">
+                                    <p>• Walking 2-3 mph: 2.5-3.5 METs</p>
+                                    <p>• Light cleaning: 2.5 METs</p>
+                                    <p>• Yoga: 3.0 METs</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-yellow-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-yellow-800 mb-2">Moderate Intensity (4-6 METs)</h5>
+                                <p class="text-sm text-yellow-700 mb-2">Examples: Brisk walking, cycling, dancing</p>
+                                <div class="text-xs text-yellow-600">
+                                    <p>• Walking 3.5-4 mph: 4.0-5.0 METs</p>
+                                    <p>• Cycling 10-12 mph: 6.0 METs</p>
+                                    <p>• Dancing: 4.5-5.0 METs</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-red-50 p-4 rounded-lg">
+                                <h5 class="font-semibold text-red-800 mb-2">Vigorous Intensity (6+ METs)</h5>
+                                <p class="text-sm text-red-700 mb-2">Examples: Running, swimming, sports</p>
+                                <div class="text-xs text-red-600">
+                                    <p>• Running 6 mph: 9.8 METs</p>
+                                    <p>• Swimming laps: 8.0 METs</p>
+                                    <p>• Basketball: 8.0 METs</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <button 
-                        onclick="calculateCaloriesBurned()" 
-                        class="w-full bg-red-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-red-700 transition-colors duration-200 font-semibold"
-                    >
-                        Calculate Calories Burned
-                    </button>
-                    
-                    <div id="calorieResult" class="result-display hidden"></div>
-                    
-                    <button 
-                        onclick="resetCalories()" 
-                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
-                    >
-                        Reset
-                    </button>
                 </div>
             </div>
 
-            <!-- Activity Guidelines -->
+            <!-- Factors Affecting Calorie Burn -->
             <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Activity Intensity Levels</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-green-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-green-800 mb-2">Light Activities</h4>
-                        <p class="text-sm text-green-700">Walking, yoga, light housework</p>
-                        <p class="text-xs text-green-600 mt-1">3-4 METs</p>
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6">Factors Affecting Calorie Burn</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <i data-feather="user" class="w-6 h-6 text-blue-600 mr-2"></i>
+                            <h4 class="font-semibold text-blue-800">Body Mass & Composition</h4>
+                        </div>
+                        <ul class="text-sm text-blue-700 space-y-2">
+                            <li>• <strong>Weight:</strong> Heavier people burn more calories</li>
+                            <li>• <strong>Muscle mass:</strong> More muscle = higher burn rate</li>
+                            <li>• <strong>Body fat:</strong> Less metabolically active</li>
+                            <li>• <strong>Height:</strong> Taller people generally burn more</li>
+                        </ul>
                     </div>
-                    <div class="bg-yellow-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-yellow-800 mb-2">Moderate Activities</h4>
-                        <p class="text-sm text-yellow-700">Brisk walking, cycling, dancing</p>
-                        <p class="text-xs text-yellow-600 mt-1">5-8 METs</p>
+                    
+                    <div class="bg-green-50 p-6 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <i data-feather="clock" class="w-6 h-6 text-green-600 mr-2"></i>
+                            <h4 class="font-semibold text-green-800">Age & Fitness Level</h4>
+                        </div>
+                        <ul class="text-sm text-green-700 space-y-2">
+                            <li>• <strong>Age:</strong> Metabolism slows with age</li>
+                            <li>• <strong>Fitness level:</strong> Fitter people are more efficient</li>
+                            <li>• <strong>Training:</strong> Adaptation reduces calorie burn</li>
+                            <li>• <strong>Recovery:</strong> Affects next workout intensity</li>
+                        </ul>
                     </div>
-                    <div class="bg-red-50 p-4 rounded-lg">
-                        <h4 class="font-semibold text-red-800 mb-2">Vigorous Activities</h4>
-                        <p class="text-sm text-red-700">Running, swimming, sports</p>
-                        <p class="text-xs text-red-600 mt-1">8+ METs</p>
+                    
+                    <div class="bg-orange-50 p-6 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <i data-feather="thermometer" class="w-6 h-6 text-orange-600 mr-2"></i>
+                            <h4 class="font-semibold text-orange-800">Environmental Factors</h4>
+                        </div>
+                        <ul class="text-sm text-orange-700 space-y-2">
+                            <li>• <strong>Temperature:</strong> Heat increases calorie burn</li>
+                            <li>• <strong>Altitude:</strong> Higher altitude = more effort</li>
+                            <li>• <strong>Terrain:</strong> Hills and rough terrain increase burn</li>
+                            <li>• <strong>Weather:</strong> Wind and conditions affect intensity</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-purple-50 p-6 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <i data-feather="zap" class="w-6 h-6 text-purple-600 mr-2"></i>
+                            <h4 class="font-semibold text-purple-800">Exercise Intensity</h4>
+                        </div>
+                        <ul class="text-sm text-purple-700 space-y-2">
+                            <li>• <strong>Heart rate:</strong> Higher HR = more calories</li>
+                            <li>• <strong>Pace:</strong> Faster pace increases burn rate</li>
+                            <li>• <strong>Resistance:</strong> Added weight/resistance</li>
+                            <li>• <strong>Intervals:</strong> High-intensity bursts</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-red-50 p-6 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <i data-feather="moon" class="w-6 h-6 text-red-600 mr-2"></i>
+                            <h4 class="font-semibold text-red-800">Lifestyle Factors</h4>
+                        </div>
+                        <ul class="text-sm text-red-700 space-y-2">
+                            <li>• <strong>Sleep:</strong> Poor sleep reduces metabolism</li>
+                            <li>• <strong>Diet:</strong> Affects metabolic rate</li>
+                            <li>• <strong>Stress:</strong> Chronic stress impacts burn rate</li>
+                            <li>• <strong>Hydration:</strong> Dehydration reduces efficiency</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <div class="flex items-center mb-3">
+                            <i data-feather="target" class="w-6 h-6 text-gray-600 mr-2"></i>
+                            <h4 class="font-semibold text-gray-800">Activity-Specific</h4>
+                        </div>
+                        <ul class="text-sm text-gray-700 space-y-2">
+                            <li>• <strong>Technique:</strong> Efficient form reduces burn</li>
+                            <li>• <strong>Equipment:</strong> Weight of gear/equipment</li>
+                            <li>• <strong>Surface:</strong> Soft vs. hard surfaces</li>
+                            <li>• <strong>Duration:</strong> Fatigue affects efficiency</li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+
+            <!-- Popular Activities Showcase -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6">Popular Activities & Calorie Burn Rates</h3>
+                <p class="text-gray-600 mb-6">Approximate calories burned per hour for a 155 lb (70 kg) person</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-3">Cardio Activities</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span>Running 6 mph</span><span class="font-semibold">680 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Cycling 14-16 mph</span><span class="font-semibold">590 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Swimming laps</span><span class="font-semibold">520 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Walking 4 mph</span><span class="font-semibold">340 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Elliptical trainer</span><span class="font-semibold">480 cal/hr</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-lg">
+                        <h4 class="font-semibold text-green-800 mb-3">Sports & Activities</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span>Basketball game</span><span class="font-semibold">560 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Tennis singles</span><span class="font-semibold">520 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Soccer</span><span class="font-semibold">520 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Rock climbing</span><span class="font-semibold">750 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Martial arts</span><span class="font-semibold">720 cal/hr</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-4 rounded-lg">
+                        <h4 class="font-semibold text-purple-800 mb-3">Gym & Training</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span>Weight lifting (vigorous)</span><span class="font-semibold">440 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Aerobics (high impact)</span><span class="font-semibold">490 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Circuit training</span><span class="font-semibold">480 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Rowing machine</span><span class="font-semibold">590 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Stair machine</span><span class="font-semibold">650 cal/hr</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 rounded-lg">
+                        <h4 class="font-semibold text-yellow-800 mb-3">Outdoor Activities</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span>Hiking</span><span class="font-semibold">430 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Skiing downhill</span><span class="font-semibold">360 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Kayaking</span><span class="font-semibold">350 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Gardening</span><span class="font-semibold">330 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Snow shoveling</span><span class="font-semibold">420 cal/hr</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-lg">
+                        <h4 class="font-semibold text-red-800 mb-3">Daily Activities</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span>Cleaning house</span><span class="font-semibold">220 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Cooking</span><span class="font-semibold">150 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Playing with kids</span><span class="font-semibold">270 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Moving furniture</span><span class="font-semibold">440 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Walking dog</span><span class="font-semibold">200 cal/hr</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-lg">
+                        <h4 class="font-semibold text-gray-800 mb-3">Low-Intensity</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between"><span>Yoga (Hatha)</span><span class="font-semibold">190 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Stretching</span><span class="font-semibold">180 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Tai Chi</span><span class="font-semibold">240 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Bowling</span><span class="font-semibold">190 cal/hr</span></div>
+                            <div class="flex justify-between"><span>Fishing</span><span class="font-semibold">200 cal/hr</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips for Maximizing Calorie Burn -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6">Tips for Maximizing Calorie Burn</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-green-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-green-800 mb-4 flex items-center">
+                            <i data-feather="check-circle" class="w-5 h-5 mr-2"></i>
+                            Effective Strategies
+                        </h4>
+                        <ul class="text-sm text-green-700 space-y-3">
+                            <li>• <strong>Increase intensity:</strong> Add intervals, resistance, or speed</li>
+                            <li>• <strong>Compound movements:</strong> Multi-muscle exercises burn more</li>
+                            <li>• <strong>Add incline:</strong> Hills or treadmill incline increase effort</li>
+                            <li>• <strong>Extend duration:</strong> Longer sessions burn more total calories</li>
+                            <li>• <strong>Mix activities:</strong> Cross-training prevents adaptation</li>
+                            <li>• <strong>Stay hydrated:</strong> Proper hydration maintains efficiency</li>
+                            <li>• <strong>Consistent schedule:</strong> Regular exercise boosts metabolism</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-6 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-4 flex items-center">
+                            <i data-feather="trending-up" class="w-5 h-5 mr-2"></i>
+                            Advanced Techniques
+                        </h4>
+                        <ul class="text-sm text-blue-700 space-y-3">
+                            <li>• <strong>HIIT training:</strong> High-intensity intervals for maximum burn</li>
+                            <li>• <strong>Circuit training:</strong> Minimal rest between exercises</li>
+                            <li>• <strong>Supersets:</strong> Back-to-back exercises without rest</li>
+                            <li>• <strong>Plyometrics:</strong> Explosive movements increase intensity</li>
+                            <li>• <strong>Functional training:</strong> Real-world movement patterns</li>
+                            <li>• <strong>Progressive overload:</strong> Gradually increase difficulty</li>
+                            <li>• <strong>Active recovery:</strong> Light activity on rest days</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-6">Frequently Asked Questions</h3>
+                
+                <div class="space-y-6">
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">How accurate are calories burned calculations?</h4>
+                        <p class="text-gray-700 text-sm">
+                            Calorie calculators provide estimates based on average MET values. Individual variations in metabolism, fitness level, and body composition can affect actual calorie burn by ±20-30%. Use results as a general guide and adjust based on your specific goals and progress.
+                        </p>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Why do heavier people burn more calories?</h4>
+                        <p class="text-gray-700 text-sm">
+                            Heavier individuals require more energy to move their body mass. Like carrying a heavier backpack, more weight means more work for your muscles and cardiovascular system, resulting in higher calorie expenditure for the same activity.
+                        </p>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Should I focus on duration or intensity for weight loss?</h4>
+                        <p class="text-gray-700 text-sm">
+                            Both matter! For fat loss, moderate-intensity longer duration activities (45-60 min) burn more fat as fuel. High-intensity shorter workouts (20-30 min) burn more calories per minute and boost metabolism post-exercise. A combination approach is most effective.
+                        </p>
+                    </div>
+                    
+                    <div class="border-b border-gray-200 pb-4">
+                        <h4 class="font-semibold text-gray-900 mb-2">Do I burn calories after exercise ends?</h4>
+                        <p class="text-gray-700 text-sm">
+                            Yes! This is called EPOC (Excess Post-Exercise Oxygen Consumption) or "afterburn effect." High-intensity workouts can increase your metabolic rate for up to 24 hours post-exercise, burning additional calories as your body recovers.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">How does muscle mass affect calorie burn?</h4>
+                        <p class="text-gray-700 text-sm">
+                            Muscle tissue is metabolically active, burning calories even at rest. Each pound of muscle burns approximately 6-7 calories per day at rest, while fat burns only 2-3 calories. Building muscle through strength training increases your daily calorie burn.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Guide -->
+            <div class="bg-green-50 rounded-xl p-6 mb-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="info" class="w-5 h-5 mr-2 text-green-600"></i>
+                    How to Use the Advanced Calories Burned Calculator
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-green-800 mb-3">Duration-Based Calculator</h4>
+                        <ol class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center mr-2 mt-0.5">1</span>
+                                Choose activity category and specific activity
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center mr-2 mt-0.5">2</span>
+                                Enter duration in hours and minutes
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center mr-2 mt-0.5">3</span>
+                                Input your body weight (pounds or kg)
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center mr-2 mt-0.5">4</span>
+                                Click calculate to get calorie burn estimate
+                            </li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-green-800 mb-3">Distance-Based Calculator</h4>
+                        <ol class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center mr-2 mt-0.5">1</span>
+                                Select activity (walking, running, cycling)
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center mr-2 mt-0.5">2</span>
+                                Enter speed/pace or use preset speeds
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center mr-2 mt-0.5">3</span>
+                                Input distance traveled (various units)
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-green-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center mr-2 mt-0.5">4</span>
+                                Enter weight and calculate calories burned
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>
