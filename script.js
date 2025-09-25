@@ -192,25 +192,33 @@ function resetBMI() {
 
 // Advanced BMI Calculator Functions
 function switchUnit(unitType) {
-    // Hide all input sections
-    document.querySelectorAll('.unit-inputs').forEach(section => {
-        section.classList.add('hidden');
-    });
-    
-    // Remove active class from all tabs
-    document.querySelectorAll('.unit-tab').forEach(tab => {
-        tab.classList.remove('active');
-        tab.classList.remove('text-blue-600', 'border-blue-600');
-        tab.classList.add('text-gray-500', 'border-transparent');
-    });
-    
-    // Show selected input section and activate tab
-    const selectedTab = document.getElementById(unitType + 'Tab');
-    const selectedInput = document.getElementById(unitType + 'Inputs');
-    
-    selectedTab.classList.add('active', 'text-blue-600', 'border-blue-600');
-    selectedTab.classList.remove('text-gray-500', 'border-transparent');
-    selectedInput.classList.remove('hidden');
+    try {
+        // Hide all input sections
+        const inputSections = document.querySelectorAll('.unit-inputs');
+        inputSections.forEach(section => {
+            section.classList.add('hidden');
+        });
+        
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll('.unit-tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+            tab.classList.remove('text-blue-600', 'border-blue-600');
+            tab.classList.add('text-gray-500', 'border-transparent');
+        });
+        
+        // Show selected input section and activate tab
+        const selectedTab = document.getElementById(unitType + 'Tab');
+        const selectedInput = document.getElementById(unitType + 'Inputs');
+        
+        if (selectedTab && selectedInput) {
+            selectedTab.classList.add('active', 'text-blue-600', 'border-blue-600');
+            selectedTab.classList.remove('text-gray-500', 'border-transparent');
+            selectedInput.classList.remove('hidden');
+        }
+    } catch (error) {
+        // Silent handling of errors for better user experience
+    }
 }
 
 function convertToKgCm(unitType) {
