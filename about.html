@@ -163,86 +163,29 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Logo & Description -->
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="bg-blue-600 p-2 rounded-lg">
-                            <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-lg font-bold">CalcHub Pro</h3>
-                            <p class="text-xs text-gray-400">Professional Calculator Suite</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-400 text-sm mb-4">
-                        Your one-stop destination for all calculator and converter needs. Fast, accurate, and always free.
-                    </p>
-                    <div class="flex space-x-4">
-                        <span class="bg-green-600 text-xs px-2 py-1 rounded">✓ No Signup</span>
-                        <span class="bg-blue-600 text-xs px-2 py-1 rounded">✓ 100% Free</span>
-                    </div>
-                </div>
-                
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#business" class="text-gray-400 hover:text-white transition-colors">Business Tools</a></li>
-                        <li><a href="#basic" class="text-gray-400 hover:text-white transition-colors">Basic Calculators</a></li>
-                        <li><a href="#financial" class="text-gray-400 hover:text-white transition-colors">Financial Tools</a></li>
-                        <li><a href="#health" class="text-gray-400 hover:text-white transition-colors">Health & Fitness</a></li>
-                        <li><a href="#engineering" class="text-gray-400 hover:text-white transition-colors">Science & Engineering</a></li>
-                        <li><a href="#converters" class="text-gray-400 hover:text-white transition-colors">Unit Converters</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Popular Tools -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Popular Tools</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="tools/salary-calculator.html" class="text-gray-400 hover:text-white transition-colors">Salary Calculator</a></li>
-                        <li><a href="tools/bmi-calculator.html" class="text-gray-400 hover:text-white transition-colors">BMI Calculator</a></li>
-                        <li><a href="tools/roi-calculator.html" class="text-gray-400 hover:text-white transition-colors">ROI Calculator</a></li>
-                        <li><a href="tools/area-calculator.html" class="text-gray-400 hover:text-white transition-colors">Area Calculator</a></li>
-                        <li><a href="tools/blood-pressure-calculator.html" class="text-gray-400 hover:text-white transition-colors">Blood Pressure</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Legal -->
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
-                        <li><a href="terms.html" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
-                        <li><a href="disclaimer.html" class="text-gray-400 hover:text-white transition-colors">Disclaimer</a></li>
-                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Bottom Bar -->
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-                <p class="text-gray-400 text-sm">
-                    © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
-                </p>
-                <p class="text-gray-500 text-xs mt-2">
-                    All calculations are performed locally in your browser. No data is stored or transmitted.
-                </p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
 
     <script src="script.js"></script>
     <script>
         // Initialize Feather icons
         feather.replace();
         
+        // Function to load footer component
+        function loadComponent(elementId, fileName) {
+            fetch(fileName)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(elementId).innerHTML = data;
+                    feather.replace();
+                })
+                .catch(error => console.log('Component load error:', error));
+        }
+        
         // Initialize functionality
         document.addEventListener('DOMContentLoaded', function() {
+            // Load footer
+            loadComponent('footer-placeholder', 'footer.html');
+            
             initializeSearch();
             initializeCategoryFilters();
         });
