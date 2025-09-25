@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMR Calculator - CalcHub Pro</title>
-    <meta name="description" content="Calculate your Basal Metabolic Rate (BMR) and daily calorie needs. Free BMR calculator tool.">
+    <title>BMR Calculator - Basal Metabolic Rate Calculator | Free Online BMR & TDEE Calculator 2025</title>
+    <meta name="description" content="Calculate your Basal Metabolic Rate (BMR) & Total Daily Energy Expenditure (TDEE) with our advanced BMR calculator. Supports multiple formulas (Mifflin-St Jeor, Harris-Benedict, Katch-McArdle), US/Metric units, and provides daily calorie needs based on activity level. Free, accurate, and comprehensive BMR calculator tool.">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="../style.css">
@@ -50,9 +50,9 @@
                     <i data-feather="heart" class="w-12 h-12"></i>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold mb-4">BMR Calculator</h1>
+            <h1 class="text-4xl font-bold mb-4">Advanced BMR Calculator</h1>
             <p class="text-xl text-blue-100 max-w-2xl mx-auto">
-                Calculate your Basal Metabolic Rate (BMR) and daily calorie needs based on your activity level.
+                Calculate your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE) with multiple formulas and unit systems.
             </p>
         </div>
     </section>
@@ -60,121 +60,505 @@
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="tool-container">
+            <!-- Unit Selection -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Unit System</h3>
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="setUnitSystem('metric')" id="metricBtn" class="unit-btn active px-4 py-2 bg-blue-600 text-white rounded-lg font-medium transition-colors">
+                        Metric Units
+                    </button>
+                    <button onclick="setUnitSystem('imperial')" id="imperialBtn" class="unit-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors hover:bg-gray-300">
+                        US Units
+                    </button>
+                </div>
+            </div>
+
             <!-- Calculator Card -->
             <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">BMR Calculator</h2>
                 <div class="space-y-6">
+                    <!-- Basic Information -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (kg)</label>
-                            <input 
-                                type="number" 
-                                id="bmrWeight" 
-                                placeholder="Enter your weight"
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                            >
-                        </div>
-                        <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Height (cm)</label>
-                            <input 
-                                type="number" 
-                                id="bmrHeight" 
-                                placeholder="Enter your height"
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                            >
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Age (years)</label>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Age</label>
                             <input 
                                 type="number" 
                                 id="bmrAge" 
-                                placeholder="Enter your age"
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                placeholder="Age (15-80)"
+                                min="15"
+                                max="80"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                         </div>
                         <div>
                             <label class="block text-lg font-semibold text-gray-900 mb-3">Gender</label>
                             <select 
                                 id="bmrGender" 
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
                         </div>
                     </div>
+
+                    <!-- Imperial Units Section -->
+                    <div id="imperialSection" class="hidden">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Height</label>
+                                <div class="flex space-x-2">
+                                    <input 
+                                        type="number" 
+                                        id="heightFeet" 
+                                        placeholder="Feet"
+                                        class="flex-1 px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                    <input 
+                                        type="number" 
+                                        id="heightInches" 
+                                        placeholder="Inches"
+                                        class="flex-1 px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (pounds)</label>
+                                <input 
+                                    type="number" 
+                                    id="weightPounds" 
+                                    placeholder="Enter weight in pounds"
+                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metric Units Section -->
+                    <div id="metricSection">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Height (cm)</label>
+                                <input 
+                                    type="number" 
+                                    id="heightCm" 
+                                    placeholder="Enter height in cm"
+                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (kg)</label>
+                                <input 
+                                    type="number" 
+                                    id="weightKg" 
+                                    placeholder="Enter weight in kg"
+                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Settings -->
+                    <div class="border-t pt-6">
+                        <button onclick="toggleAdvancedSettings()" class="flex items-center text-blue-600 hover:text-blue-700 font-medium mb-4">
+                            <i data-feather="settings" class="w-5 h-5 mr-2"></i>
+                            <span id="advancedToggleText">+ Advanced Settings</span>
+                        </button>
+                        
+                        <div id="advancedSettings" class="hidden space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-lg font-semibold text-gray-900 mb-3">Results Unit</label>
+                                    <select 
+                                        id="resultUnit" 
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        <option value="calories">Calories</option>
+                                        <option value="kilojoules">Kilojoules</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-semibold text-gray-900 mb-3">BMR Formula</label>
+                                    <select 
+                                        id="bmrFormula" 
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    >
+                                        <option value="mifflin">Mifflin-St Jeor</option>
+                                        <option value="harris">Revised Harris-Benedict</option>
+                                        <option value="katch">Katch-McArdle</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <!-- Body Fat Percentage (for Katch-McArdle) -->
+                            <div id="bodyFatSection" class="hidden">
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Body Fat Percentage (%)</label>
+                                <input 
+                                    type="number" 
+                                    id="bodyFat" 
+                                    placeholder="Enter body fat percentage"
+                                    min="1"
+                                    max="50"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                >
+                                <p class="text-sm text-gray-600 mt-1">Required for Katch-McArdle formula. <a href="../tools/body-fat-calculator.html" class="text-blue-600 hover:underline">Calculate body fat</a></p>
+                            </div>
+                        </div>
+                    </div>
                     
                     <button 
-                        onclick="calculateBMR()" 
-                        class="w-full bg-red-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-red-700 transition-colors duration-200 font-semibold"
+                        onclick="calculateAdvancedBMR()" 
+                        class="w-full bg-blue-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold flex items-center justify-center"
                     >
-                        Calculate BMR
+                        <i data-feather="zap" class="w-5 h-5 mr-2"></i>
+                        Calculate BMR & TDEE
                     </button>
                     
                     <div id="bmrResult" class="result-display hidden"></div>
                     
                     <button 
-                        onclick="resetBMR()" 
-                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200"
+                        onclick="resetAdvancedBMR()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200 flex items-center justify-center"
                     >
-                        Reset
+                        <i data-feather="refresh-cw" class="w-4 h-4 mr-2"></i>
+                        Reset Calculator
                     </button>
                 </div>
             </div>
 
-            <!-- Activity Levels Info -->
-            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Activity Level Guide</h3>
-                <div class="space-y-3 text-sm">
-                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                        <span class="font-medium">Sedentary (little/no exercise)</span>
-                        <span class="text-gray-600">BMR × 1.2</span>
+            <!-- Daily Calorie Needs Results Table -->
+            <div id="tdeeResults" class="bg-white rounded-xl shadow-lg p-6 mb-8 hidden">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="activity" class="w-5 h-5 mr-2 text-blue-600"></i>
+                    Daily Calorie Needs Based on Activity Level
+                </h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-gray-200">
+                                <th class="text-left py-3 px-4 font-semibold text-gray-900">Activity Level</th>
+                                <th class="text-right py-3 px-4 font-semibold text-gray-900">Calories/Day</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tdeeTableBody">
+                            <!-- Results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                    <p class="text-sm text-gray-700">
+                        <strong>Exercise:</strong> 15-30 minutes of elevated heart rate activity.<br>
+                        <strong>Intense exercise:</strong> 45-120 minutes of elevated heart rate activity.<br>
+                        <strong>Very intense exercise:</strong> 2+ hours of elevated heart rate activity.
+                    </p>
+                </div>
+            </div>
+
+            <!-- BMR Information -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">Understanding Your BMR</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                            <i data-feather="info" class="w-5 h-5 mr-2 text-blue-600"></i>
+                            What is BMR?
+                        </h4>
+                        <p class="text-gray-700 mb-4">
+                            The <strong>Basal Metabolic Rate (BMR)</strong> is the amount of energy expended while at rest in a neutrally temperate environment, and in a post-absorptive state (meaning that the digestive system is inactive, which requires about 12 hours of fasting).
+                        </p>
+                        <p class="text-gray-700">
+                            It represents the minimum amount of energy needed to keep your body functioning, including breathing, circulation, cell production, nutrient processing, protein synthesis, and ion transport.
+                        </p>
                     </div>
-                    <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
-                        <span class="font-medium">Light Activity (light exercise 1-3 days/week)</span>
-                        <span class="text-gray-600">BMR × 1.375</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
-                        <span class="font-medium">Moderate Activity (moderate exercise 3-5 days/week)</span>
-                        <span class="text-gray-600">BMR × 1.55</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
-                        <span class="font-medium">Active (hard exercise 6-7 days/week)</span>
-                        <span class="text-gray-600">BMR × 1.725</span>
-                    </div>
-                    <div class="flex justify-between items-center p-3 bg-red-50 rounded-lg">
-                        <span class="font-medium">Very Active (very hard exercise, physical job)</span>
-                        <span class="text-gray-600">BMR × 1.9</span>
+                    <div>
+                        <h4 class="text-lg font-semibold text-gray-900 mb-3 flex items-center">
+                            <i data-feather="trending-up" class="w-5 h-5 mr-2 text-green-600"></i>
+                            Why is BMR Important?
+                        </h4>
+                        <ul class="text-gray-700 space-y-2">
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">•</span>
+                                <span>Accounts for 60-75% of total daily calorie expenditure</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">•</span>
+                                <span>Essential for weight management and fitness goals</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">•</span>
+                                <span>Helps determine proper nutrition requirements</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-green-600 mr-2">•</span>
+                                <span>Basis for calculating Total Daily Energy Expenditure (TDEE)</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- How to Use -->
-            <div class="bg-red-50 rounded-xl p-6 mb-8">
+            <!-- BMR Formulas Explained -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">BMR Calculation Formulas</h3>
+                <div class="space-y-6">
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Mifflin-St Jeor Equation (Recommended)</h4>
+                        <div class="text-gray-700 space-y-1">
+                            <p><strong>For Men:</strong> BMR = 10W + 6.25H - 5A + 5</p>
+                            <p><strong>For Women:</strong> BMR = 10W + 6.25H - 5A - 161</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Most accurate for general population. Introduced in 1990.</p>
+                    </div>
+                    
+                    <div class="border-l-4 border-green-500 pl-6">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Revised Harris-Benedict Equation</h4>
+                        <div class="text-gray-700 space-y-1">
+                            <p><strong>For Men:</strong> BMR = 13.397W + 4.799H - 5.677A + 88.362</p>
+                            <p><strong>For Women:</strong> BMR = 9.247W + 3.098H - 4.330A + 447.593</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Revised in 1984 for better accuracy than original 1919 equation.</p>
+                    </div>
+                    
+                    <div class="border-l-4 border-purple-500 pl-6">
+                        <h4 class="text-lg font-semibold text-gray-900 mb-2">Katch-McArdle Formula</h4>
+                        <div class="text-gray-700 space-y-1">
+                            <p><strong>For Both:</strong> BMR = 370 + 21.6(1 - F)W</p>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">Uses lean body mass. More accurate for lean individuals who know their body fat percentage.</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg mt-4">
+                        <p class="text-sm text-gray-700">
+                            <strong>Where:</strong> W = weight in kg, H = height in cm, A = age in years, F = body fat percentage (as decimal)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Guide -->
+            <div class="bg-blue-50 rounded-xl p-6 mb-8">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                    <i data-feather="info" class="w-5 h-5 mr-2 text-red-600"></i>
+                    <i data-feather="help-circle" class="w-5 h-5 mr-2 text-blue-600"></i>
                     How to Use the BMR Calculator
                 </h3>
-                <ol class="space-y-2 text-gray-700">
-                    <li class="flex items-start">
-                        <span class="bg-red-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">1</span>
-                        Enter your weight in kilograms
-                    </li>
-                    <li class="flex items-start">
-                        <span class="bg-red-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">2</span>
-                        Enter your height in centimeters
-                    </li>
-                    <li class="flex items-start">
-                        <span class="bg-red-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">3</span>
-                        Enter your age and select your gender
-                    </li>
-                    <li class="flex items-start">
-                        <span class="bg-red-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5">4</span>
-                        Click "Calculate BMR" to get your results including daily calorie needs for different activity levels
-                    </li>
-                </ol>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <ol class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
+                            <div>
+                                <p class="font-medium">Choose your unit system</p>
+                                <p class="text-sm text-gray-600">Select between Metric (kg, cm) or US/Imperial (lb, ft/in) units</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
+                            <div>
+                                <p class="font-medium">Enter your basic information</p>
+                                <p class="text-sm text-gray-600">Age (15-80), gender, height, and weight</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
+                            <div>
+                                <p class="font-medium">Optional: Configure advanced settings</p>
+                                <p class="text-sm text-gray-600">Choose calculation formula, result units, and add body fat % if known</p>
+                            </div>
+                        </li>
+                    </ol>
+                    <ol start="4" class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                            <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">4</span>
+                            <div>
+                                <p class="font-medium">Calculate your BMR & TDEE</p>
+                                <p class="text-sm text-gray-600">Get your basal metabolic rate and daily calorie needs</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">5</span>
+                            <div>
+                                <p class="font-medium">Review your activity level needs</p>
+                                <p class="text-sm text-gray-600">See calorie requirements for different activity levels</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">6</span>
+                            <div>
+                                <p class="font-medium">Use results for your goals</p>
+                                <p class="text-sm text-gray-600">Apply to weight loss, gain, or maintenance plans</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <!-- Comprehensive BMR Guide Blog Content -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <article class="prose prose-lg max-w-none">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Complete Guide to Basal Metabolic Rate (BMR)</h2>
+                    
+                    <div class="space-y-8">
+                        <section>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-4">What is Basal Metabolic Rate?</h3>
+                            <p class="text-gray-700 leading-relaxed mb-4">
+                                The basal metabolic rate (BMR) is the amount of energy needed while resting in a temperate environment when the digestive system is inactive. It is the equivalent of figuring out how much gas an idle car consumes while parked. In such a state, energy will be used only to maintain vital organs, which include the heart, brain, kidneys, nervous system, intestines, liver, lungs, sex organs, muscles, and skin.
+                            </p>
+                            <p class="text-gray-700 leading-relaxed mb-4">
+                                For most people, upwards of ~70% of total energy (calories) burned each day is due to upkeep. Physical activity makes up ~20% of expenditure and ~10% is used for the digestion of food, also known as thermogenesis.
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-4">BMR vs RMR: Understanding the Difference</h3>
+                            <p class="text-gray-700 leading-relaxed mb-4">
+                                While BMR and <strong>Resting Metabolic Rate (RMR)</strong> are often used interchangeably, there is a key difference in their definitions. Resting metabolic rate, or RMR for short, is the rate at which the body burns energy in a relaxed, but not fully inactive state. It is also sometimes defined as resting energy expenditure, or REE.
+                            </p>
+                            <p class="text-gray-700 leading-relaxed mb-4">
+                                BMR measurements must meet total physiological equilibrium while RMR conditions of measurement can be altered and defined by contextual limitations. In practical terms, RMR is typically 10-20% higher than BMR.
+                            </p>
+                        </section>
+
+                        <section>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-4">Factors That Affect Your BMR</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-3">Physical Factors</h4>
+                                    <ul class="space-y-2 text-gray-700">
+                                        <li class="flex items-start">
+                                            <span class="text-blue-600 mr-2">•</span>
+                                            <div>
+                                                <strong>Muscle Mass:</strong> More muscle tissue requires more energy to maintain. Anaerobic exercises like weight-lifting can increase BMR by building muscle mass.
+                                            </div>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-blue-600 mr-2">•</span>
+                                            <div>
+                                                <strong>Age:</strong> BMR generally decreases with age as muscle mass decreases and metabolic processes slow down.
+                                            </div>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-blue-600 mr-2">•</span>
+                                            <div>
+                                                <strong>Body Size:</strong> Larger bodies require more energy to function, resulting in higher BMR.
+                                            </div>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-blue-600 mr-2">•</span>
+                                            <div>
+                                                <strong>Gender:</strong> Men typically have higher BMRs than women due to greater muscle mass and lower body fat percentage.
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold text-gray-900 mb-3">Environmental & Lifestyle Factors</h4>
+                                    <ul class="space-y-2 text-gray-700">
+                                        <li class="flex items-start">
+                                            <span class="text-green-600 mr-2">•</span>
+                                            <div>
+                                                <strong>Temperature:</strong> Cold environments raise BMR due to energy required for body temperature regulation. BMR increases ~7% per 1.36°F internal temperature increase.
+                                            </div>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-600 mr-2">•</span>
+                                            <div>
+                                                <strong>Diet:</strong> Small, frequent meals can slightly increase BMR. Starvation can reduce BMR by up to 30%.
+                                            </div>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-600 mr-2">•</span>
+                                            <div>
+                                                <strong>Genetics:</strong> Hereditary traits significantly influence metabolic rate.
+                                            </div>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-green-600 mr-2">•</span>
+                                            <div>
+                                                <strong>Supplements:</strong> Caffeine and certain supplements can temporarily increase BMR.
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-4">How to Use Your BMR for Health Goals</h3>
+                            <div class="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Weight Management Applications</h4>
+                                <ul class="space-y-3 text-gray-700">
+                                    <li class="flex items-start">
+                                        <span class="bg-green-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">1</span>
+                                        <div>
+                                            <strong>Weight Loss:</strong> Create a caloric deficit by eating 300-500 calories below your TDEE (BMR × activity factor)
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="bg-blue-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">2</span>
+                                        <div>
+                                            <strong>Weight Gain:</strong> Consume 300-500 calories above your TDEE for gradual, healthy weight gain
+                                        </div>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="bg-purple-600 text-white text-sm w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">3</span>
+                                        <div>
+                                            <strong>Maintenance:</strong> Eat approximately your TDEE to maintain current weight
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-4">BMR Testing Methods</h3>
+                            <p class="text-gray-700 leading-relaxed mb-4">
+                                Online BMR tests with rigid formulas are not the most accurate method of determining an individual's BMR. For more precise measurements, consider:
+                            </p>
+                            <ul class="space-y-2 text-gray-700 mb-4">
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    <strong>Indirect Calorimetry:</strong> Measures oxygen consumption and carbon dioxide production
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    <strong>Handheld Metabolic Devices:</strong> Available at many fitness centers and medical offices
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-blue-600 mr-2">•</span>
+                                    <strong>DEXA Scans:</strong> Provide body composition data for more accurate calculations
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-4">Important Considerations</h3>
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                                <p class="text-gray-700 leading-relaxed mb-3">
+                                    <strong>Individual Variation:</strong> A 2005 meta-analysis study showed that even when controlling all factors of metabolic rate, there is still a 26% unknown variance between people. This means BMR calculations are estimates, not precise measurements.
+                                </p>
+                                <p class="text-gray-700 leading-relaxed">
+                                    <strong>Practical Application:</strong> While BMR provides a foundation for nutrition planning, tracking your progress through food and exercise journals, and adjusting based on real results, is the most reliable approach to achieving your health goals.
+                                </p>
+                            </div>
+                        </section>
+
+                        <section>
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-4">Related Calculators & Tools</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <a href="bmi-calculator.html" class="block p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                                    <h4 class="font-semibold text-blue-900 mb-2">BMI Calculator</h4>
+                                    <p class="text-sm text-blue-700">Calculate Body Mass Index</p>
+                                </a>
+                                <a href="body-fat-calculator.html" class="block p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                                    <h4 class="font-semibold text-green-900 mb-2">Body Fat Calculator</h4>
+                                    <p class="text-sm text-green-700">Determine body fat percentage</p>
+                                </a>
+                                <a href="calorie-calculator.html" class="block p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
+                                    <h4 class="font-semibold text-purple-900 mb-2">Calorie Calculator</h4>
+                                    <p class="text-sm text-purple-700">Plan your daily nutrition</p>
+                                </a>
+                            </div>
+                        </section>
+                    </div>
+                </article>
             </div>
         </div>
     </main>
@@ -205,6 +589,216 @@
 
     <script src="../script.js"></script>
     <script>
+        // BMR Calculator Advanced Functions
+        let currentUnit = 'metric';
+        let advancedVisible = false;
+
+        function setUnitSystem(unit) {
+            currentUnit = unit;
+            const metricBtn = document.getElementById('metricBtn');
+            const imperialBtn = document.getElementById('imperialBtn');
+            const metricSection = document.getElementById('metricSection');
+            const imperialSection = document.getElementById('imperialSection');
+
+            if (unit === 'metric') {
+                metricBtn.className = 'unit-btn active px-4 py-2 bg-blue-600 text-white rounded-lg font-medium transition-colors';
+                imperialBtn.className = 'unit-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors hover:bg-gray-300';
+                metricSection.classList.remove('hidden');
+                imperialSection.classList.add('hidden');
+            } else {
+                imperialBtn.className = 'unit-btn active px-4 py-2 bg-blue-600 text-white rounded-lg font-medium transition-colors';
+                metricBtn.className = 'unit-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors hover:bg-gray-300';
+                imperialSection.classList.remove('hidden');
+                metricSection.classList.add('hidden');
+            }
+        }
+
+        function toggleAdvancedSettings() {
+            const settings = document.getElementById('advancedSettings');
+            const toggleText = document.getElementById('advancedToggleText');
+            
+            advancedVisible = !advancedVisible;
+            
+            if (advancedVisible) {
+                settings.classList.remove('hidden');
+                toggleText.textContent = '- Advanced Settings';
+            } else {
+                settings.classList.add('hidden');
+                toggleText.textContent = '+ Advanced Settings';
+            }
+            
+            // Toggle body fat section based on formula
+            toggleBodyFatSection();
+        }
+
+        function toggleBodyFatSection() {
+            const formula = document.getElementById('bmrFormula').value;
+            const bodyFatSection = document.getElementById('bodyFatSection');
+            
+            if (formula === 'katch' && advancedVisible) {
+                bodyFatSection.classList.remove('hidden');
+            } else {
+                bodyFatSection.classList.add('hidden');
+            }
+        }
+
+        // Listen for formula changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const formulaSelect = document.getElementById('bmrFormula');
+            if (formulaSelect) {
+                formulaSelect.addEventListener('change', toggleBodyFatSection);
+            }
+        });
+
+        function calculateAdvancedBMR() {
+            const age = parseFloat(document.getElementById('bmrAge').value);
+            const gender = document.getElementById('bmrGender').value;
+            const formula = document.getElementById('bmrFormula').value;
+            const resultUnit = document.getElementById('resultUnit').value;
+
+            let weight, height;
+
+            // Get weight and height based on unit system
+            if (currentUnit === 'metric') {
+                weight = parseFloat(document.getElementById('weightKg').value);
+                height = parseFloat(document.getElementById('heightCm').value);
+            } else {
+                const weightPounds = parseFloat(document.getElementById('weightPounds').value);
+                const feet = parseFloat(document.getElementById('heightFeet').value) || 0;
+                const inches = parseFloat(document.getElementById('heightInches').value) || 0;
+                
+                // Convert to metric
+                weight = weightPounds * 0.453592; // pounds to kg
+                height = (feet * 12 + inches) * 2.54; // inches to cm
+            }
+
+            // Validation
+            if (!age || !weight || !height || age < 15 || age > 80) {
+                document.getElementById('bmrResult').innerHTML = 
+                    '<div class="p-4 bg-red-50 border border-red-200 rounded-lg"><p class="text-red-600">Please enter valid values. Age must be between 15-80 years.</p></div>';
+                document.getElementById('bmrResult').classList.remove('hidden');
+                return;
+            }
+
+            let bmr;
+
+            // Calculate BMR based on selected formula
+            if (formula === 'mifflin') {
+                // Mifflin-St Jeor
+                if (gender === 'male') {
+                    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+                } else {
+                    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+                }
+            } else if (formula === 'harris') {
+                // Revised Harris-Benedict
+                if (gender === 'male') {
+                    bmr = 13.397 * weight + 4.799 * height - 5.677 * age + 88.362;
+                } else {
+                    bmr = 9.247 * weight + 3.098 * height - 4.330 * age + 447.593;
+                }
+            } else if (formula === 'katch') {
+                // Katch-McArdle
+                const bodyFatPercent = parseFloat(document.getElementById('bodyFat').value);
+                if (!bodyFatPercent || bodyFatPercent < 1 || bodyFatPercent > 50) {
+                    document.getElementById('bmrResult').innerHTML = 
+                        '<div class="p-4 bg-red-50 border border-red-200 rounded-lg"><p class="text-red-600">Please enter a valid body fat percentage (1-50%) for Katch-McArdle formula.</p></div>';
+                    document.getElementById('bmrResult').classList.remove('hidden');
+                    return;
+                }
+                const leanBodyMass = weight * (1 - bodyFatPercent / 100);
+                bmr = 370 + 21.6 * leanBodyMass;
+            }
+
+            // Convert to kilojoules if selected
+            let bmrDisplay = bmr;
+            let unit = 'Calories';
+            if (resultUnit === 'kilojoules') {
+                bmrDisplay = bmr * 4.184;
+                unit = 'Kilojoules';
+            }
+
+            // Calculate TDEE for different activity levels
+            const activityFactors = {
+                'Sedentary: little or no exercise': 1.2,
+                'Exercise 1-3 times/week': 1.375,
+                'Exercise 4-5 times/week': 1.55,
+                'Daily exercise or intense exercise 3-4 times/week': 1.725,
+                'Intense exercise 6-7 times/week': 1.9,
+                'Very intense exercise daily, or physical job': 2.25
+            };
+
+            // Display results
+            const formulaNames = {
+                'mifflin': 'Mifflin-St Jeor',
+                'harris': 'Revised Harris-Benedict',
+                'katch': 'Katch-McArdle'
+            };
+
+            let resultsHTML = `
+                <div class="p-6 bg-green-50 border border-green-200 rounded-lg">
+                    <h3 class="text-xl font-bold text-green-800 mb-4 text-center">Your BMR Results</h3>
+                    <div class="text-center mb-4">
+                        <div class="text-3xl font-bold text-green-700">${Math.round(bmrDisplay)} ${unit}/day</div>
+                        <p class="text-sm text-green-600 mt-1">Calculated using ${formulaNames[formula]} formula</p>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('bmrResult').innerHTML = resultsHTML;
+            document.getElementById('bmrResult').classList.remove('hidden');
+
+            // Show TDEE table
+            const tdeeResults = document.getElementById('tdeeResults');
+            const tableBody = document.getElementById('tdeeTableBody');
+            
+            let tableHTML = '';
+            Object.entries(activityFactors).forEach(([activity, factor]) => {
+                const tdee = Math.round(bmr * factor);
+                const tdeeDisplay = resultUnit === 'kilojoules' ? Math.round(tdee * 4.184) : tdee;
+                tableHTML += `
+                    <tr class="border-b border-gray-100 hover:bg-gray-50">
+                        <td class="py-3 px-4 text-gray-700">${activity}</td>
+                        <td class="py-3 px-4 text-right font-semibold text-gray-900">${tdeeDisplay.toLocaleString()}</td>
+                    </tr>
+                `;
+            });
+            
+            tableBody.innerHTML = tableHTML;
+            tdeeResults.classList.remove('hidden');
+
+            // Scroll to results
+            document.getElementById('bmrResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function resetAdvancedBMR() {
+            // Clear all inputs
+            document.getElementById('bmrAge').value = '';
+            document.getElementById('heightCm').value = '';
+            document.getElementById('weightKg').value = '';
+            document.getElementById('weightPounds').value = '';
+            document.getElementById('heightFeet').value = '';
+            document.getElementById('heightInches').value = '';
+            document.getElementById('bodyFat').value = '';
+            
+            // Reset selects
+            document.getElementById('bmrGender').value = 'male';
+            document.getElementById('bmrFormula').value = 'mifflin';
+            document.getElementById('resultUnit').value = 'calories';
+            
+            // Hide results
+            document.getElementById('bmrResult').classList.add('hidden');
+            document.getElementById('tdeeResults').classList.add('hidden');
+            
+            // Reset unit system to metric
+            setUnitSystem('metric');
+            
+            // Hide advanced settings
+            if (advancedVisible) {
+                toggleAdvancedSettings();
+            }
+        }
+
         // Initialize Feather icons
         feather.replace();
     </script>
