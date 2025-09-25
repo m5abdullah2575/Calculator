@@ -60,171 +60,219 @@
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="tool-container">
-            <!-- Unit Selection -->
-            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Unit System</h3>
-                <div class="flex flex-wrap gap-3">
-                    <button onclick="setUnitSystem('metric')" id="metricBtn" class="unit-btn active px-4 py-2 bg-blue-600 text-white rounded-lg font-medium transition-colors">
-                        Metric Units
-                    </button>
-                    <button onclick="setUnitSystem('imperial')" id="imperialBtn" class="unit-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors hover:bg-gray-300">
-                        US Units
-                    </button>
-                </div>
-            </div>
-
-            <!-- Calculator Card -->
-            <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">BMR Calculator</h2>
-                <div class="space-y-6">
-                    <!-- Basic Information -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Age</label>
-                            <input 
-                                type="number" 
-                                id="bmrAge" 
-                                placeholder="Age (15-80)"
-                                min="15"
-                                max="80"
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            >
-                        </div>
-                        <div>
-                            <label class="block text-lg font-semibold text-gray-900 mb-3">Gender</label>
-                            <select 
-                                id="bmrGender" 
-                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            >
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Imperial Units Section -->
-                    <div id="imperialSection" class="hidden">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Height</label>
-                                <div class="flex space-x-2">
-                                    <input 
-                                        type="number" 
-                                        id="heightFeet" 
-                                        placeholder="Feet"
-                                        class="flex-1 px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    >
-                                    <input 
-                                        type="number" 
-                                        id="heightInches" 
-                                        placeholder="Inches"
-                                        class="flex-1 px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    >
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (pounds)</label>
-                                <input 
-                                    type="number" 
-                                    id="weightPounds" 
-                                    placeholder="Enter weight in pounds"
-                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                >
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Metric Units Section -->
-                    <div id="metricSection">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Height (cm)</label>
-                                <input 
-                                    type="number" 
-                                    id="heightCm" 
-                                    placeholder="Enter height in cm"
-                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                >
-                            </div>
-                            <div>
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Weight (kg)</label>
-                                <input 
-                                    type="number" 
-                                    id="weightKg" 
-                                    placeholder="Enter weight in kg"
-                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                >
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Advanced Settings -->
-                    <div class="border-t pt-6">
-                        <button onclick="toggleAdvancedSettings()" class="flex items-center text-blue-600 hover:text-blue-700 font-medium mb-4">
-                            <i data-feather="settings" class="w-5 h-5 mr-2"></i>
-                            <span id="advancedToggleText">+ Advanced Settings</span>
+            <!-- BMR Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                <!-- Unit Selection Tabs -->
+                <div class="bg-gray-50 border-b border-gray-200">
+                    <div class="flex">
+                        <button onclick="setUnitSystem('imperial')" id="imperialTab" class="unit-tab flex-1 px-6 py-3 text-sm font-medium border-r border-gray-200 bg-blue-600 text-white">
+                            US Units
                         </button>
-                        
-                        <div id="advancedSettings" class="hidden space-y-4">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-lg font-semibold text-gray-900 mb-3">Results Unit</label>
-                                    <select 
-                                        id="resultUnit" 
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    >
-                                        <option value="calories">Calories</option>
-                                        <option value="kilojoules">Kilojoules</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-lg font-semibold text-gray-900 mb-3">BMR Formula</label>
-                                    <select 
-                                        id="bmrFormula" 
-                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    >
-                                        <option value="mifflin">Mifflin-St Jeor</option>
-                                        <option value="harris">Revised Harris-Benedict</option>
-                                        <option value="katch">Katch-McArdle</option>
-                                    </select>
+                        <button onclick="setUnitSystem('metric')" id="metricTab" class="unit-tab flex-1 px-6 py-3 text-sm font-medium border-r border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                            Metric Units
+                        </button>
+                        <button onclick="setUnitSystem('other')" id="otherTab" class="unit-tab flex-1 px-6 py-3 text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">
+                            Other Units
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Calculator Form -->
+                <div class="p-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 text-center">BMR Calculator</h2>
+                    
+                    <!-- Basic Information Table -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden mb-6">
+                        <table class="w-full">
+                            <tbody>
+                                <tr class="border-b border-gray-200">
+                                    <td class="px-4 py-3 font-medium text-gray-900 bg-gray-50 w-24">Age</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center space-x-2">
+                                            <input 
+                                                type="number" 
+                                                id="bmrAge" 
+                                                placeholder="ages 15 - 80"
+                                                min="15"
+                                                max="80"
+                                                class="w-32 px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="border-b border-gray-200">
+                                    <td class="px-4 py-3 font-medium text-gray-900 bg-gray-50">Gender</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center space-x-4">
+                                            <label class="inline-flex items-center">
+                                                <input type="radio" name="gender" value="male" id="male" checked class="text-blue-600">
+                                                <span class="ml-2">Male</span>
+                                            </label>
+                                            <label class="inline-flex items-center">
+                                                <input type="radio" name="gender" value="female" id="female" class="text-blue-600">
+                                                <span class="ml-2">Female</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- Imperial Units Rows -->
+                                <tr id="heightRowImperial" class="border-b border-gray-200">
+                                    <td class="px-4 py-3 font-medium text-gray-900 bg-gray-50">Height</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center space-x-2">
+                                            <input 
+                                                type="number" 
+                                                id="heightFeet" 
+                                                placeholder="feet"
+                                                class="w-20 px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                            <span class="text-gray-500">feet</span>
+                                            <input 
+                                                type="number" 
+                                                id="heightInches" 
+                                                placeholder="inches"
+                                                class="w-20 px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                            <span class="text-gray-500">inches</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="weightRowImperial" class="border-b border-gray-200">
+                                    <td class="px-4 py-3 font-medium text-gray-900 bg-gray-50">Weight</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center space-x-2">
+                                            <input 
+                                                type="number" 
+                                                id="weightPounds" 
+                                                placeholder="pounds"
+                                                class="w-32 px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                            <span class="text-gray-500">pounds</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Metric Units Rows (Hidden by default) -->
+                                <tr id="heightRowMetric" class="border-b border-gray-200 hidden">
+                                    <td class="px-4 py-3 font-medium text-gray-900 bg-gray-50">Height</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center space-x-2">
+                                            <input 
+                                                type="number" 
+                                                id="heightCm" 
+                                                placeholder="cm"
+                                                class="w-32 px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                            <span class="text-gray-500">cm</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="weightRowMetric" class="border-b border-gray-200 hidden">
+                                    <td class="px-4 py-3 font-medium text-gray-900 bg-gray-50">Weight</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center space-x-2">
+                                            <input 
+                                                type="number" 
+                                                id="weightKg" 
+                                                placeholder="kg"
+                                                class="w-32 px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                            <span class="text-gray-500">kg</span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- Other Units Rows (Hidden by default) -->
+                                <tr id="heightRowOther" class="border-b border-gray-200 hidden">
+                                    <td class="px-4 py-3 font-medium text-gray-900 bg-gray-50">Height</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center space-x-2">
+                                            <input 
+                                                type="number" 
+                                                id="heightCmOther" 
+                                                placeholder="cm"
+                                                class="w-32 px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                            <span class="text-gray-500">cm</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="weightRowOther" class="border-b border-gray-200 hidden">
+                                    <td class="px-4 py-3 font-medium text-gray-900 bg-gray-50">Weight</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center space-x-2">
+                                            <input 
+                                                type="number" 
+                                                id="weightKgOther" 
+                                                placeholder="kg"
+                                                class="w-32 px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                            <span class="text-gray-500">kg</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Settings Section -->
+                    <div class="border border-gray-200 rounded-lg mb-6">
+                        <button onclick="toggleSettings()" class="w-full px-4 py-3 text-left font-medium text-gray-900 bg-gray-50 border-b border-gray-200 hover:bg-gray-100 flex items-center justify-between">
+                            <span id="settingsToggleText">+ Settings</span>
+                            <i data-feather="chevron-down" id="settingsIcon" class="w-4 h-4 transform transition-transform"></i>
+                        </button>
+                        <div id="settingsPanel" class="hidden p-4 space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-900 mb-2">Results unit:</label>
+                                <div class="flex items-center space-x-4">
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="resultUnit" value="calories" checked class="text-blue-600">
+                                        <span class="ml-2">Calories</span>
+                                    </label>
+                                    <label class="inline-flex items-center">
+                                        <input type="radio" name="resultUnit" value="kilojoules" class="text-blue-600">
+                                        <span class="ml-2">Kilojoules</span>
+                                    </label>
                                 </div>
                             </div>
-                            
-                            <!-- Body Fat Percentage (for Katch-McArdle) -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-900 mb-2">BMR estimation formula:</label>
+                                <select id="bmrFormula" class="w-full max-w-xs px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="mifflin">Mifflin St Jeor</option>
+                                    <option value="harris">Revised Harris-Benedict</option>
+                                    <option value="katch">Katch-McArdle</option>
+                                </select>
+                            </div>
                             <div id="bodyFatSection" class="hidden">
-                                <label class="block text-lg font-semibold text-gray-900 mb-3">Body Fat Percentage (%)</label>
-                                <input 
-                                    type="number" 
-                                    id="bodyFat" 
-                                    placeholder="Enter body fat percentage"
-                                    min="1"
-                                    max="50"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                >
-                                <p class="text-sm text-gray-600 mt-1">Required for Katch-McArdle formula. <a href="../tools/body-fat-calculator.html" class="text-blue-600 hover:underline">Calculate body fat</a></p>
+                                <label class="block text-sm font-medium text-gray-900 mb-2">Body Fat:</label>
+                                <div class="flex items-center space-x-2">
+                                    <input 
+                                        type="number" 
+                                        id="bodyFat" 
+                                        placeholder="%"
+                                        min="1"
+                                        max="50"
+                                        class="w-20 px-3 py-2 border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                    <span class="text-gray-500">%</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     
+                    <!-- Calculate Button -->
                     <button 
-                        onclick="calculateAdvancedBMR()" 
-                        class="w-full bg-blue-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold flex items-center justify-center"
+                        onclick="calculateBMR()" 
+                        class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
                     >
-                        <i data-feather="zap" class="w-5 h-5 mr-2"></i>
-                        Calculate BMR & TDEE
-                    </button>
-                    
-                    <div id="bmrResult" class="result-display hidden"></div>
-                    
-                    <button 
-                        onclick="resetAdvancedBMR()" 
-                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200 flex items-center justify-center"
-                    >
-                        <i data-feather="refresh-cw" class="w-4 h-4 mr-2"></i>
-                        Reset Calculator
+                        Calculate
                     </button>
                 </div>
             </div>
+
+            <!-- BMR Result Section -->
+            <div id="bmrResult" class="hidden"></div>
 
             <!-- Daily Calorie Needs Results Table -->
             <div id="tdeeResults" class="bg-white rounded-xl shadow-lg p-6 mb-8 hidden">
@@ -589,42 +637,61 @@
 
     <script src="../script.js"></script>
     <script>
-        // BMR Calculator Advanced Functions
-        let currentUnit = 'metric';
-        let advancedVisible = false;
+        // BMR Calculator Functions
+        let currentUnit = 'imperial';
+        let settingsVisible = false;
 
         function setUnitSystem(unit) {
             currentUnit = unit;
-            const metricBtn = document.getElementById('metricBtn');
-            const imperialBtn = document.getElementById('imperialBtn');
-            const metricSection = document.getElementById('metricSection');
-            const imperialSection = document.getElementById('imperialSection');
-
-            if (unit === 'metric') {
-                metricBtn.className = 'unit-btn active px-4 py-2 bg-blue-600 text-white rounded-lg font-medium transition-colors';
-                imperialBtn.className = 'unit-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors hover:bg-gray-300';
-                metricSection.classList.remove('hidden');
-                imperialSection.classList.add('hidden');
-            } else {
-                imperialBtn.className = 'unit-btn active px-4 py-2 bg-blue-600 text-white rounded-lg font-medium transition-colors';
-                metricBtn.className = 'unit-btn px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-medium transition-colors hover:bg-gray-300';
-                imperialSection.classList.remove('hidden');
-                metricSection.classList.add('hidden');
+            
+            // Update tab states
+            document.querySelectorAll('.unit-tab').forEach(tab => {
+                tab.classList.remove('bg-blue-600', 'text-white');
+                tab.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            
+            // Hide all unit rows
+            document.getElementById('heightRowImperial').classList.add('hidden');
+            document.getElementById('weightRowImperial').classList.add('hidden');
+            document.getElementById('heightRowMetric').classList.add('hidden');
+            document.getElementById('weightRowMetric').classList.add('hidden');
+            document.getElementById('heightRowOther').classList.add('hidden');
+            document.getElementById('weightRowOther').classList.add('hidden');
+            
+            // Show appropriate rows and update active tab
+            if (unit === 'imperial') {
+                document.getElementById('imperialTab').classList.add('bg-blue-600', 'text-white');
+                document.getElementById('imperialTab').classList.remove('bg-gray-100', 'text-gray-700');
+                document.getElementById('heightRowImperial').classList.remove('hidden');
+                document.getElementById('weightRowImperial').classList.remove('hidden');
+            } else if (unit === 'metric') {
+                document.getElementById('metricTab').classList.add('bg-blue-600', 'text-white');
+                document.getElementById('metricTab').classList.remove('bg-gray-100', 'text-gray-700');
+                document.getElementById('heightRowMetric').classList.remove('hidden');
+                document.getElementById('weightRowMetric').classList.remove('hidden');
+            } else if (unit === 'other') {
+                document.getElementById('otherTab').classList.add('bg-blue-600', 'text-white');
+                document.getElementById('otherTab').classList.remove('bg-gray-100', 'text-gray-700');
+                document.getElementById('heightRowOther').classList.remove('hidden');
+                document.getElementById('weightRowOther').classList.remove('hidden');
             }
         }
 
-        function toggleAdvancedSettings() {
-            const settings = document.getElementById('advancedSettings');
-            const toggleText = document.getElementById('advancedToggleText');
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            const toggleText = document.getElementById('settingsToggleText');
+            const icon = document.getElementById('settingsIcon');
             
-            advancedVisible = !advancedVisible;
+            settingsVisible = !settingsVisible;
             
-            if (advancedVisible) {
-                settings.classList.remove('hidden');
-                toggleText.textContent = '- Advanced Settings';
+            if (settingsVisible) {
+                panel.classList.remove('hidden');
+                toggleText.textContent = '- Settings';
+                icon.classList.add('rotate-180');
             } else {
-                settings.classList.add('hidden');
-                toggleText.textContent = '+ Advanced Settings';
+                panel.classList.add('hidden');
+                toggleText.textContent = '+ Settings';
+                icon.classList.remove('rotate-180');
             }
             
             // Toggle body fat section based on formula
@@ -635,26 +702,44 @@
             const formula = document.getElementById('bmrFormula').value;
             const bodyFatSection = document.getElementById('bodyFatSection');
             
-            if (formula === 'katch' && advancedVisible) {
+            if (formula === 'katch' && settingsVisible) {
                 bodyFatSection.classList.remove('hidden');
             } else {
                 bodyFatSection.classList.add('hidden');
             }
         }
 
-        // Listen for formula changes
+        function getSelectedGender() {
+            const maleRadio = document.getElementById('male');
+            return maleRadio.checked ? 'male' : 'female';
+        }
+
+        function getSelectedResultUnit() {
+            const caloriesRadio = document.querySelector('input[name="resultUnit"][value="calories"]');
+            return caloriesRadio.checked ? 'calories' : 'kilojoules';
+        }
+
+        // Initialize when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+            
+            // Set default to imperial (US Units) like reference website
+            setUnitSystem('imperial');
+            
+            // Listen for formula changes
             const formulaSelect = document.getElementById('bmrFormula');
             if (formulaSelect) {
                 formulaSelect.addEventListener('change', toggleBodyFatSection);
             }
         });
 
-        function calculateAdvancedBMR() {
+        function calculateBMR() {
             const age = parseFloat(document.getElementById('bmrAge').value);
-            const gender = document.getElementById('bmrGender').value;
+            const gender = getSelectedGender();
             const formula = document.getElementById('bmrFormula').value;
-            const resultUnit = document.getElementById('resultUnit').value;
+            const resultUnit = getSelectedResultUnit();
 
             let weight, height;
 
@@ -662,7 +747,7 @@
             if (currentUnit === 'metric') {
                 weight = parseFloat(document.getElementById('weightKg').value);
                 height = parseFloat(document.getElementById('heightCm').value);
-            } else {
+            } else if (currentUnit === 'imperial') {
                 const weightPounds = parseFloat(document.getElementById('weightPounds').value);
                 const feet = parseFloat(document.getElementById('heightFeet').value) || 0;
                 const inches = parseFloat(document.getElementById('heightInches').value) || 0;
@@ -670,13 +755,14 @@
                 // Convert to metric
                 weight = weightPounds * 0.453592; // pounds to kg
                 height = (feet * 12 + inches) * 2.54; // inches to cm
+            } else { // other units (metric)
+                weight = parseFloat(document.getElementById('weightKgOther').value);
+                height = parseFloat(document.getElementById('heightCmOther').value);
             }
 
             // Validation
             if (!age || !weight || !height || age < 15 || age > 80) {
-                document.getElementById('bmrResult').innerHTML = 
-                    '<div class="p-4 bg-red-50 border border-red-200 rounded-lg"><p class="text-red-600">Please enter valid values. Age must be between 15-80 years.</p></div>';
-                document.getElementById('bmrResult').classList.remove('hidden');
+                showResult('<div class="p-4 bg-red-50 border border-red-200 rounded-lg"><p class="text-red-600">Please enter valid values. Age must be between 15-80 years.</p></div>');
                 return;
             }
 
@@ -701,9 +787,7 @@
                 // Katch-McArdle
                 const bodyFatPercent = parseFloat(document.getElementById('bodyFat').value);
                 if (!bodyFatPercent || bodyFatPercent < 1 || bodyFatPercent > 50) {
-                    document.getElementById('bmrResult').innerHTML = 
-                        '<div class="p-4 bg-red-50 border border-red-200 rounded-lg"><p class="text-red-600">Please enter a valid body fat percentage (1-50%) for Katch-McArdle formula.</p></div>';
-                    document.getElementById('bmrResult').classList.remove('hidden');
+                    showResult('<div class="p-4 bg-red-50 border border-red-200 rounded-lg"><p class="text-red-600">Please enter a valid body fat percentage (1-50%) for Katch-McArdle formula.</p></div>');
                     return;
                 }
                 const leanBodyMass = weight * (1 - bodyFatPercent / 100);
@@ -728,74 +812,90 @@
                 'Very intense exercise daily, or physical job': 2.25
             };
 
-            // Display results
-            const formulaNames = {
-                'mifflin': 'Mifflin-St Jeor',
-                'harris': 'Revised Harris-Benedict',
-                'katch': 'Katch-McArdle'
-            };
-
+            // Display BMR result that matches reference website
             let resultsHTML = `
-                <div class="p-6 bg-green-50 border border-green-200 rounded-lg">
-                    <h3 class="text-xl font-bold text-green-800 mb-4 text-center">Your BMR Results</h3>
-                    <div class="text-center mb-4">
-                        <div class="text-3xl font-bold text-green-700">${Math.round(bmrDisplay)} ${unit}/day</div>
-                        <p class="text-sm text-green-600 mt-1">Calculated using ${formulaNames[formula]} formula</p>
+                <div class="bg-white border border-gray-200 rounded-lg p-6 mt-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Result</h3>
+                    <div class="text-center mb-6">
+                        <div class="text-2xl">BMR = <strong>${Math.round(bmrDisplay)}</strong> ${unit}/day</div>
+                    </div>
+                    
+                    <h4 class="font-bold text-gray-900 mb-3">Daily calorie needs based on activity level</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full border border-gray-200">
+                            <tbody>
+            `;
+
+            Object.entries(activityFactors).forEach(([activity, factor]) => {
+                const tdee = Math.round(bmr * factor);
+                const tdeeDisplay = resultUnit === 'kilojoules' ? Math.round(tdee * 4.184) : tdee;
+                resultsHTML += `
+                    <tr class="border-b border-gray-200">
+                        <td class="px-4 py-2 text-gray-700">${activity}</td>
+                        <td class="px-4 py-2 text-right font-medium">${tdeeDisplay.toLocaleString()}</td>
+                    </tr>
+                `;
+            });
+
+            resultsHTML += `
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-4 text-sm text-gray-600">
+                        <p><strong>Exercise:</strong> 15-30 minutes of elevated heart rate activity.</p>
+                        <p><strong>Intense exercise:</strong> 45-120 minutes of elevated heart rate activity.</p>
+                        <p><strong>Very intense exercise:</strong> 2+ hours of elevated heart rate activity.</p>
                     </div>
                 </div>
             `;
 
-            document.getElementById('bmrResult').innerHTML = resultsHTML;
-            document.getElementById('bmrResult').classList.remove('hidden');
+            showResult(resultsHTML);
 
-            // Show TDEE table
-            const tdeeResults = document.getElementById('tdeeResults');
-            const tableBody = document.getElementById('tdeeTableBody');
-            
-            let tableHTML = '';
-            Object.entries(activityFactors).forEach(([activity, factor]) => {
-                const tdee = Math.round(bmr * factor);
-                const tdeeDisplay = resultUnit === 'kilojoules' ? Math.round(tdee * 4.184) : tdee;
-                tableHTML += `
-                    <tr class="border-b border-gray-100 hover:bg-gray-50">
-                        <td class="py-3 px-4 text-gray-700">${activity}</td>
-                        <td class="py-3 px-4 text-right font-semibold text-gray-900">${tdeeDisplay.toLocaleString()}</td>
-                    </tr>
-                `;
-            });
-            
-            tableBody.innerHTML = tableHTML;
-            tdeeResults.classList.remove('hidden');
-
-            // Scroll to results
-            document.getElementById('bmrResult').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        function resetAdvancedBMR() {
+        function showResult(html) {
+            const resultDiv = document.getElementById('bmrResult');
+            if (resultDiv) {
+                resultDiv.innerHTML = html;
+                resultDiv.classList.remove('hidden');
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function resetBMR() {
             // Clear all inputs
             document.getElementById('bmrAge').value = '';
-            document.getElementById('heightCm').value = '';
-            document.getElementById('weightKg').value = '';
-            document.getElementById('weightPounds').value = '';
-            document.getElementById('heightFeet').value = '';
-            document.getElementById('heightInches').value = '';
-            document.getElementById('bodyFat').value = '';
+            if (document.getElementById('heightCm')) document.getElementById('heightCm').value = '';
+            if (document.getElementById('weightKg')) document.getElementById('weightKg').value = '';
+            if (document.getElementById('weightPounds')) document.getElementById('weightPounds').value = '';
+            if (document.getElementById('heightFeet')) document.getElementById('heightFeet').value = '';
+            if (document.getElementById('heightInches')) document.getElementById('heightInches').value = '';
+            if (document.getElementById('heightCmOther')) document.getElementById('heightCmOther').value = '';
+            if (document.getElementById('weightKgOther')) document.getElementById('weightKgOther').value = '';
+            if (document.getElementById('bodyFat')) document.getElementById('bodyFat').value = '';
             
-            // Reset selects
-            document.getElementById('bmrGender').value = 'male';
+            // Reset selects and radio buttons
+            const maleRadio = document.getElementById('male');
+            if (maleRadio) maleRadio.checked = true;
+            
             document.getElementById('bmrFormula').value = 'mifflin';
-            document.getElementById('resultUnit').value = 'calories';
+            const caloriesRadio = document.querySelector('input[name="resultUnit"][value="calories"]');
+            if (caloriesRadio) caloriesRadio.checked = true;
             
             // Hide results
-            document.getElementById('bmrResult').classList.add('hidden');
-            document.getElementById('tdeeResults').classList.add('hidden');
+            const resultDiv = document.getElementById('bmrResult');
+            if (resultDiv) {
+                resultDiv.innerHTML = '';
+                resultDiv.classList.add('hidden');
+            }
             
-            // Reset unit system to metric
-            setUnitSystem('metric');
+            // Reset unit system to imperial (like reference website)
+            setUnitSystem('imperial');
             
-            // Hide advanced settings
-            if (advancedVisible) {
-                toggleAdvancedSettings();
+            // Hide settings if visible
+            if (settingsVisible) {
+                toggleSettings();
             }
         }
 
