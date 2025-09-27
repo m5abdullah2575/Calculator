@@ -2230,46 +2230,256 @@ function copyToClipboard(text) {
 // ======= NEW CALCULATORS FUNCTIONS =======
 
 // Heart Rate Zone Calculator
-function calculateHeartRateZones() {
-    try {
-        const age = validateInput(document.getElementById('hrAge').value, 'Age');
-        const restingHR = document.getElementById('hrResting').value ? 
-            validateInput(document.getElementById('hrResting').value, 'Resting Heart Rate') : 60;
-        
-        if (age <= 0) throw new Error('Age must be a positive number');
-        if (restingHR <= 0) throw new Error('Resting heart rate must be a positive number');
-        
-        const maxHR = 220 - age;
-        const hrReserve = maxHR - restingHR;
-        
-        const zones = {
-            zone1: { min: Math.round(restingHR + (hrReserve * 0.5)), max: Math.round(restingHR + (hrReserve * 0.6)) },
-            zone2: { min: Math.round(restingHR + (hrReserve * 0.6)), max: Math.round(restingHR + (hrReserve * 0.7)) },
-            zone3: { min: Math.round(restingHR + (hrReserve * 0.7)), max: Math.round(restingHR + (hrReserve * 0.8)) },
-            zone4: { min: Math.round(restingHR + (hrReserve * 0.8)), max: Math.round(restingHR + (hrReserve * 0.9)) },
-            zone5: { min: Math.round(restingHR + (hrReserve * 0.9)), max: maxHR }
-        };
-        
-        const result = `
-            <strong>Maximum Heart Rate:</strong> ${maxHR} bpm<br>
-            <strong>Zone 1 (50-60%):</strong> ${zones.zone1.min}-${zones.zone1.max} bpm<br>
-            <strong>Zone 2 (60-70%):</strong> ${zones.zone2.min}-${zones.zone2.max} bpm<br>
-            <strong>Zone 3 (70-80%):</strong> ${zones.zone3.min}-${zones.zone3.max} bpm<br>
-            <strong>Zone 4 (80-90%):</strong> ${zones.zone4.min}-${zones.zone4.max} bpm<br>
-            <strong>Zone 5 (90-100%):</strong> ${zones.zone5.min}-${zones.zone5.max} bpm
-        `;
-        
-        showResult('hrZoneResult', result);
-    } catch (error) {
-        showResult('hrZoneResult', error.message, true);
+// Target Heart Rate Calculator Functions
+
+// Toggle between age-based and tested max HR inputs
+function toggleMaxHrInputs() {
+    const selectedMethod = document.querySelector('input[name="maxHrMethod"]:checked').value;
+    const formulaSelection = document.getElementById('formulaSelection');
+    const testedMaxHrInput = document.getElementById('testedMaxHrInput');
+    
+    if (selectedMethod === 'age') {
+        formulaSelection.classList.remove('hidden');
+        testedMaxHrInput.classList.add('hidden');
+    } else {
+        formulaSelection.classList.add('hidden');
+        testedMaxHrInput.classList.remove('hidden');
     }
 }
 
-function resetHeartRateZones() {
+// Calculate maximum heart rate using selected formula
+function calculateMaxHeartRate(age, formula) {
+    switch (formula) {
+        case 'haskell':
+            return 220 - age;
+        case 'tanaka':
+            return Math.round(208 - (0.7 * age));
+        case 'nes':
+            return Math.round(211 - (0.64 * age));
+        default:
+            return 220 - age;
+    }
+}
+
+// Get formula display name
+function getFormulaName(formula) {
+    switch (formula) {
+        case 'haskell':
+            return 'Haskell & Fox (1971): 220 - age';
+        case 'tanaka':
+            return 'Tanaka, Monahan & Seals (2001): 208 - 0.7 × age';
+        case 'nes':
+            return 'Nes, Janszky et al. (2013): 211 - 0.64 × age';
+        default:
+            return 'Haskell & Fox (1971): 220 - age';
+    }
+}
+
+// Main calculation function
+function calculateTargetHeartRate() {
+    try {
+        // Get and validate age
+        const age = validateInput(document.getElementById('hrAge').value, 'Age');
+        if (age < 10 || age > 100) {
+            throw new Error('Age must be between 10 and 100 years');
+        }
+        
+        // Determine method and get max heart rate
+        const method = document.querySelector('input[name="maxHrMethod"]:checked').value;
+        let maxHR, methodUsed;
+        
+        if (method === 'age') {
+            const formula = document.querySelector('input[name="formula"]:checked').value;
+            maxHR = calculateMaxHeartRate(age, formula);
+            methodUsed = `Estimated using ${getFormulaName(formula)}`;
+        } else {
+            const testedMaxHr = validateInput(document.getElementById('testedMaxHr').value, 'Tested Maximum Heart Rate');
+            if (testedMaxHr < 120 || testedMaxHr > 250) {
+                throw new Error('Tested maximum heart rate must be between 120 and 250 bpm');
+            }
+            maxHR = testedMaxHr;
+            methodUsed = 'User-provided tested maximum heart rate';
+        }
+        
+        // Get resting heart rate (optional)
+        const restingHRInput = document.getElementById('hrResting').value;
+        let restingHR = null;
+        let useKarvonen = false;
+        
+        if (restingHRInput && restingHRInput.trim() !== '') {
+            restingHR = validateInput(restingHRInput, 'Resting Heart Rate');
+            if (restingHR < 30 || restingHR > 100) {
+                throw new Error('Resting heart rate must be between 30 and 100 bpm');
+            }
+            if (restingHR >= maxHR) {
+                throw new Error('Resting heart rate cannot be higher than maximum heart rate');
+            }
+            useKarvonen = true;
+        }
+        
+        // Calculate zones
+        let zones;
+        let calculationMethod;
+        
+        if (useKarvonen) {
+            // Karvonen method (Heart Rate Reserve)
+            const hrReserve = maxHR - restingHR;
+            zones = {
+                zone1: { 
+                    min: Math.round(restingHR + (hrReserve * 0.50)), 
+                    max: Math.round(restingHR + (hrReserve * 0.60)) 
+                },
+                zone2: { 
+                    min: Math.round(restingHR + (hrReserve * 0.60)), 
+                    max: Math.round(restingHR + (hrReserve * 0.70)) 
+                },
+                zone3: { 
+                    min: Math.round(restingHR + (hrReserve * 0.70)), 
+                    max: Math.round(restingHR + (hrReserve * 0.80)) 
+                },
+                zone4: { 
+                    min: Math.round(restingHR + (hrReserve * 0.80)), 
+                    max: Math.round(restingHR + (hrReserve * 0.90)) 
+                },
+                zone5: { 
+                    min: Math.round(restingHR + (hrReserve * 0.90)), 
+                    max: maxHR 
+                }
+            };
+            calculationMethod = `Karvonen Method (Heart Rate Reserve: ${hrReserve} bpm)`;
+        } else {
+            // Simple percentage method
+            zones = {
+                zone1: { 
+                    min: Math.round(maxHR * 0.50), 
+                    max: Math.round(maxHR * 0.60) 
+                },
+                zone2: { 
+                    min: Math.round(maxHR * 0.60), 
+                    max: Math.round(maxHR * 0.70) 
+                },
+                zone3: { 
+                    min: Math.round(maxHR * 0.70), 
+                    max: Math.round(maxHR * 0.80) 
+                },
+                zone4: { 
+                    min: Math.round(maxHR * 0.80), 
+                    max: Math.round(maxHR * 0.90) 
+                },
+                zone5: { 
+                    min: Math.round(maxHR * 0.90), 
+                    max: maxHR 
+                }
+            };
+            calculationMethod = 'Simple Percentage Method';
+        }
+        
+        // Generate comprehensive results
+        const result = `
+            <div class="bg-white border border-gray-200 rounded-lg p-6 mb-4">
+                <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                    <i data-feather="heart" class="w-5 h-5 mr-2 text-red-600"></i>
+                    Your Target Heart Rate Zones
+                </h3>
+                
+                <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div><strong>Age:</strong> ${age} years</div>
+                        <div><strong>Maximum Heart Rate:</strong> ${maxHR} bpm</div>
+                        ${restingHR ? `<div><strong>Resting Heart Rate:</strong> ${restingHR} bpm</div>` : ''}
+                        ${restingHR ? `<div><strong>Heart Rate Reserve:</strong> ${maxHR - restingHR} bpm</div>` : ''}
+                    </div>
+                    <div class="mt-3 text-xs text-gray-600">
+                        <div><strong>Method:</strong> ${methodUsed}</div>
+                        <div><strong>Calculation:</strong> ${calculationMethod}</div>
+                    </div>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="bg-green-50 border border-green-200 p-4 rounded-lg">
+                        <div class="font-semibold text-green-800 mb-1">Zone 1: Active Recovery (50-60% ${useKarvonen ? 'HRR' : 'MHR'})</div>
+                        <div class="text-2xl font-bold text-green-700">${zones.zone1.min} - ${zones.zone1.max} bpm</div>
+                        <div class="text-sm text-green-700 mt-1">Light activity, warm-up, cool-down, recovery workouts</div>
+                    </div>
+                    
+                    <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                        <div class="font-semibold text-blue-800 mb-1">Zone 2: Base Training (60-70% ${useKarvonen ? 'HRR' : 'MHR'})</div>
+                        <div class="text-2xl font-bold text-blue-700">${zones.zone2.min} - ${zones.zone2.max} bpm</div>
+                        <div class="text-sm text-blue-700 mt-1">Aerobic base building, fat burning, endurance foundation</div>
+                    </div>
+                    
+                    <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+                        <div class="font-semibold text-yellow-800 mb-1">Zone 3: Aerobic Development (70-80% ${useKarvonen ? 'HRR' : 'MHR'})</div>
+                        <div class="text-2xl font-bold text-yellow-700">${zones.zone3.min} - ${zones.zone3.max} bpm</div>
+                        <div class="text-sm text-yellow-700 mt-1">Moderate intensity, endurance building, aerobic power</div>
+                    </div>
+                    
+                    <div class="bg-orange-50 border border-orange-200 p-4 rounded-lg">
+                        <div class="font-semibold text-orange-800 mb-1">Zone 4: Lactate Threshold (80-90% ${useKarvonen ? 'HRR' : 'MHR'})</div>
+                        <div class="text-2xl font-bold text-orange-700">${zones.zone4.min} - ${zones.zone4.max} bpm</div>
+                        <div class="text-sm text-orange-700 mt-1">High intensity, lactate threshold training, race pace</div>
+                    </div>
+                    
+                    <div class="bg-red-50 border border-red-200 p-4 rounded-lg">
+                        <div class="font-semibold text-red-800 mb-1">Zone 5: Neuromuscular Power (90-100% ${useKarvonen ? 'HRR' : 'MHR'})</div>
+                        <div class="text-2xl font-bold text-red-700">${zones.zone5.min} - ${zones.zone5.max} bpm</div>
+                        <div class="text-sm text-red-700 mt-1">Maximum effort, anaerobic power, speed development</div>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg mt-4">
+                    <h4 class="font-semibold text-blue-900 mb-2 flex items-center">
+                        <i data-feather="info" class="w-4 h-4 mr-1"></i>
+                        Training Recommendations
+                    </h4>
+                    <div class="text-sm text-blue-800 space-y-1">
+                        <div>• <strong>80% of training</strong> should be in Zones 1-2 (aerobic base)</div>
+                        <div>• <strong>20% of training</strong> should be in Zones 3-5 (higher intensity)</div>
+                        <div>• Monitor your heart rate during exercise to stay in target zones</div>
+                        <div>• ${restingHR ? 'Great job including resting HR for more accurate zones!' : 'Add your resting HR for more personalized zones'}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        showResult('hrResult', result);
+        
+        // Re-initialize feather icons for the new content
+        setTimeout(() => feather.replace(), 100);
+        
+    } catch (error) {
+        showResult('hrResult', error.message, true);
+    }
+}
+
+// Reset function
+function resetTargetHeartRate() {
     document.getElementById('hrAge').value = '';
     document.getElementById('hrResting').value = '';
-    hideResult('hrZoneResult');
+    document.getElementById('testedMaxHr').value = '';
+    
+    // Reset radio buttons to default
+    document.querySelector('input[name="maxHrMethod"][value="age"]').checked = true;
+    document.querySelector('input[name="formula"][value="haskell"]').checked = true;
+    
+    // Reset UI state
+    toggleMaxHrInputs();
+    
+    hideResult('hrResult');
 }
+
+// Legacy function names for backward compatibility
+function calculateHeartRateZones() {
+    calculateTargetHeartRate();
+}
+
+function resetHeartRateZones() {
+    resetTargetHeartRate();
+}
+
+// Global aliases for complete backward compatibility
+window.calculateHeartRateZones = calculateTargetHeartRate;
+window.resetHeartRateZones = resetTargetHeartRate;
 
 // Ideal Weight Calculator
 function calculateIdealWeight() {
