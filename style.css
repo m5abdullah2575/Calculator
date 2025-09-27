@@ -56,6 +56,30 @@
     display: none;
 }
 
+/* GPA Calculator Tab Styles */
+.gpa-tab {
+    transition: all 0.2s ease-in-out;
+}
+
+.gpa-tab.active {
+    color: #4f46e5;
+    border-color: #4f46e5;
+}
+
+.gpa-tab:not(.active) {
+    color: #6b7280;
+    border-color: transparent;
+}
+
+.gpa-tab:not(.active):hover {
+    color: #4b5563;
+    border-color: #d1d5db;
+}
+
+.gpa-calculator-section.hidden {
+    display: none;
+}
+
 .result-display {
     background-color: #f8fafc;
     border: 1px solid #e2e8f0;

@@ -4238,3 +4238,701 @@ function resetPropertyTax() {
     document.getElementById('otherExemptions').value = '0';
     hideResult('propertyTaxResult');
 }
+
+// GPA Calculator Functions
+let semesterCount = 1;
+
+// Tab switching for GPA calculator
+function switchGPATab(tab) {
+    try {
+        // Hide all calculator sections
+        const sections = document.querySelectorAll('.gpa-calculator-section');
+        sections.forEach(section => {
+            section.classList.add('hidden');
+        });
+        
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll('.gpa-tab');
+        tabs.forEach(tabEl => {
+            tabEl.classList.remove('active');
+            tabEl.classList.remove('text-indigo-600', 'border-indigo-600');
+            tabEl.classList.add('text-gray-500', 'border-transparent');
+        });
+        
+        // Show selected section and activate tab
+        const selectedTab = document.getElementById(tab + 'Tab');
+        const selectedSection = tab === 'current' ? document.getElementById('currentGPACalculator') : document.getElementById('gpaPlanning');
+        
+        if (selectedTab && selectedSection) {
+            selectedTab.classList.add('active', 'text-indigo-600', 'border-indigo-600');
+            selectedTab.classList.remove('text-gray-500', 'border-transparent');
+            selectedSection.classList.remove('hidden');
+        }
+    } catch (error) {
+        console.error('Error switching GPA tabs:', error);
+    }
+}
+
+// Update grade format dropdown options
+function updateGradeFormat() {
+    try {
+        const format = document.getElementById('gradeFormat').value;
+        const gradeSelects = document.querySelectorAll('.grade-select');
+        
+        gradeSelects.forEach(select => {
+            const currentValue = select.value;
+            select.innerHTML = '<option value="">Select Grade</option>';
+            
+            switch (format) {
+                case 'standard':
+                    select.innerHTML += `
+                        <option value="4.0">A (4.0)</option>
+                        <option value="3.0">B (3.0)</option>
+                        <option value="2.0">C (2.0)</option>
+                        <option value="1.0">D (1.0)</option>
+                        <option value="0.0">F (0.0)</option>
+                    `;
+                    break;
+                case 'plus-minus':
+                    select.innerHTML += `
+                        <option value="4.3">A+ (4.3)</option>
+                        <option value="4.0">A (4.0)</option>
+                        <option value="3.7">A- (3.7)</option>
+                        <option value="3.3">B+ (3.3)</option>
+                        <option value="3.0">B (3.0)</option>
+                        <option value="2.7">B- (2.7)</option>
+                        <option value="2.3">C+ (2.3)</option>
+                        <option value="2.0">C (2.0)</option>
+                        <option value="1.7">C- (1.7)</option>
+                        <option value="1.3">D+ (1.3)</option>
+                        <option value="1.0">D (1.0)</option>
+                        <option value="0.7">D- (0.7)</option>
+                        <option value="0.0">F (0.0)</option>
+                    `;
+                    break;
+                case 'percentage':
+                    for (let i = 100; i >= 0; i -= 5) {
+                        const gpa = percentageToGPA(i);
+                        select.innerHTML += `<option value="${gpa}">${i}% (${gpa})</option>`;
+                    }
+                    break;
+                case 'points':
+                    for (let i = 43; i >= 0; i -= 1) {
+                        const points = i / 10;
+                        select.innerHTML += `<option value="${points}">${points} Points</option>`;
+                    }
+                    break;
+            }
+            
+            // Try to restore previous value
+            if (currentValue && select.querySelector(`option[value="${currentValue}"]`)) {
+                select.value = currentValue;
+            }
+        });
+    } catch (error) {
+        console.error('Error updating grade format:', error);
+    }
+}
+
+// Convert percentage to GPA
+function percentageToGPA(percentage) {
+    if (percentage >= 97) return 4.3;
+    if (percentage >= 93) return 4.0;
+    if (percentage >= 90) return 3.7;
+    if (percentage >= 87) return 3.3;
+    if (percentage >= 83) return 3.0;
+    if (percentage >= 80) return 2.7;
+    if (percentage >= 77) return 2.3;
+    if (percentage >= 73) return 2.0;
+    if (percentage >= 70) return 1.7;
+    if (percentage >= 67) return 1.3;
+    if (percentage >= 65) return 1.0;
+    if (percentage >= 60) return 0.7;
+    return 0.0;
+}
+
+// Toggle prior GPA section visibility
+function togglePriorGPA() {
+    const checkbox = document.getElementById('includePriorGPA');
+    const section = document.getElementById('priorGPASection');
+    
+    if (checkbox.checked) {
+        section.classList.remove('hidden');
+    } else {
+        section.classList.add('hidden');
+        document.getElementById('priorGPA').value = '';
+        document.getElementById('priorCredits').value = '';
+    }
+}
+
+// Toggle semester organization
+function toggleSemesterOrganization() {
+    const checkbox = document.getElementById('organizeBySemester');
+    const addSemesterBtn = document.getElementById('addSemesterBtn');
+    const semesterHeaders = document.querySelectorAll('[id^="semesterHeader"]');
+    
+    if (checkbox.checked) {
+        addSemesterBtn.classList.remove('hidden');
+        semesterHeaders.forEach(header => header.classList.remove('hidden'));
+    } else {
+        addSemesterBtn.classList.add('hidden');
+        semesterHeaders.forEach(header => header.classList.add('hidden'));
+    }
+}
+
+// Add a new semester section
+function addSemester() {
+    try {
+        semesterCount++;
+        const container = document.getElementById('semestersContainer');
+        
+        const semesterDiv = document.createElement('div');
+        semesterDiv.className = 'semester-section';
+        semesterDiv.setAttribute('data-semester', semesterCount);
+        
+        semesterDiv.innerHTML = `
+            <h4 id="semesterHeader${semesterCount}" class="text-lg font-medium text-gray-800 mb-4 flex items-center">
+                <i data-feather="calendar" class="w-5 h-5 mr-2"></i>
+                Semester ${semesterCount}
+                <button onclick="removeSemester(${semesterCount})" class="ml-auto bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600">
+                    <i data-feather="x" class="w-3 h-3"></i>
+                </button>
+            </h4>
+            <div id="coursesList${semesterCount}" class="courses-list space-y-4 mb-6">
+                <!-- Empty initially -->
+            </div>
+        `;
+        
+        container.appendChild(semesterDiv);
+        
+        // Add initial course to new semester
+        addCourse(semesterCount);
+        
+        // Update feather icons
+        feather.replace();
+    } catch (error) {
+        console.error('Error adding semester:', error);
+    }
+}
+
+// Remove a semester section
+function removeSemester(semesterNumber) {
+    try {
+        const semesterDiv = document.querySelector(`[data-semester="${semesterNumber}"]`);
+        if (semesterDiv) {
+            semesterDiv.remove();
+        }
+    } catch (error) {
+        console.error('Error removing semester:', error);
+    }
+}
+
+// Add a new course row
+function addCourse(targetSemester = null) {
+    try {
+        let coursesList;
+        
+        if (targetSemester) {
+            coursesList = document.getElementById(`coursesList${targetSemester}`);
+        } else {
+            // Find the last semester or default to semester 1
+            const allCourseLists = document.querySelectorAll('[id^="coursesList"]');
+            coursesList = allCourseLists[allCourseLists.length - 1];
+        }
+        
+        if (!coursesList) return;
+        
+        const courseRow = document.createElement('div');
+        courseRow.className = 'course-row bg-gray-50 rounded-lg p-4';
+        
+        courseRow.innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Course Name</label>
+                    <input type="text" placeholder="e.g., Mathematics" 
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Credits</label>
+                    <input type="number" min="0.5" max="10" step="0.5" placeholder="3" onchange="updateQualityPoints(this)"
+                        class="credit-hours w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Grade</label>
+                    <select onchange="updateQualityPoints(this)" class="grade-select w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <option value="">Select Grade</option>
+                        <option value="4.3">A+ (4.3)</option>
+                        <option value="4.0">A (4.0)</option>
+                        <option value="3.7">A- (3.7)</option>
+                        <option value="3.3">B+ (3.3)</option>
+                        <option value="3.0">B (3.0)</option>
+                        <option value="2.7">B- (2.7)</option>
+                        <option value="2.3">C+ (2.3)</option>
+                        <option value="2.0">C (2.0)</option>
+                        <option value="1.7">C- (1.7)</option>
+                        <option value="1.3">D+ (1.3)</option>
+                        <option value="1.0">D (1.0)</option>
+                        <option value="0.7">D- (0.7)</option>
+                        <option value="0.0">F (0.0)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Quality Points</label>
+                    <input type="text" readonly class="quality-points w-full px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-lg" placeholder="0.0">
+                </div>
+                <div class="flex items-end">
+                    <button onclick="removeCourse(this)" class="w-full bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        coursesList.appendChild(courseRow);
+        
+        // Update feather icons
+        feather.replace();
+    } catch (error) {
+        console.error('Error adding course:', error);
+    }
+}
+
+// Remove a course row
+function removeCourse(button) {
+    try {
+        const courseRow = button.closest('.course-row');
+        if (courseRow) {
+            const parentList = courseRow.parentElement;
+            courseRow.remove();
+            
+            // If it's the last course in a semester and there are multiple semesters, remove the semester
+            if (parentList.children.length === 0 && semesterCount > 1) {
+                const semesterSection = parentList.closest('.semester-section');
+                if (semesterSection) {
+                    semesterSection.remove();
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error removing course:', error);
+    }
+}
+
+// Update quality points when grade or credits change
+function updateQualityPoints(element) {
+    try {
+        const courseRow = element.closest('.course-row');
+        const credits = parseFloat(courseRow.querySelector('.credit-hours').value) || 0;
+        const gradePoints = parseFloat(courseRow.querySelector('.grade-select').value) || 0;
+        const qualityPointsInput = courseRow.querySelector('.quality-points');
+        
+        const qualityPoints = credits * gradePoints;
+        qualityPointsInput.value = qualityPoints.toFixed(2);
+    } catch (error) {
+        console.error('Error updating quality points:', error);
+    }
+}
+
+// Calculate overall GPA
+function calculateGPA() {
+    try {
+        const courseRows = document.querySelectorAll('.course-row');
+        
+        if (courseRows.length === 0) {
+            throw new Error('Please add at least one course');
+        }
+        
+        let totalQualityPoints = 0;
+        let totalCredits = 0;
+        let courseDetails = [];
+        let semesterGPAs = [];
+        
+        // Group courses by semester if organized by semester
+        const organizeBySemester = document.getElementById('organizeBySemester').checked;
+        let semesterData = {};
+        
+        courseRows.forEach((row, index) => {
+            const courseName = row.querySelector('input[type="text"]').value || `Course ${index + 1}`;
+            const credits = parseFloat(row.querySelector('.credit-hours').value);
+            const gradePoints = parseFloat(row.querySelector('.grade-select').value);
+            
+            if (isNaN(credits) || credits <= 0) {
+                throw new Error(`Please enter valid credits for ${courseName}`);
+            }
+            
+            if (isNaN(gradePoints) && row.querySelector('.grade-select').value !== '') {
+                throw new Error(`Please select a valid grade for ${courseName}`);
+            }
+            
+            if (row.querySelector('.grade-select').value === '') {
+                return; // Skip courses without grades
+            }
+            
+            const qualityPoints = credits * gradePoints;
+            totalQualityPoints += qualityPoints;
+            totalCredits += credits;
+            
+            courseDetails.push({
+                name: courseName,
+                credits: credits,
+                grade: getGradeLabel(gradePoints),
+                gradePoints: gradePoints,
+                qualityPoints: qualityPoints
+            });
+            
+            // Group by semester if needed
+            if (organizeBySemester) {
+                const semesterSection = row.closest('.semester-section');
+                const semesterNum = semesterSection ? semesterSection.getAttribute('data-semester') : '1';
+                
+                if (!semesterData[semesterNum]) {
+                    semesterData[semesterNum] = {
+                        totalQualityPoints: 0,
+                        totalCredits: 0,
+                        courses: []
+                    };
+                }
+                
+                semesterData[semesterNum].totalQualityPoints += qualityPoints;
+                semesterData[semesterNum].totalCredits += credits;
+                semesterData[semesterNum].courses.push(courseDetails[courseDetails.length - 1]);
+            }
+        });
+        
+        if (totalCredits === 0) {
+            throw new Error('Please add at least one course with valid grades and credits');
+        }
+        
+        const currentGPA = totalQualityPoints / totalCredits;
+        
+        // Calculate semester GPAs if organized by semester
+        if (organizeBySemester) {
+            Object.keys(semesterData).forEach(semesterNum => {
+                const semester = semesterData[semesterNum];
+                if (semester.totalCredits > 0) {
+                    semesterGPAs.push({
+                        semester: parseInt(semesterNum),
+                        gpa: semester.totalQualityPoints / semester.totalCredits,
+                        credits: semester.totalCredits,
+                        courses: semester.courses
+                    });
+                }
+            });
+        }
+        
+        // Include prior GPA if specified
+        let cumulativeGPA = currentGPA;
+        let cumulativeCredits = totalCredits;
+        let cumulativeQualityPoints = totalQualityPoints;
+        
+        if (document.getElementById('includePriorGPA').checked) {
+            const priorGPA = parseFloat(document.getElementById('priorGPA').value);
+            const priorCredits = parseFloat(document.getElementById('priorCredits').value);
+            
+            if (!isNaN(priorGPA) && !isNaN(priorCredits) && priorCredits > 0) {
+                const priorQualityPoints = priorGPA * priorCredits;
+                cumulativeQualityPoints += priorQualityPoints;
+                cumulativeCredits += priorCredits;
+                cumulativeGPA = cumulativeQualityPoints / cumulativeCredits;
+            }
+        }
+        
+        // Generate results display
+        let result = `
+            <div class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-indigo-50 p-6 rounded-lg text-center">
+                        <h4 class="font-semibold text-indigo-800 mb-2">Current GPA</h4>
+                        <p class="text-2xl font-bold text-indigo-700">${currentGPA.toFixed(3)}</p>
+                        <p class="text-indigo-600 text-sm">${getGPAStatus(currentGPA)}</p>
+                    </div>
+        `;
+        
+        if (document.getElementById('includePriorGPA').checked && cumulativeGPA !== currentGPA) {
+            result += `
+                    <div class="bg-purple-50 p-6 rounded-lg text-center">
+                        <h4 class="font-semibold text-purple-800 mb-2">Cumulative GPA</h4>
+                        <p class="text-2xl font-bold text-purple-700">${cumulativeGPA.toFixed(3)}</p>
+                        <p class="text-purple-600 text-sm">${getGPAStatus(cumulativeGPA)}</p>
+                    </div>
+            `;
+        }
+        
+        result += `
+                    <div class="bg-green-50 p-6 rounded-lg text-center">
+                        <h4 class="font-semibold text-green-800 mb-2">Total Credits</h4>
+                        <p class="text-2xl font-bold text-green-700">${totalCredits.toFixed(1)}</p>
+                        <p class="text-green-600 text-sm">Current Semester</p>
+                    </div>
+                </div>
+        `;
+        
+        // Add semester breakdown if organized by semester
+        if (organizeBySemester && semesterGPAs.length > 0) {
+            result += `
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h4 class="font-semibold text-gray-800 mb-4">Semester Breakdown</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            `;
+            
+            semesterGPAs.forEach(semester => {
+                result += `
+                        <div class="bg-white p-4 rounded-lg border">
+                            <h5 class="font-medium text-gray-700 mb-2">Semester ${semester.semester}</h5>
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-bold text-gray-800">${semester.gpa.toFixed(3)}</span>
+                                <span class="text-sm text-gray-600">${semester.credits} credits</span>
+                            </div>
+                        </div>
+                `;
+            });
+            
+            result += `
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Add course details
+        result += `
+                <div class="bg-white p-6 rounded-lg border">
+                    <h4 class="font-semibold text-gray-800 mb-4">Course Details</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left p-2">Course</th>
+                                    <th class="text-center p-2">Credits</th>
+                                    <th class="text-center p-2">Grade</th>
+                                    <th class="text-center p-2">Quality Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+        `;
+        
+        courseDetails.forEach(course => {
+            result += `
+                                <tr class="border-b border-gray-100">
+                                    <td class="p-2">${course.name}</td>
+                                    <td class="text-center p-2">${course.credits}</td>
+                                    <td class="text-center p-2">${course.grade}</td>
+                                    <td class="text-center p-2">${course.qualityPoints.toFixed(2)}</td>
+                                </tr>
+            `;
+        });
+        
+        result += `
+                                <tr class="border-t-2 border-gray-300 font-semibold">
+                                    <td class="p-2">Total</td>
+                                    <td class="text-center p-2">${totalCredits.toFixed(1)}</td>
+                                    <td class="text-center p-2">-</td>
+                                    <td class="text-center p-2">${totalQualityPoints.toFixed(2)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        showResult('gpaResult', result);
+        
+    } catch (error) {
+        showResult('gpaResult', error.message, true);
+    }
+}
+
+// Get grade label from grade points
+function getGradeLabel(gradePoints) {
+    if (gradePoints >= 4.3) return 'A+';
+    if (gradePoints >= 4.0) return 'A';
+    if (gradePoints >= 3.7) return 'A-';
+    if (gradePoints >= 3.3) return 'B+';
+    if (gradePoints >= 3.0) return 'B';
+    if (gradePoints >= 2.7) return 'B-';
+    if (gradePoints >= 2.3) return 'C+';
+    if (gradePoints >= 2.0) return 'C';
+    if (gradePoints >= 1.7) return 'C-';
+    if (gradePoints >= 1.3) return 'D+';
+    if (gradePoints >= 1.0) return 'D';
+    if (gradePoints >= 0.7) return 'D-';
+    return 'F';
+}
+
+// Get GPA status description
+function getGPAStatus(gpa) {
+    if (gpa >= 3.8) return 'Excellent - Summa Cum Laude';
+    if (gpa >= 3.6) return 'Outstanding - Magna Cum Laude';
+    if (gpa >= 3.4) return 'Great - Cum Laude';
+    if (gpa >= 3.0) return 'Good Standing';
+    if (gpa >= 2.5) return 'Satisfactory';
+    if (gpa >= 2.0) return 'Academic Warning';
+    return 'Academic Probation Risk';
+}
+
+// Calculate required GPA for planning
+function calculateRequiredGPA() {
+    try {
+        const currentGPA = parseFloat(document.getElementById('currentGPAInput').value);
+        const targetGPA = parseFloat(document.getElementById('targetGPA').value);
+        const currentCredits = parseFloat(document.getElementById('currentCreditsInput').value);
+        const additionalCredits = parseFloat(document.getElementById('additionalCredits').value);
+        
+        if (isNaN(currentGPA) || currentGPA < 0 || currentGPA > 4.3) {
+            throw new Error('Please enter a valid current GPA (0.0 - 4.3)');
+        }
+        
+        if (isNaN(targetGPA) || targetGPA < 0 || targetGPA > 4.3) {
+            throw new Error('Please enter a valid target GPA (0.0 - 4.3)');
+        }
+        
+        if (isNaN(currentCredits) || currentCredits <= 0) {
+            throw new Error('Please enter valid current credits completed');
+        }
+        
+        if (isNaN(additionalCredits) || additionalCredits <= 0) {
+            throw new Error('Please enter valid additional credits to take');
+        }
+        
+        const currentQualityPoints = currentGPA * currentCredits;
+        const totalCreditsAfter = currentCredits + additionalCredits;
+        const targetQualityPoints = targetGPA * totalCreditsAfter;
+        const requiredQualityPoints = targetQualityPoints - currentQualityPoints;
+        const requiredGPA = requiredQualityPoints / additionalCredits;
+        
+        let result = `
+            <div class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-6 rounded-lg text-center">
+                        <h4 class="font-semibold text-blue-800 mb-2">Required GPA</h4>
+                        <p class="text-3xl font-bold text-blue-700">${requiredGPA.toFixed(3)}</p>
+        `;
+        
+        if (requiredGPA > 4.3) {
+            result += `<p class="text-red-600 text-sm font-semibold">Impossible to Achieve</p>`;
+        } else if (requiredGPA > 4.0) {
+            result += `<p class="text-orange-600 text-sm">Very Difficult</p>`;
+        } else if (requiredGPA > 3.5) {
+            result += `<p class="text-yellow-600 text-sm">Challenging</p>`;
+        } else if (requiredGPA > 2.0) {
+            result += `<p class="text-green-600 text-sm">Achievable</p>`;
+        } else {
+            result += `<p class="text-green-600 text-sm">Easily Achievable</p>`;
+        }
+        
+        result += `
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg text-center">
+                        <h4 class="font-semibold text-purple-800 mb-2">Final GPA</h4>
+                        <p class="text-3xl font-bold text-purple-700">${targetGPA.toFixed(3)}</p>
+                        <p class="text-purple-600 text-sm">${getGPAStatus(targetGPA)}</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <h4 class="font-semibold text-gray-800 mb-4">Planning Summary</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <p class="text-gray-600">Current GPA: <span class="font-semibold text-gray-800">${currentGPA.toFixed(3)}</span></p>
+                            <p class="text-gray-600">Current Credits: <span class="font-semibold text-gray-800">${currentCredits}</span></p>
+                            <p class="text-gray-600">Current Quality Points: <span class="font-semibold text-gray-800">${currentQualityPoints.toFixed(2)}</span></p>
+                        </div>
+                        <div>
+                            <p class="text-gray-600">Additional Credits: <span class="font-semibold text-gray-800">${additionalCredits}</span></p>
+                            <p class="text-gray-600">Required Quality Points: <span class="font-semibold text-gray-800">${requiredQualityPoints.toFixed(2)}</span></p>
+                            <p class="text-gray-600">Final Total Credits: <span class="font-semibold text-gray-800">${totalCreditsAfter}</span></p>
+                        </div>
+                    </div>
+                </div>
+        `;
+        
+        if (requiredGPA > 4.3) {
+            result += `
+                <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                    <div class="flex items-start">
+                        <i data-feather="alert-triangle" class="w-5 h-5 text-red-600 mt-1 mr-2 flex-shrink-0"></i>
+                        <div>
+                            <p class="text-red-800 font-semibold mb-1">Target GPA Not Achievable</p>
+                            <p class="text-red-700 text-sm">
+                                The required GPA of ${requiredGPA.toFixed(3)} exceeds the maximum possible GPA. 
+                                Consider taking more credits or adjusting your target GPA to a more realistic goal.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (requiredGPA < 0) {
+            result += `
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <div class="flex items-start">
+                        <i data-feather="check-circle" class="w-5 h-5 text-green-600 mt-1 mr-2 flex-shrink-0"></i>
+                        <div>
+                            <p class="text-green-800 font-semibold mb-1">Target Already Exceeded</p>
+                            <p class="text-green-700 text-sm">
+                                Your current GPA already exceeds your target. You can maintain your target GPA 
+                                even with minimum passing grades in future courses.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        result += '</div>';
+        
+        showResult('planningResult', result);
+        
+    } catch (error) {
+        showResult('planningResult', error.message, true);
+    }
+}
+
+// Reset GPA calculator
+function resetGPA() {
+    try {
+        // Reset all input fields
+        document.querySelectorAll('#currentGPACalculator input[type="text"]').forEach(input => input.value = '');
+        document.querySelectorAll('#currentGPACalculator input[type="number"]').forEach(input => input.value = '');
+        document.querySelectorAll('#currentGPACalculator select').forEach(select => {
+            if (!select.id || (select.id !== 'gradeFormat')) {
+                select.selectedIndex = 0;
+            }
+        });
+        
+        // Reset checkboxes
+        document.getElementById('includePriorGPA').checked = false;
+        document.getElementById('organizeBySemester').checked = false;
+        
+        // Hide prior GPA section
+        document.getElementById('priorGPASection').classList.add('hidden');
+        
+        // Hide add semester button and semester headers
+        document.getElementById('addSemesterBtn').classList.add('hidden');
+        document.querySelectorAll('[id^="semesterHeader"]').forEach(header => header.classList.add('hidden'));
+        
+        // Remove all course rows except the first one
+        const allCourseRows = document.querySelectorAll('.course-row');
+        for (let i = 1; i < allCourseRows.length; i++) {
+            allCourseRows[i].remove();
+        }
+        
+        // Remove additional semesters
+        const semesterSections = document.querySelectorAll('.semester-section');
+        for (let i = 1; i < semesterSections.length; i++) {
+            semesterSections[i].remove();
+        }
+        
+        // Reset semester count
+        semesterCount = 1;
+        
+        // Hide results
+        hideResult('gpaResult');
+        hideResult('planningResult');
+        
+        // Reset tab to current GPA
+        switchGPATab('current');
+        
+    } catch (error) {
+        console.error('Error resetting GPA calculator:', error);
+    }
+}
