@@ -68,9 +68,9 @@
                     <i data-feather="book-open" class="w-12 h-12"></i>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold mb-4">Advanced GPA Calculator</h1>
+            <h1 class="text-4xl font-bold mb-4">GPA Calculator</h1>
             <p class="text-xl text-blue-100 max-w-2xl mx-auto">
-                Calculate your Grade Point Average (GPA) with course credits, semester organization, and GPA planning tools for academic success.
+                Calculate your Grade Point Average with multiple courses, semester organization, and planning tools for academic success.
             </p>
         </div>
     </section>
@@ -78,28 +78,32 @@
     <!-- Main Content -->
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="tool-container">
-            <!-- Calculator Tabs -->
-            <div class="mb-6">
-                <div class="flex flex-wrap justify-center border-b border-gray-200">
-                    <button onclick="switchGPATab('current')" id="currentTab" class="gpa-tab active px-6 py-3 text-sm font-medium text-indigo-600 border-b-2 border-indigo-600 rounded-t-lg hover:text-indigo-800 hover:border-indigo-800">
-                        Current GPA
-                    </button>
-                    <button onclick="switchGPATab('planning')" id="planningTab" class="gpa-tab px-6 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
-                        GPA Planning
-                    </button>
+            <!-- Calculator Card -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
+                <!-- Calculator Tabs -->
+                <div class="bg-gray-50 border-b border-gray-200">
+                    <div class="flex">
+                        <button onclick="switchGPATab('current')" id="currentTab" class="gpa-tab flex-1 px-6 py-3 text-sm font-medium border-r border-gray-200 bg-blue-600 text-white">
+                            Current GPA
+                        </button>
+                        <button onclick="switchGPATab('cumulative')" id="cumulativeTab" class="gpa-tab flex-1 px-6 py-3 text-sm font-medium border-r border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200">
+                            Cumulative GPA
+                        </button>
+                        <button onclick="switchGPATab('planning')" id="planningTab" class="gpa-tab flex-1 px-6 py-3 text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200">
+                            GPA Planning
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Current GPA Calculator -->
-            <div id="currentGPACalculator" class="gpa-calculator-section">
-                <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <!-- Current GPA Calculator -->
+                <div id="currentGPACalculator" class="gpa-calculator-section p-6">
                     <!-- Settings Section -->
                     <div class="mb-6 p-4 bg-gray-50 rounded-lg">
                         <h3 class="text-lg font-semibold text-gray-900 mb-4">Calculator Settings</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Grade Format</label>
-                                <select id="gradeFormat" onchange="updateGradeFormat()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                <select id="gradeFormat" onchange="updateGradeFormat()" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     <option value="standard">Standard (A, B, C, D, F)</option>
                                     <option value="plus-minus" selected>Plus/Minus (A+, A, A-, B+...)</option>
                                     <option value="percentage">Percentage (0-100)</option>
@@ -108,13 +112,13 @@
                             </div>
                             <div>
                                 <label class="flex items-center">
-                                    <input type="checkbox" id="includePriorGPA" onchange="togglePriorGPA()" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    <input type="checkbox" id="includePriorGPA" onchange="togglePriorGPA()" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                     <span class="ml-2 text-sm text-gray-700">Include Prior GPA</span>
                                 </label>
                             </div>
                             <div>
                                 <label class="flex items-center">
-                                    <input type="checkbox" id="organizeBySemester" onchange="toggleSemesterOrganization()" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    <input type="checkbox" id="organizeBySemester" onchange="toggleSemesterOrganization()" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                                     <span class="ml-2 text-sm text-gray-700">Organize by Semester</span>
                                 </label>
                             </div>
@@ -147,7 +151,7 @@
                                     <i data-feather="folder-plus" class="w-4 h-4 mr-1"></i>
                                     Add Semester
                                 </button>
-                                <button onclick="addCourse()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center text-sm">
+                                <button onclick="addCourse()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center text-sm">
                                     <i data-feather="plus" class="w-4 h-4 mr-1"></i>
                                     Add Course
                                 </button>
@@ -167,16 +171,16 @@
                                             <div>
                                                 <label class="block text-xs font-medium text-gray-600 mb-1">Course Name</label>
                                                 <input type="text" placeholder="e.g., Mathematics" 
-                                                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                                    class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                             </div>
                                             <div>
                                                 <label class="block text-xs font-medium text-gray-600 mb-1">Credits</label>
-                                                <input type="number" min="0.5" max="10" step="0.5" placeholder="3" 
-                                                    class="credit-hours w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                                <input type="number" min="0.5" max="10" step="0.5" placeholder="3" onchange="updateQualityPoints(this)"
+                                                    class="credit-hours w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                             </div>
                                             <div>
                                                 <label class="block text-xs font-medium text-gray-600 mb-1">Grade</label>
-                                                <select class="grade-select w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                                <select onchange="updateQualityPoints(this)" class="grade-select w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                                     <option value="">Select Grade</option>
                                                     <option value="4.3">A+ (4.3)</option>
                                                     <option value="4.0">A (4.0)</option>
@@ -209,7 +213,7 @@
                         </div>
                         
                         <button onclick="calculateGPA()" 
-                            class="w-full bg-indigo-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-indigo-700 transition-colors duration-200 font-semibold">
+                            class="w-full bg-blue-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold">
                             Calculate GPA
                         </button>
                         
@@ -221,39 +225,121 @@
                         </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- GPA Planning Calculator -->
-            <div id="gpaPlanning" class="gpa-calculator-section hidden">
-                <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
-                    <h3 class="text-xl font-semibold text-gray-900 mb-6">GPA Planning Calculator</h3>
-                    <p class="text-gray-600 mb-6">Calculate what GPA you need in future courses to achieve your target GPA or maintain a minimum GPA.</p>
+                <!-- Cumulative GPA Calculator -->
+                <div id="cumulativeGPACalculator" class="gpa-calculator-section hidden p-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 text-center">Cumulative GPA Calculator</h2>
+                    <p class="text-gray-600 mb-6 text-center">Calculate your overall GPA across multiple semesters including prior academic record.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Previous GPA</label>
+                            <input type="number" id="prevGPA" step="0.01" min="0" max="4.3" placeholder="e.g., 3.2" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Previous Credits Completed</label>
+                            <input type="number" id="prevCredits" min="1" placeholder="e.g., 45" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Current Semester Courses</h3>
+                        <div id="cumulativeCoursesList" class="space-y-4">
+                            <!-- Initial course row -->
+                            <div class="course-row bg-gray-50 rounded-lg p-4">
+                                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-600 mb-1">Course Name</label>
+                                        <input type="text" placeholder="e.g., Mathematics" 
+                                            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-600 mb-1">Credits</label>
+                                        <input type="number" min="0.5" max="10" step="0.5" placeholder="3" onchange="updateQualityPoints(this)"
+                                            class="credit-hours w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-600 mb-1">Grade</label>
+                                        <select onchange="updateQualityPoints(this)" class="grade-select w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                            <option value="">Select Grade</option>
+                                            <option value="4.3">A+ (4.3)</option>
+                                            <option value="4.0">A (4.0)</option>
+                                            <option value="3.7">A- (3.7)</option>
+                                            <option value="3.3">B+ (3.3)</option>
+                                            <option value="3.0">B (3.0)</option>
+                                            <option value="2.7">B- (2.7)</option>
+                                            <option value="2.3">C+ (2.3)</option>
+                                            <option value="2.0">C (2.0)</option>
+                                            <option value="1.7">C- (1.7)</option>
+                                            <option value="1.3">D+ (1.3)</option>
+                                            <option value="1.0">D (1.0)</option>
+                                            <option value="0.7">D- (0.7)</option>
+                                            <option value="0.0">F (0.0)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-medium text-gray-600 mb-1">Quality Points</label>
+                                        <input type="text" readonly class="quality-points w-full px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-lg" placeholder="0.0">
+                                    </div>
+                                    <div class="flex items-end">
+                                        <button onclick="removeCourse(this)" class="w-full bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                                            <i data-feather="trash-2" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="addCumulativeCourse()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center text-sm">
+                            <i data-feather="plus" class="w-4 h-4 mr-1"></i>
+                            Add Course
+                        </button>
+                    </div>
+                    
+                    <button onclick="calculateCumulativeGPA()" 
+                        class="w-full bg-blue-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold">
+                        Calculate Cumulative GPA
+                    </button>
+                    
+                    <div id="cumulativeGpaResult" class="result-display hidden mt-6"></div>
+                    
+                    <button onclick="resetCumulativeGPA()" 
+                        class="w-full bg-gray-300 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-400 transition-colors duration-200 mt-4">
+                        Reset All
+                    </button>
+                </div>
+
+                <!-- GPA Planning Calculator -->
+                <div id="gpaPlanning" class="gpa-calculator-section hidden p-6">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6 text-center">GPA Planning Calculator</h2>
+                    <p class="text-gray-600 mb-6 text-center">Calculate what GPA you need in future courses to achieve your target GPA.</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Current GPA</label>
                             <input type="number" id="currentGPAInput" step="0.01" min="0" max="4.3" placeholder="e.g., 3.2" 
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Target GPA</label>
                             <input type="number" id="targetGPA" step="0.01" min="0" max="4.3" placeholder="e.g., 3.5" 
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Current Credits Completed</label>
                             <input type="number" id="currentCreditsInput" min="1" placeholder="e.g., 45" 
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Additional Credits to Take</label>
                             <input type="number" id="additionalCredits" min="1" placeholder="e.g., 15" 
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                     </div>
                     
                     <button onclick="calculateRequiredGPA()" 
-                        class="w-full bg-purple-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-purple-700 transition-colors duration-200 font-semibold">
+                        class="w-full bg-green-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-green-700 transition-colors duration-200 font-semibold">
                         Calculate Required GPA
                     </button>
                     

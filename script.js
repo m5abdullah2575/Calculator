@@ -4251,21 +4251,28 @@ function switchGPATab(tab) {
             section.classList.add('hidden');
         });
         
-        // Remove active class from all tabs
+        // Remove active styling from all tabs
         const tabs = document.querySelectorAll('.gpa-tab');
         tabs.forEach(tabEl => {
-            tabEl.classList.remove('active');
-            tabEl.classList.remove('text-indigo-600', 'border-indigo-600');
-            tabEl.classList.add('text-gray-500', 'border-transparent');
+            tabEl.classList.remove('bg-blue-600', 'text-white');
+            tabEl.classList.add('bg-gray-100', 'text-gray-700');
         });
         
         // Show selected section and activate tab
         const selectedTab = document.getElementById(tab + 'Tab');
-        const selectedSection = tab === 'current' ? document.getElementById('currentGPACalculator') : document.getElementById('gpaPlanning');
+        let selectedSection;
+        
+        if (tab === 'current') {
+            selectedSection = document.getElementById('currentGPACalculator');
+        } else if (tab === 'cumulative') {
+            selectedSection = document.getElementById('cumulativeGPACalculator');
+        } else if (tab === 'planning') {
+            selectedSection = document.getElementById('gpaPlanning');
+        }
         
         if (selectedTab && selectedSection) {
-            selectedTab.classList.add('active', 'text-indigo-600', 'border-indigo-600');
-            selectedTab.classList.remove('text-gray-500', 'border-transparent');
+            selectedTab.classList.add('bg-blue-600', 'text-white');
+            selectedTab.classList.remove('bg-gray-100', 'text-gray-700');
             selectedSection.classList.remove('hidden');
         }
     } catch (error) {
@@ -4494,6 +4501,267 @@ function addCourse(targetSemester = null) {
         feather.replace();
     } catch (error) {
         console.error('Error adding course:', error);
+    }
+}
+
+// Add course for cumulative GPA calculator
+function addCumulativeCourse() {
+    try {
+        const coursesList = document.getElementById('cumulativeCoursesList');
+        if (!coursesList) return;
+        
+        const courseRow = document.createElement('div');
+        courseRow.className = 'course-row bg-gray-50 rounded-lg p-4';
+        
+        courseRow.innerHTML = `
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Course Name</label>
+                    <input type="text" placeholder="e.g., Mathematics" 
+                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Credits</label>
+                    <input type="number" min="0.5" max="10" step="0.5" placeholder="3" onchange="updateQualityPoints(this)"
+                        class="credit-hours w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Grade</label>
+                    <select onchange="updateQualityPoints(this)" class="grade-select w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="">Select Grade</option>
+                        <option value="4.3">A+ (4.3)</option>
+                        <option value="4.0">A (4.0)</option>
+                        <option value="3.7">A- (3.7)</option>
+                        <option value="3.3">B+ (3.3)</option>
+                        <option value="3.0">B (3.0)</option>
+                        <option value="2.7">B- (2.7)</option>
+                        <option value="2.3">C+ (2.3)</option>
+                        <option value="2.0">C (2.0)</option>
+                        <option value="1.7">C- (1.7)</option>
+                        <option value="1.3">D+ (1.3)</option>
+                        <option value="1.0">D (1.0)</option>
+                        <option value="0.7">D- (0.7)</option>
+                        <option value="0.0">F (0.0)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-600 mb-1">Quality Points</label>
+                    <input type="text" readonly class="quality-points w-full px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-lg" placeholder="0.0">
+                </div>
+                <div class="flex items-end">
+                    <button onclick="removeCourse(this)" class="w-full bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                        <i data-feather="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        coursesList.appendChild(courseRow);
+        
+        // Update feather icons
+        feather.replace();
+    } catch (error) {
+        console.error('Error adding cumulative course:', error);
+    }
+}
+
+// Calculate cumulative GPA
+function calculateCumulativeGPA() {
+    try {
+        const prevGPA = parseFloat(document.getElementById('prevGPA').value);
+        const prevCredits = parseFloat(document.getElementById('prevCredits').value);
+        const courseRows = document.querySelectorAll('#cumulativeCoursesList .course-row');
+        
+        if (isNaN(prevGPA) || isNaN(prevCredits)) {
+            throw new Error('Please enter valid previous GPA and credits');
+        }
+        
+        if (courseRows.length === 0) {
+            throw new Error('Please add at least one current semester course');
+        }
+        
+        let currentQualityPoints = 0;
+        let currentCredits = 0;
+        let courseDetails = [];
+        
+        courseRows.forEach((row, index) => {
+            const courseName = row.querySelector('input[type="text"]').value || `Course ${index + 1}`;
+            const credits = parseFloat(row.querySelector('.credit-hours').value);
+            const gradePoints = parseFloat(row.querySelector('.grade-select').value);
+            
+            if (isNaN(credits) || credits <= 0) {
+                throw new Error(`Please enter valid credits for ${courseName}`);
+            }
+            
+            if (isNaN(gradePoints) && row.querySelector('.grade-select').value !== '') {
+                throw new Error(`Please select a valid grade for ${courseName}`);
+            }
+            
+            if (row.querySelector('.grade-select').value === '') {
+                return; // Skip courses without grades
+            }
+            
+            const qualityPoints = credits * gradePoints;
+            currentQualityPoints += qualityPoints;
+            currentCredits += credits;
+            
+            courseDetails.push({
+                name: courseName,
+                credits: credits,
+                grade: getGradeLabel(gradePoints),
+                gradePoints: gradePoints,
+                qualityPoints: qualityPoints
+            });
+        });
+        
+        if (currentCredits === 0) {
+            throw new Error('Please add courses with valid grades');
+        }
+        
+        // Calculate cumulative GPA
+        const prevQualityPoints = prevGPA * prevCredits;
+        const totalQualityPoints = prevQualityPoints + currentQualityPoints;
+        const totalCredits = prevCredits + currentCredits;
+        const cumulativeGPA = totalQualityPoints / totalCredits;
+        const currentSemesterGPA = currentQualityPoints / currentCredits;
+        
+        // Display results
+        const resultDiv = document.getElementById('cumulativeGpaResult');
+        resultDiv.innerHTML = `
+            <div class="bg-gradient-to-r from-blue-50 to-blue-100 border border-blue-200 rounded-xl p-6">
+                <h3 class="text-2xl font-bold text-blue-800 mb-6 text-center">Cumulative GPA Results</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="text-center p-4 bg-white rounded-lg border border-blue-200">
+                        <div class="text-3xl font-bold text-blue-600">${cumulativeGPA.toFixed(2)}</div>
+                        <div class="text-sm text-blue-800 font-medium">Cumulative GPA</div>
+                    </div>
+                    <div class="text-center p-4 bg-white rounded-lg border border-blue-200">
+                        <div class="text-3xl font-bold text-green-600">${currentSemesterGPA.toFixed(2)}</div>
+                        <div class="text-sm text-green-800 font-medium">Current Semester GPA</div>
+                    </div>
+                    <div class="text-center p-4 bg-white rounded-lg border border-blue-200">
+                        <div class="text-3xl font-bold text-gray-600">${totalCredits}</div>
+                        <div class="text-sm text-gray-800 font-medium">Total Credits</div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg p-4 border border-blue-200">
+                    <h4 class="font-semibold text-blue-800 mb-3">Current Semester Courses</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-blue-200">
+                                    <th class="text-left p-2 text-blue-800">Course</th>
+                                    <th class="text-center p-2 text-blue-800">Credits</th>
+                                    <th class="text-center p-2 text-blue-800">Grade</th>
+                                    <th class="text-center p-2 text-blue-800">Quality Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${courseDetails.map(course => `
+                                    <tr class="border-b border-blue-100">
+                                        <td class="p-2 text-blue-700">${course.name}</td>
+                                        <td class="text-center p-2 text-blue-700">${course.credits}</td>
+                                        <td class="text-center p-2 text-blue-700">${course.grade}</td>
+                                        <td class="text-center p-2 text-blue-700">${course.qualityPoints.toFixed(2)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="mt-4 text-sm text-blue-600">
+                    <p><strong>Summary:</strong> Your cumulative GPA across ${totalCredits} total credits is ${cumulativeGPA.toFixed(2)}. 
+                    Your current semester GPA is ${currentSemesterGPA.toFixed(2)} from ${currentCredits} credits.</p>
+                </div>
+            </div>
+        `;
+        
+        resultDiv.classList.remove('hidden');
+        
+    } catch (error) {
+        const resultDiv = document.getElementById('cumulativeGpaResult');
+        resultDiv.innerHTML = `
+            <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                <div class="flex items-center">
+                    <i data-feather="alert-circle" class="w-5 h-5 text-red-500 mr-2"></i>
+                    <span class="text-red-700 font-medium">Error: ${error.message}</span>
+                </div>
+            </div>
+        `;
+        resultDiv.classList.remove('hidden');
+        feather.replace();
+    }
+}
+
+// Reset cumulative GPA calculator
+function resetCumulativeGPA() {
+    try {
+        // Clear input fields
+        document.getElementById('prevGPA').value = '';
+        document.getElementById('prevCredits').value = '';
+        
+        // Reset to one course row
+        const coursesList = document.getElementById('cumulativeCoursesList');
+        if (coursesList) {
+            coursesList.innerHTML = `
+                <div class="course-row bg-gray-50 rounded-lg p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Course Name</label>
+                            <input type="text" placeholder="e.g., Mathematics" 
+                                class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Credits</label>
+                            <input type="number" min="0.5" max="10" step="0.5" placeholder="3" onchange="updateQualityPoints(this)"
+                                class="credit-hours w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Grade</label>
+                            <select onchange="updateQualityPoints(this)" class="grade-select w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select Grade</option>
+                                <option value="4.3">A+ (4.3)</option>
+                                <option value="4.0">A (4.0)</option>
+                                <option value="3.7">A- (3.7)</option>
+                                <option value="3.3">B+ (3.3)</option>
+                                <option value="3.0">B (3.0)</option>
+                                <option value="2.7">B- (2.7)</option>
+                                <option value="2.3">C+ (2.3)</option>
+                                <option value="2.0">C (2.0)</option>
+                                <option value="1.7">C- (1.7)</option>
+                                <option value="1.3">D+ (1.3)</option>
+                                <option value="1.0">D (1.0)</option>
+                                <option value="0.7">D- (0.7)</option>
+                                <option value="0.0">F (0.0)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-600 mb-1">Quality Points</label>
+                            <input type="text" readonly class="quality-points w-full px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-lg" placeholder="0.0">
+                        </div>
+                        <div class="flex items-end">
+                            <button onclick="removeCourse(this)" class="w-full bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                                <i data-feather="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Hide results
+        const resultDiv = document.getElementById('cumulativeGpaResult');
+        if (resultDiv) {
+            resultDiv.classList.add('hidden');
+        }
+        
+        // Update feather icons
+        feather.replace();
+    } catch (error) {
+        console.error('Error resetting cumulative GPA calculator:', error);
     }
 }
 
