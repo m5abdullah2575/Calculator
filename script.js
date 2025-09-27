@@ -1784,61 +1784,282 @@ function resetSubnet() {
 }
 
 // Pregnancy Calculator
+function switchPregnancyMethod(method) {
+    try {
+        // Hide all method input sections
+        const inputSections = document.querySelectorAll('.method-inputs');
+        inputSections.forEach(section => {
+            section.classList.add('hidden');
+        });
+        
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll('.pregnancy-tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+            tab.classList.remove('text-pink-600', 'border-pink-600');
+            tab.classList.add('text-gray-500', 'border-transparent');
+        });
+        
+        // Show selected method input section and activate tab
+        const selectedTab = document.getElementById(method + 'Tab');
+        const selectedInput = document.getElementById(method + 'Inputs');
+        
+        if (selectedTab && selectedInput) {
+            selectedTab.classList.add('active', 'text-pink-600', 'border-pink-600');
+            selectedTab.classList.remove('text-gray-500', 'border-transparent');
+            selectedInput.classList.remove('hidden');
+        }
+    } catch (error) {
+        // Silent handling of errors for better user experience
+    }
+}
+
 function calculatePregnancy() {
     try {
-        const lmpInput = document.getElementById('pregnancyLmp').value;
-        if (!lmpInput) {
-            throw new Error('Last menstrual period date is required');
+        // Determine which method is active
+        const activeTab = document.querySelector('.pregnancy-tab.active');
+        if (!activeTab) {
+            throw new Error('Please select a calculation method');
         }
         
-        const lmp = new Date(lmpInput);
+        const method = activeTab.id.replace('Tab', '');
+        let dueDate, lmpDate, conceptionDate;
+        
+        switch (method) {
+            case 'lmp':
+                const lmpInput = document.getElementById('pregnancyLmp').value;
+                const cycleLength = parseInt(document.getElementById('cycleLength').value);
+                
+                if (!lmpInput) {
+                    throw new Error('Last menstrual period date is required');
+                }
+                
+                lmpDate = new Date(lmpInput);
+                if (lmpDate > new Date()) {
+                    throw new Error('Last menstrual period cannot be in the future');
+                }
+                
+                // Calculate due date (280 days from LMP, adjusted for cycle length)
+                const ovulationDay = cycleLength - 14; // Luteal phase is typically 14 days
+                dueDate = new Date(lmpDate);
+                dueDate.setDate(dueDate.getDate() + 280);
+                
+                // Adjust for cycle length
+                if (cycleLength !== 28) {
+                    const adjustment = cycleLength - 28;
+                    dueDate.setDate(dueDate.getDate() + adjustment);
+                }
+                
+                conceptionDate = new Date(lmpDate);
+                conceptionDate.setDate(conceptionDate.getDate() + ovulationDay);
+                break;
+                
+            case 'duedate':
+                const dueDateInput = document.getElementById('pregnancyDueDate').value;
+                if (!dueDateInput) {
+                    throw new Error('Due date is required');
+                }
+                
+                dueDate = new Date(dueDateInput);
+                lmpDate = new Date(dueDate);
+                lmpDate.setDate(lmpDate.getDate() - 280);
+                
+                conceptionDate = new Date(lmpDate);
+                conceptionDate.setDate(conceptionDate.getDate() + 14);
+                break;
+                
+            case 'ultrasound':
+                const ultrasoundDateInput = document.getElementById('ultrasoundDate').value;
+                const ultrasoundWeeks = parseInt(document.getElementById('ultrasoundWeeks').value || '0');
+                const ultrasoundDays = parseInt(document.getElementById('ultrasoundDays').value || '0');
+                
+                if (!ultrasoundDateInput) {
+                    throw new Error('Ultrasound date is required');
+                }
+                if (ultrasoundWeeks < 0 || ultrasoundWeeks > 42) {
+                    throw new Error('Weeks must be between 0 and 42');
+                }
+                if (ultrasoundDays < 0 || ultrasoundDays > 6) {
+                    throw new Error('Days must be between 0 and 6');
+                }
+                
+                const ultrasoundDate = new Date(ultrasoundDateInput);
+                const totalUltrasoundDays = (ultrasoundWeeks * 7) + ultrasoundDays;
+                
+                // Calculate LMP from ultrasound
+                lmpDate = new Date(ultrasoundDate);
+                lmpDate.setDate(lmpDate.getDate() - totalUltrasoundDays);
+                
+                // Calculate due date (280 days from LMP)
+                dueDate = new Date(lmpDate);
+                dueDate.setDate(dueDate.getDate() + 280);
+                
+                conceptionDate = new Date(lmpDate);
+                conceptionDate.setDate(conceptionDate.getDate() + 14);
+                break;
+                
+            case 'conception':
+                const conceptionDateInput = document.getElementById('conceptionDate').value;
+                if (!conceptionDateInput) {
+                    throw new Error('Conception date is required');
+                }
+                
+                conceptionDate = new Date(conceptionDateInput);
+                if (conceptionDate > new Date()) {
+                    throw new Error('Conception date cannot be in the future');
+                }
+                
+                // Calculate LMP (14 days before conception)
+                lmpDate = new Date(conceptionDate);
+                lmpDate.setDate(lmpDate.getDate() - 14);
+                
+                // Calculate due date (266 days from conception)
+                dueDate = new Date(conceptionDate);
+                dueDate.setDate(dueDate.getDate() + 266);
+                break;
+                
+            case 'ivf':
+                const transferDateInput = document.getElementById('ivfTransferDate').value;
+                const embryoAge = parseInt(document.getElementById('embryoAge').value);
+                
+                if (!transferDateInput) {
+                    throw new Error('Transfer date is required');
+                }
+                
+                const transferDate = new Date(transferDateInput);
+                if (transferDate > new Date()) {
+                    throw new Error('Transfer date cannot be in the future');
+                }
+                
+                // Calculate conception date (transfer date - embryo age + fertilization day)
+                conceptionDate = new Date(transferDate);
+                conceptionDate.setDate(conceptionDate.getDate() - embryoAge + 1);
+                
+                // Calculate LMP (14 days before conception)
+                lmpDate = new Date(conceptionDate);
+                lmpDate.setDate(lmpDate.getDate() - 14);
+                
+                // Calculate due date (266 days from conception)
+                dueDate = new Date(conceptionDate);
+                dueDate.setDate(dueDate.getDate() + 266);
+                break;
+                
+            default:
+                throw new Error('Invalid calculation method selected');
+        }
+        
+        // Calculate current pregnancy status
         const today = new Date();
+        const daysSinceLmp = Math.floor((today - lmpDate) / (1000 * 60 * 60 * 24));
+        const weeksSinceLmp = Math.floor(daysSinceLmp / 7);
+        const daysPart = daysSinceLmp % 7;
         
-        if (lmp > today) {
-            throw new Error('Last menstrual period cannot be in the future');
-        }
-        
-        // Calculate due date (280 days from LMP)
-        const dueDate = new Date(lmp);
-        dueDate.setDate(dueDate.getDate() + 280);
-        
-        // Calculate current pregnancy week
-        const daysSinceLmp = Math.floor((today - lmp) / (1000 * 60 * 60 * 24));
-        const weeks = Math.floor(daysSinceLmp / 7);
-        const days = daysSinceLmp % 7;
-        
-        // Determine trimester
-        let trimester;
-        if (weeks < 13) {
-            trimester = 'First Trimester';
-        } else if (weeks < 27) {
-            trimester = 'Second Trimester';
-        } else {
-            trimester = 'Third Trimester';
-        }
-        
-        // Days until due date
+        // Calculate days until due date
         const daysUntilDue = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
         
+        // Determine trimester
+        let trimester, trimesterWeeks;
+        if (weeksSinceLmp < 13) {
+            trimester = 'First Trimester';
+            trimesterWeeks = `Week ${weeksSinceLmp} of 12`;
+        } else if (weeksSinceLmp < 27) {
+            trimester = 'Second Trimester';
+            trimesterWeeks = `Week ${weeksSinceLmp - 12} of 14`;
+        } else {
+            trimester = 'Third Trimester';
+            trimesterWeeks = `Week ${weeksSinceLmp - 26} of 14`;
+        }
+        
+        // Determine pregnancy status
+        let status;
+        if (daysUntilDue > 0) {
+            status = weeksSinceLmp < 37 ? 'Ongoing Pregnancy' : 'Full Term';
+        } else if (daysUntilDue > -14) {
+            status = 'Due Date Passed';
+        } else {
+            status = 'Post-term';
+        }
+        
+        // Calculate percentage of pregnancy completed
+        const pregnancyProgress = Math.min(100, Math.max(0, (daysSinceLmp / 280) * 100));
+        
         const result = `
-            <strong>Pregnancy Information:</strong><br>
-            <strong>Due Date:</strong> ${dueDate.toDateString()}<br>
-            <strong>Current Week:</strong> ${weeks} weeks, ${days} days<br>
-            <strong>Trimester:</strong> ${trimester}<br>
-            <strong>Days until due:</strong> ${daysUntilDue > 0 ? daysUntilDue : 'Overdue by ' + Math.abs(daysUntilDue)} days<br>
-            <strong>Conception Date:</strong> ${new Date(lmp.getTime() + 14 * 24 * 60 * 60 * 1000).toDateString()}<br><br>
-            <small>This calculation is based on a 28-day cycle. Consult your doctor for personalized care.</small>
+            <div class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-pink-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-pink-800 mb-2">Due Date</h4>
+                        <p class="text-pink-700 text-lg">${dueDate.toLocaleDateString()}</p>
+                        <p class="text-pink-600 text-sm">${daysUntilDue > 0 ? daysUntilDue + ' days to go' : Math.abs(daysUntilDue) + ' days overdue'}</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-purple-800 mb-2">Current Week</h4>
+                        <p class="text-purple-700 text-lg">${weeksSinceLmp} weeks, ${daysPart} days</p>
+                        <p class="text-purple-600 text-sm">${status}</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-blue-800 mb-2">Trimester</h4>
+                        <p class="text-blue-700 text-lg">${trimester}</p>
+                        <p class="text-blue-600 text-sm">${trimesterWeeks}</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-green-800 mb-2">Progress</h4>
+                        <p class="text-green-700 text-lg">${pregnancyProgress.toFixed(1)}% complete</p>
+                        <div class="w-full bg-green-200 rounded-full h-2 mt-2">
+                            <div class="bg-green-600 h-2 rounded-full" style="width: ${pregnancyProgress}%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-semibold text-gray-800 mb-2">Key Dates</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div>
+                            <span class="text-gray-600">LMP Date:</span><br>
+                            <span class="font-medium">${lmpDate.toLocaleDateString()}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Conception Date:</span><br>
+                            <span class="font-medium">${conceptionDate.toLocaleDateString()}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-600">Days Since LMP:</span><br>
+                            <span class="font-medium">${daysSinceLmp} days</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg">
+                    <p class="text-yellow-800 text-sm">
+                        <strong>Note:</strong> This calculator provides estimates. Always consult your healthcare provider for personalized medical advice and accurate dating.
+                    </p>
+                </div>
+            </div>
         `;
         
         showResult('pregnancyResult', result);
+        
     } catch (error) {
         showResult('pregnancyResult', error.message, true);
     }
 }
 
 function resetPregnancy() {
+    // Reset all input fields
     document.getElementById('pregnancyLmp').value = '';
+    document.getElementById('pregnancyDueDate').value = '';
+    document.getElementById('ultrasoundDate').value = '';
+    document.getElementById('ultrasoundWeeks').value = '';
+    document.getElementById('ultrasoundDays').value = '';
+    document.getElementById('conceptionDate').value = '';
+    document.getElementById('ivfTransferDate').value = '';
+    document.getElementById('cycleLength').value = '28';
+    document.getElementById('embryoAge').value = '5';
+    
+    // Hide result
     hideResult('pregnancyResult');
+    
+    // Reset to default method (LMP)
+    switchPregnancyMethod('lmp');
 }
 
 // Loan Comparison Calculator

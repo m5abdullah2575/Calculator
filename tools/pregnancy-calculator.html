@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pregnancy Calculator - CalcHub Pro</title>
-    <meta name="description" content="Calculate pregnancy due date, weeks, and trimester information.">
+    <title>Pregnancy Calculator - Due Date Calculator | Free Pregnancy Week Calculator with Multiple Methods</title>
+    <meta name="description" content="Calculate your pregnancy due date, current week, and trimester with our comprehensive pregnancy calculator. Supports LMP, ultrasound, conception date, IVF transfer, and due date methods. Get instant accurate results!">
+    <meta name="keywords" content="pregnancy calculator, due date calculator, pregnancy week calculator, pregnancy trimester, LMP calculator, ultrasound dating, conception calculator, IVF pregnancy calculator">
+    <meta property="og:title" content="Pregnancy Calculator - Comprehensive Due Date & Week Calculator">
+    <meta property="og:description" content="Calculate pregnancy due date, current week, and trimester using multiple methods: LMP, ultrasound, conception, IVF transfer. Professional pregnancy planning tool.">
+    <meta property="og:type" content="website">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Pregnancy Calculator",
+      "description": "Comprehensive pregnancy calculator supporting multiple calculation methods including LMP, ultrasound dating, conception date, and IVF transfer calculations",
+      "applicationCategory": "HealthApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="stylesheet" href="../style.css">
@@ -47,12 +65,12 @@
             </nav>
             <div class="flex items-center justify-center mb-4">
                 <div class="bg-white bg-opacity-20 p-4 rounded-xl">
-                    <i data-feather="baby" class="w-12 h-12"></i>
+                    <i data-feather="heart" class="w-12 h-12"></i>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold mb-4">Pregnancy Calculator</h1>
+            <h1 class="text-4xl font-bold mb-4">Advanced Pregnancy Calculator</h1>
             <p class="text-xl text-blue-100 max-w-2xl mx-auto">
-                Calculate your due date, current pregnancy week, and trimester information.
+                Calculate your pregnancy due date, current week, and trimester using multiple methods. Supports LMP, ultrasound, conception date, and IVF transfer calculations.
             </p>
         </div>
     </section>
@@ -62,21 +80,160 @@
         <div class="tool-container">
             <!-- Calculator Card -->
             <div class="bg-white rounded-xl shadow-lg p-8 mb-8">
+                <!-- Method Selection Tabs -->
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Calculate Based On:</h2>
+                    <div class="flex flex-wrap justify-center border-b border-gray-200">
+                        <button onclick="switchPregnancyMethod('lmp')" id="lmpTab" class="pregnancy-tab active px-4 py-3 text-sm font-medium text-pink-600 border-b-2 border-pink-600 rounded-t-lg hover:text-pink-800 hover:border-pink-800">
+                            Last Period
+                        </button>
+                        <button onclick="switchPregnancyMethod('duedate')" id="duedateTab" class="pregnancy-tab px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
+                            Due Date
+                        </button>
+                        <button onclick="switchPregnancyMethod('ultrasound')" id="ultrasoundTab" class="pregnancy-tab px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
+                            Ultrasound
+                        </button>
+                        <button onclick="switchPregnancyMethod('conception')" id="conceptionTab" class="pregnancy-tab px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
+                            Conception Date
+                        </button>
+                        <button onclick="switchPregnancyMethod('ivf')" id="ivfTab" class="pregnancy-tab px-4 py-3 text-sm font-medium text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300">
+                            IVF Transfer
+                        </button>
+                    </div>
+                </div>
+
                 <div class="space-y-6">
-                    <div>
-                        <label class="block text-lg font-semibold text-gray-900 mb-3">Last Menstrual Period (LMP)</label>
-                        <input 
-                            type="date" 
-                            id="pregnancyLmp" 
-                            class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        >
+                    <!-- LMP Method -->
+                    <div id="lmpInputs" class="method-inputs">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">First Day of Your Last Period</label>
+                            <input 
+                                type="date" 
+                                id="pregnancyLmp" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Average Length of Your Cycles</label>
+                            <select 
+                                id="cycleLength"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                                <option value="22">22 days</option>
+                                <option value="23">23 days</option>
+                                <option value="24">24 days</option>
+                                <option value="25">25 days</option>
+                                <option value="26">26 days</option>
+                                <option value="27">27 days</option>
+                                <option value="28" selected>28 days</option>
+                                <option value="29">29 days</option>
+                                <option value="30">30 days</option>
+                                <option value="31">31 days</option>
+                                <option value="32">32 days</option>
+                                <option value="33">33 days</option>
+                                <option value="34">34 days</option>
+                                <option value="35">35 days</option>
+                                <option value="36">36 days</option>
+                                <option value="37">37 days</option>
+                                <option value="38">38 days</option>
+                                <option value="39">39 days</option>
+                                <option value="40">40 days</option>
+                                <option value="41">41 days</option>
+                                <option value="42">42 days</option>
+                                <option value="43">43 days</option>
+                                <option value="44">44 days</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Due Date Method -->
+                    <div id="duedateInputs" class="method-inputs hidden">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Your Due Date</label>
+                            <input 
+                                type="date" 
+                                id="pregnancyDueDate" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Ultrasound Method -->
+                    <div id="ultrasoundInputs" class="method-inputs hidden">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Ultrasound Date</label>
+                            <input 
+                                type="date" 
+                                id="ultrasoundDate" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Pregnancy Length at Ultrasound - Weeks</label>
+                                <input 
+                                    type="number" 
+                                    id="ultrasoundWeeks" 
+                                    placeholder="0-42 weeks"
+                                    min="0"
+                                    max="42"
+                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-lg font-semibold text-gray-900 mb-3">Days</label>
+                                <input 
+                                    type="number" 
+                                    id="ultrasoundDays" 
+                                    placeholder="0-6 days"
+                                    min="0"
+                                    max="6"
+                                    class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conception Method -->
+                    <div id="conceptionInputs" class="method-inputs hidden">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Conception Date</label>
+                            <input 
+                                type="date" 
+                                id="conceptionDate" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- IVF Method -->
+                    <div id="ivfInputs" class="method-inputs hidden">
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Transfer Date</label>
+                            <input 
+                                type="date" 
+                                id="ivfTransferDate" 
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-lg font-semibold text-gray-900 mb-3">Embryo Age</label>
+                            <select 
+                                id="embryoAge"
+                                class="w-full px-4 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                            >
+                                <option value="3">Day 3</option>
+                                <option value="5" selected>Day 5</option>
+                                <option value="6">Day 6</option>
+                            </select>
+                        </div>
                     </div>
                     
                     <button 
                         onclick="calculatePregnancy()" 
                         class="w-full bg-pink-600 text-white text-lg py-4 px-6 rounded-lg hover:bg-pink-700 transition-colors duration-200 font-semibold"
                     >
-                        Calculate Pregnancy Info
+                        Calculate Pregnancy Information
                     </button>
                     
                     <div id="pregnancyResult" class="result-display hidden"></div>
@@ -89,11 +246,230 @@
                     </button>
                 </div>
             </div>
+
+            <!-- Information Section -->
+            <div class="space-y-8">
+                <!-- Pregnancy Overview -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Understanding Pregnancy Calculation</h2>
+                    <div class="prose max-w-none text-gray-700">
+                        <p class="mb-4">
+                            Pregnancy is typically calculated as lasting about 40 weeks (280 days) from the first day of your last menstrual period (LMP). This calculation method is used because it's often difficult to determine the exact date of conception.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                            <div class="bg-pink-50 p-6 rounded-lg">
+                                <h3 class="text-lg font-semibold text-pink-800 mb-3">Key Facts</h3>
+                                <ul class="space-y-2 text-pink-700 text-sm">
+                                    <li>• Full-term pregnancy: 37-42 weeks</li>
+                                    <li>• Average pregnancy: 40 weeks from LMP</li>
+                                    <li>• Only 4% of babies are born on their due date</li>
+                                    <li>• 90% are born within 2 weeks of due date</li>
+                                    <li>• Pregnancy is divided into 3 trimesters</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h3 class="text-lg font-semibold text-blue-800 mb-3">Calculation Methods</h3>
+                                <ul class="space-y-2 text-blue-700 text-sm">
+                                    <li>• Last Menstrual Period (LMP) - Most common</li>
+                                    <li>• Ultrasound dating - Most accurate early in pregnancy</li>
+                                    <li>• Conception date - If known precisely</li>
+                                    <li>• IVF transfer date - For assisted pregnancies</li>
+                                    <li>• Due date - Working backwards</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pregnancy Trimesters -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Pregnancy Trimesters</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-green-50 p-6 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <i data-feather="sunrise" class="w-6 h-6 text-green-600 mr-2"></i>
+                                <h3 class="text-xl font-semibold text-green-800">First Trimester</h3>
+                            </div>
+                            <p class="text-green-700 mb-3 font-medium">Weeks 1-12</p>
+                            <ul class="space-y-2 text-green-700 text-sm">
+                                <li>• Embryo development begins</li>
+                                <li>• Major organ formation</li>
+                                <li>• Morning sickness common</li>
+                                <li>• Fatigue and mood changes</li>
+                                <li>• First prenatal appointments</li>
+                                <li>• Higher risk of miscarriage</li>
+                            </ul>
+                        </div>
+                        <div class="bg-yellow-50 p-6 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <i data-feather="sun" class="w-6 h-6 text-yellow-600 mr-2"></i>
+                                <h3 class="text-xl font-semibold text-yellow-800">Second Trimester</h3>
+                            </div>
+                            <p class="text-yellow-700 mb-3 font-medium">Weeks 13-27</p>
+                            <ul class="space-y-2 text-yellow-700 text-sm">
+                                <li>• Often called the "golden period"</li>
+                                <li>• Morning sickness typically subsides</li>
+                                <li>• Baby movements felt</li>
+                                <li>• Anatomy scan performed</li>
+                                <li>• Gender can be determined</li>
+                                <li>• Energy levels improve</li>
+                            </ul>
+                        </div>
+                        <div class="bg-orange-50 p-6 rounded-lg">
+                            <div class="flex items-center mb-3">
+                                <i data-feather="sunset" class="w-6 h-6 text-orange-600 mr-2"></i>
+                                <h3 class="text-xl font-semibold text-orange-800">Third Trimester</h3>
+                            </div>
+                            <p class="text-orange-700 mb-3 font-medium">Weeks 28-40+</p>
+                            <ul class="space-y-2 text-orange-700 text-sm">
+                                <li>• Rapid baby growth</li>
+                                <li>• Increased discomfort</li>
+                                <li>• Preparation for labor</li>
+                                <li>• Regular prenatal visits</li>
+                                <li>• Baby positioning for birth</li>
+                                <li>• Birth plan finalization</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Accuracy and Limitations -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Accuracy and Limitations</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold text-green-600 mb-4">Most Accurate Methods</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start">
+                                    <i data-feather="check-circle" class="w-4 h-4 text-green-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <strong>Early Ultrasound (6-12 weeks):</strong> Most accurate method, especially before 12 weeks
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="check-circle" class="w-4 h-4 text-green-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <strong>IVF Transfer Date:</strong> Precise timing known for assisted pregnancies
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="check-circle" class="w-4 h-4 text-green-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <strong>Known Conception:</strong> When ovulation timing is tracked precisely
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-amber-600 mb-4">Limitations</h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-amber-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <strong>LMP Method:</strong> Assumes regular 28-day cycles and day 14 ovulation
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-amber-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <strong>Irregular Cycles:</strong> Less accurate for women with irregular periods
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-feather="alert-circle" class="w-4 h-4 text-amber-500 mt-1 mr-2 flex-shrink-0"></i>
+                                    <strong>Late Ultrasounds:</strong> Accuracy decreases after 12 weeks
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                        <p class="text-blue-800">
+                            <strong>Important:</strong> Due dates are estimates. Your healthcare provider may adjust your due date based on ultrasound measurements and other factors. Always consult with your healthcare provider for personalized medical advice.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Pregnancy Milestones -->
+                <section class="bg-white rounded-xl shadow-lg p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Important Pregnancy Milestones</h2>
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="bg-pink-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-pink-800 mb-2">Week 4-6</h4>
+                                <p class="text-pink-700 text-sm">First prenatal visit, confirm pregnancy</p>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-purple-800 mb-2">Week 8-12</h4>
+                                <p class="text-purple-700 text-sm">First trimester screening, nuchal translucency</p>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-blue-800 mb-2">Week 15-20</h4>
+                                <p class="text-blue-700 text-sm">Anatomy scan, gender determination</p>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-green-800 mb-2">Week 18-22</h4>
+                                <p class="text-green-700 text-sm">First baby movements felt (quickening)</p>
+                            </div>
+                            <div class="bg-yellow-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-yellow-800 mb-2">Week 24-28</h4>
+                                <p class="text-yellow-700 text-sm">Glucose screening test, viability threshold</p>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg">
+                                <h4 class="font-semibold text-orange-800 mb-2">Week 32-36</h4>
+                                <p class="text-orange-700 text-sm">Weekly appointments, baby positioning</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Related Tools -->
+                <section class="bg-gray-50 rounded-xl p-8">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Related Pregnancy Tools</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <a href="ovulation-calculator.html" class="block bg-white p-6 rounded-lg hover:shadow-lg transition-shadow">
+                            <div class="flex items-center mb-3">
+                                <i data-feather="calendar" class="w-6 h-6 text-pink-600 mr-2"></i>
+                                <h3 class="font-semibold text-gray-900">Ovulation Calculator</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm">Track your fertile window and ovulation dates</p>
+                        </a>
+                        <a href="calorie-calculator.html" class="block bg-white p-6 rounded-lg hover:shadow-lg transition-shadow">
+                            <div class="flex items-center mb-3">
+                                <i data-feather="target" class="w-6 h-6 text-orange-600 mr-2"></i>
+                                <h3 class="font-semibold text-gray-900">Calorie Calculator</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm">Calculate daily calorie needs during pregnancy</p>
+                        </a>
+                        <a href="bmi-calculator.html" class="block bg-white p-6 rounded-lg hover:shadow-lg transition-shadow">
+                            <div class="flex items-center mb-3">
+                                <i data-feather="activity" class="w-6 h-6 text-green-600 mr-2"></i>
+                                <h3 class="font-semibold text-gray-900">BMI Calculator</h3>
+                            </div>
+                            <p class="text-gray-600 text-sm">Monitor healthy weight gain during pregnancy</p>
+                        </a>
+                    </div>
+                </section>
+            </div>
         </div>
     </main>
 
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="bg-blue-600 p-2 rounded-lg">
+                    <i data-feather="minus-square" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">CalcHub Pro</h3>
+                    <p class="text-xs text-gray-400">Professional Calculator Suite</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm mb-4">
+                © 2025 CalcHub Pro. All rights reserved. Made with ❤️ for everyone.
+            </p>
+            <div class="flex justify-center space-x-6 text-sm">
+                <a href="../index.html" class="text-gray-400 hover:text-white">Home</a>
+                <a href="../about.html" class="text-gray-400 hover:text-white">About</a>
+                <a href="../privacy.html" class="text-gray-400 hover:text-white">Privacy</a>
+                <a href="../contact.html" class="text-gray-400 hover:text-white">Contact</a>
+            </div>
+        </div>
+    </footer>
+
     <script src="../script.js"></script>
     <script>
+        // Initialize Feather icons
         feather.replace();
     </script>
 </body>

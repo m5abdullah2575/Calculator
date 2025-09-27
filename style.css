@@ -32,6 +32,30 @@
     color: white;
 }
 
+/* Pregnancy Calculator Tab Styles */
+.pregnancy-tab {
+    transition: all 0.2s ease-in-out;
+}
+
+.pregnancy-tab.active {
+    color: #db2777;
+    border-color: #db2777;
+}
+
+.pregnancy-tab:not(.active) {
+    color: #6b7280;
+    border-color: transparent;
+}
+
+.pregnancy-tab:not(.active):hover {
+    color: #4b5563;
+    border-color: #d1d5db;
+}
+
+.method-inputs.hidden {
+    display: none;
+}
+
 .result-display {
     background-color: #f8fafc;
     border: 1px solid #e2e8f0;
